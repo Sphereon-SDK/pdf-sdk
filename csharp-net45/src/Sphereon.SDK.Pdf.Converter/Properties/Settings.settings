@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Sphereon.SDK.Pdf.Converter.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Username" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">example</Value>
+    </Setting>
+    <Setting Name="Password" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">password</Value>
+    </Setting>
+    <Setting Name="Timeout" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">120</Value>
+    </Setting>
+    <Setting Name="AccessToken" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ac5c0469-aec5-31ca-8cf7-7cb508c8d4ab</Value>
+    </Setting>
+    <Setting Name="URL" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://gw.api.cloud.sphereon.com/pdf/0.1.4</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

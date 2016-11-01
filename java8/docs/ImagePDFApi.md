@@ -1,14 +1,14 @@
 # ImagePDFApi
 
-All URIs are relative to *https://localhost:18082/*
+All URIs are relative to *https://gw.api.cloud.sphereon.com/*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**deleteJob**](ImagePDFApi.md#deleteJob) | **DELETE** /image2pdf/{jobid} | Delete a job manually
-[**getJob**](ImagePDFApi.md#getJob) | **GET** /image2pdf/{jobid} | Job definition and state
-[**getStream**](ImagePDFApi.md#getStream) | **GET** /image2pdf/{jobid}/stream | Get the current result stream
-[**submitJob**](ImagePDFApi.md#submitJob) | **PUT** /image2pdf/{jobid} | Submit PDF job for processing
-[**uploadImage**](ImagePDFApi.md#uploadImage) | **POST** /image2pdf | Upload (first) image
+[**deleteJob**](ImagePDFApi.md#deleteJob) | **DELETE** /pdf/0.1.5/image2pdf/{jobid} | Delete a job manually
+[**getJob**](ImagePDFApi.md#getJob) | **GET** /pdf/0.1.5/image2pdf/{jobid} | Job definition and state
+[**getStream**](ImagePDFApi.md#getStream) | **GET** /pdf/0.1.5/image2pdf/{jobid}/stream | Get the current result stream
+[**submitJob**](ImagePDFApi.md#submitJob) | **PUT** /pdf/0.1.5/image2pdf/{jobid} | Submit PDF job for processing
+[**uploadImage**](ImagePDFApi.md#uploadImage) | **POST** /pdf/0.1.5/image2pdf | Upload (first) image
 
 
 <a name="deleteJob"></a>
@@ -119,7 +119,7 @@ Name | Type | Description  | Notes
 
 <a name="getStream"></a>
 # **getStream**
-> String getStream(jobid)
+> byte[] getStream(jobid)
 
 Get the current result stream
 
@@ -143,7 +143,7 @@ oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
 ImagePDFApi apiInstance = new ImagePDFApi();
 String jobid = "jobid_example"; // String | jobid
 try {
-    String result = apiInstance.getStream(jobid);
+    byte[] result = apiInstance.getStream(jobid);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling ImagePDFApi#getStream");
@@ -159,7 +159,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**String**
+**byte[]**
 
 ### Authorization
 
@@ -249,7 +249,7 @@ OAuth oauth2schema = (OAuth) defaultClient.getAuthentication("oauth2schema");
 oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
 
 ImagePDFApi apiInstance = new ImagePDFApi();
-File stream = new File("/path/to/file.txt"); // File | The binary image (file/inputstream) to convert to PDF
+File stream = new File("/path/to/file.txt"); // File | The binary image or PDF (file/inputstream) to convert to PDF
 try {
     PDFJobResponse result = apiInstance.uploadImage(stream);
     System.out.println(result);
@@ -263,7 +263,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **stream** | **File**| The binary image (file/inputstream) to convert to PDF |
+ **stream** | **File**| The binary image or PDF (file/inputstream) to convert to PDF |
 
 ### Return type
 

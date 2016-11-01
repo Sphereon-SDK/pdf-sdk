@@ -19,6 +19,7 @@ Name | Value
 ---- | -----
 BASIC | &quot;BASIC&quot;
 ADVANCED | &quot;ADVANCED&quot;
+PREMIUM | &quot;PREMIUM&quot;
 
 
 <a name="VersionEnum"></a>

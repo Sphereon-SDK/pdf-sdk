@@ -1,14 +1,14 @@
 # Sphereon.SDK.Pdf.Api.ImagePDFApi
 
-All URIs are relative to *https://localhost:18082/*
+All URIs are relative to *https://gw.api.cloud.sphereon.com/*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**DeleteJob**](ImagePDFApi.md#deletejob) | **DELETE** /image2pdf/{jobid} | Delete a job manually
-[**GetJob**](ImagePDFApi.md#getjob) | **GET** /image2pdf/{jobid} | Job definition and state
-[**GetStream**](ImagePDFApi.md#getstream) | **GET** /image2pdf/{jobid}/stream | Get the current result stream
-[**SubmitJob**](ImagePDFApi.md#submitjob) | **PUT** /image2pdf/{jobid} | Submit PDF job for processing
-[**UploadImage**](ImagePDFApi.md#uploadimage) | **POST** /image2pdf | Upload (first) image
+[**DeleteJob**](ImagePDFApi.md#deletejob) | **DELETE** /pdf/0.1.5/image2pdf/{jobid} | Delete a job manually
+[**GetJob**](ImagePDFApi.md#getjob) | **GET** /pdf/0.1.5/image2pdf/{jobid} | Job definition and state
+[**GetStream**](ImagePDFApi.md#getstream) | **GET** /pdf/0.1.5/image2pdf/{jobid}/stream | Get the current result stream
+[**SubmitJob**](ImagePDFApi.md#submitjob) | **PUT** /pdf/0.1.5/image2pdf/{jobid} | Submit PDF job for processing
+[**UploadImage**](ImagePDFApi.md#uploadimage) | **POST** /pdf/0.1.5/image2pdf | Upload (first) image
 
 
 <a name="deletejob"></a>
@@ -143,7 +143,7 @@ Name | Type | Description  | Notes
 
 <a name="getstream"></a>
 # **GetStream**
-> string GetStream (string jobid)
+> byte[] GetStream (string jobid)
 
 Get the current result stream
 
@@ -173,7 +173,7 @@ namespace Example
             try
             {
                 // Get the current result stream
-                string result = apiInstance.GetStream(jobid);
+                byte[] result = apiInstance.GetStream(jobid);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -193,7 +193,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**string**
+**byte[]**
 
 ### Authorization
 
@@ -300,7 +300,7 @@ namespace Example
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new ImagePDFApi();
-            var stream = new System.IO.Stream(); // System.IO.Stream | The binary image (file/inputstream) to convert to PDF
+            var stream = new System.IO.Stream(); // System.IO.Stream | The binary image or PDF (file/inputstream) to convert to PDF
 
             try
             {
@@ -321,7 +321,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **stream** | **System.IO.Stream**| The binary image (file/inputstream) to convert to PDF | 
+ **stream** | **System.IO.Stream**| The binary image or PDF (file/inputstream) to convert to PDF | 
 
 ### Return type
 

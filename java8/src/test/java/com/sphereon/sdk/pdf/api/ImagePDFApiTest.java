@@ -68,7 +68,7 @@ public class ImagePDFApiTest {
      */
     @Test
     public void _01UploadImageUsingPOSTTest() throws ApiException {
-        api.getApiClient().setBasePath("https://gw.api.cloud.sphereon.com/pdf/0.1.4");
+//        api.getApiClient().setBasePath("https://gw.api.cloud.sphereon.com/pdf/0.1.4");
         api.getApiClient().setAccessToken(ACCESS_TOKEN);
         File stream = new File(IMAGE_URL.getFile());
         PDFJobResponse response = api.uploadImage(stream);
@@ -128,10 +128,11 @@ public class ImagePDFApiTest {
             response = api.getJob(pdfJob.getJobId());
             Thread.sleep(200);
         } while (count < 100 && response.getStatus() == PDFJobResponse.StatusEnum.PROCESSING);
-        String pdfOutput = api.getStream(pdfJob.getJobId());
+        byte[] pdfOutput = api.getStream(pdfJob.getJobId());
         Assert.assertNotNull(pdfOutput);
-        Assert.assertTrue(pdfOutput.startsWith("%PDF-1"));
-        Assert.assertTrue(pdfOutput.contains("EOF"));
+        String result = new String(pdfOutput);
+        Assert.assertTrue(result.startsWith("%PDF-1"));
+        Assert.assertTrue(result.contains("EOF"));
         // We could write the output to file of course
     }
 

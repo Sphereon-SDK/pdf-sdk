@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**getJob**](ImagePDFApi.md#getJob) | **GET** /pdf/0.1.5/image2pdf/{jobid} | Job definition and state
 [**getStream**](ImagePDFApi.md#getStream) | **GET** /pdf/0.1.5/image2pdf/{jobid}/stream | Get the current result stream
 [**submitJob**](ImagePDFApi.md#submitJob) | **PUT** /pdf/0.1.5/image2pdf/{jobid} | Submit PDF job for processing
+[**uploadAdditionalImage**](ImagePDFApi.md#uploadAdditionalImage) | **POST** /pdf/0.1.5/image2pdf/{jobid} | Upload an additional image
 [**uploadImage**](ImagePDFApi.md#uploadImage) | **POST** /pdf/0.1.5/image2pdf | Upload (first) image
 
 
@@ -225,13 +226,13 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json;charset=UTF-8
  - **Accept**: application/json;charset=UTF-8
 
-<a name="uploadImage"></a>
-# **uploadImage**
-> PDFJobResponse uploadImage(stream)
+<a name="uploadAdditionalImage"></a>
+# **uploadAdditionalImage**
+> PDFJobResponse uploadAdditionalImage(jobid, stream)
 
-Upload (first) image
+Upload an additional image
 
-Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff
+Upload an additional image for conversion to PDF. Conversion will not be started yet.
 
 ### Example
 ```java
@@ -249,7 +250,62 @@ OAuth oauth2schema = (OAuth) defaultClient.getAuthentication("oauth2schema");
 oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
 
 ImagePDFApi apiInstance = new ImagePDFApi();
-File stream = new File("/path/to/file.txt"); // File | The binary image or PDF (file/inputstream) to convert to PDF
+String jobid = "jobid_example"; // String | jobid
+File stream = new File("/path/to/file.txt"); // File | The additional binary image or PDF (file/inputstream) to convert to PDF
+try {
+    PDFJobResponse result = apiInstance.uploadAdditionalImage(jobid, stream);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling ImagePDFApi#uploadAdditionalImage");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **jobid** | **String**| jobid |
+ **stream** | **File**| The additional binary image or PDF (file/inputstream) to convert to PDF |
+
+### Return type
+
+[**PDFJobResponse**](PDFJobResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: application/json;charset=UTF-8
+
+<a name="uploadImage"></a>
+# **uploadImage**
+> PDFJobResponse uploadImage(stream)
+
+Upload (first) image
+
+Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff in this step or submit additional images or PDFs in subsequent steps using the uploadAdditionalImage endpoint
+
+### Example
+```java
+// Import classes:
+//import com.sphereon.sdk.pdf.handler.ApiClient;
+//import com.sphereon.sdk.pdf.handler.ApiException;
+//import com.sphereon.sdk.pdf.handler.Configuration;
+//import com.sphereon.sdk.pdf.handler.auth.*;
+//import com.sphereon.sdk.pdf.api.ImagePDFApi;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure OAuth2 access token for authorization: oauth2schema
+OAuth oauth2schema = (OAuth) defaultClient.getAuthentication("oauth2schema");
+oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
+
+ImagePDFApi apiInstance = new ImagePDFApi();
+File stream = new File("/path/to/file.txt"); // File | The first binary image or PDF (file/inputstream) to convert to PDF
 try {
     PDFJobResponse result = apiInstance.uploadImage(stream);
     System.out.println(result);
@@ -263,7 +319,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **stream** | **File**| The binary image or PDF (file/inputstream) to convert to PDF |
+ **stream** | **File**| The first binary image or PDF (file/inputstream) to convert to PDF |
 
 ### Return type
 

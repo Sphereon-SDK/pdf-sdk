@@ -1,7 +1,7 @@
 /* 
  * Sphereon :: DOC :: PDF
  *
- * <b>The PDF conversion API 'image2pdf' converts images to (searcheable) PDF files.</b>    The flow is generally as follows:  1. First upload an image using the /image2pdf POST endpoint. You will get back a response that contains a job with its associated settings.  2. Start the job from a PUT request to the /image2pdf/{jobid} endpoint, with the Job and Settings JSON as request body. The conversion to PDF will now start  3. Check the job status from the /image2pdf/{jobid} GET endpoint until the status has changed to DONE or ERROR. Messaging using a websocket will be available as an alternative in a future version  4. Retrieve the PDF file using the /image2pdf/{jobid}/stream GET endpoint. This will return the PDF file only when the status is DONE. In other cases it will return the Job Response JSON (with http code 202 instead of 200)      <b>Interactive testing: </b>A web based test console is available in the <a href=\"https://store.sphereon.com\">Sphereon API Store</a>
+ * <b>The PDF conversion API 'image2pdf' converts images to (searcheable) PDF files.</b>    The flow is generally as follows:  1. First upload an image using the /image2pdf POST endpoint. You will get back a job response that contains a job with its associated settings.  2. Upload any additional images using the /image2pdf/{jobId} POST endpoint when you want to merge additional images or PDFs. You will get back the update job response that contains a job with its associated settings.  3. Start the job from a PUT request to the /image2pdf/{jobid} endpoint, with the Job and Settings JSON as request body. The conversion to PDF will now start  4. Check the job status from the /image2pdf/{jobid} GET endpoint until the status has changed to DONE or ERROR. Messaging using a websocket will be available as an alternative in a future version  5. Retrieve the PDF file using the /image2pdf/{jobid}/stream GET endpoint. This will return the PDF file only when the status is DONE. In other cases it will return the Job Response JSON (with http code 202 instead of 200)      <b>Interactive testing: </b>A web based test console is available in the <a href=\"https://store.sphereon.com\">Sphereon API Store</a>
  *
  * OpenAPI spec version: 0.1.5
  * Contact: dev@sphereon.com
@@ -123,13 +123,36 @@ namespace Sphereon.SDK.Pdf.Api
         /// <returns>ApiResponse of PDFJobResponse</returns>
         ApiResponse<PDFJobResponse> SubmitJobWithHttpInfo (string jobid, PDFJob job);
         /// <summary>
+        /// Upload an additional image
+        /// </summary>
+        /// <remarks>
+        /// Upload an additional image for conversion to PDF. Conversion will not be started yet.
+        /// </remarks>
+        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="jobid">jobid</param>
+        /// <param name="stream">The additional binary image or PDF (file/inputstream) to convert to PDF</param>
+        /// <returns>PDFJobResponse</returns>
+        PDFJobResponse UploadAdditionalImage (string jobid, System.IO.Stream stream);
+
+        /// <summary>
+        /// Upload an additional image
+        /// </summary>
+        /// <remarks>
+        /// Upload an additional image for conversion to PDF. Conversion will not be started yet.
+        /// </remarks>
+        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="jobid">jobid</param>
+        /// <param name="stream">The additional binary image or PDF (file/inputstream) to convert to PDF</param>
+        /// <returns>ApiResponse of PDFJobResponse</returns>
+        ApiResponse<PDFJobResponse> UploadAdditionalImageWithHttpInfo (string jobid, System.IO.Stream stream);
+        /// <summary>
         /// Upload (first) image
         /// </summary>
         /// <remarks>
-        /// Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff
+        /// Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff in this step or submit additional images or PDFs in subsequent steps using the uploadAdditionalImage endpoint
         /// </remarks>
         /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="stream">The binary image or PDF (file/inputstream) to convert to PDF</param>
+        /// <param name="stream">The first binary image or PDF (file/inputstream) to convert to PDF</param>
         /// <returns>PDFJobResponse</returns>
         PDFJobResponse UploadImage (System.IO.Stream stream);
 
@@ -137,10 +160,10 @@ namespace Sphereon.SDK.Pdf.Api
         /// Upload (first) image
         /// </summary>
         /// <remarks>
-        /// Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff
+        /// Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff in this step or submit additional images or PDFs in subsequent steps using the uploadAdditionalImage endpoint
         /// </remarks>
         /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="stream">The binary image or PDF (file/inputstream) to convert to PDF</param>
+        /// <param name="stream">The first binary image or PDF (file/inputstream) to convert to PDF</param>
         /// <returns>ApiResponse of PDFJobResponse</returns>
         ApiResponse<PDFJobResponse> UploadImageWithHttpInfo (System.IO.Stream stream);
         #endregion Synchronous Operations
@@ -232,13 +255,36 @@ namespace Sphereon.SDK.Pdf.Api
         /// <returns>Task of ApiResponse (PDFJobResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<PDFJobResponse>> SubmitJobAsyncWithHttpInfo (string jobid, PDFJob job);
         /// <summary>
+        /// Upload an additional image
+        /// </summary>
+        /// <remarks>
+        /// Upload an additional image for conversion to PDF. Conversion will not be started yet.
+        /// </remarks>
+        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="jobid">jobid</param>
+        /// <param name="stream">The additional binary image or PDF (file/inputstream) to convert to PDF</param>
+        /// <returns>Task of PDFJobResponse</returns>
+        System.Threading.Tasks.Task<PDFJobResponse> UploadAdditionalImageAsync (string jobid, System.IO.Stream stream);
+
+        /// <summary>
+        /// Upload an additional image
+        /// </summary>
+        /// <remarks>
+        /// Upload an additional image for conversion to PDF. Conversion will not be started yet.
+        /// </remarks>
+        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="jobid">jobid</param>
+        /// <param name="stream">The additional binary image or PDF (file/inputstream) to convert to PDF</param>
+        /// <returns>Task of ApiResponse (PDFJobResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<PDFJobResponse>> UploadAdditionalImageAsyncWithHttpInfo (string jobid, System.IO.Stream stream);
+        /// <summary>
         /// Upload (first) image
         /// </summary>
         /// <remarks>
-        /// Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff
+        /// Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff in this step or submit additional images or PDFs in subsequent steps using the uploadAdditionalImage endpoint
         /// </remarks>
         /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="stream">The binary image or PDF (file/inputstream) to convert to PDF</param>
+        /// <param name="stream">The first binary image or PDF (file/inputstream) to convert to PDF</param>
         /// <returns>Task of PDFJobResponse</returns>
         System.Threading.Tasks.Task<PDFJobResponse> UploadImageAsync (System.IO.Stream stream);
 
@@ -246,10 +292,10 @@ namespace Sphereon.SDK.Pdf.Api
         /// Upload (first) image
         /// </summary>
         /// <remarks>
-        /// Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff
+        /// Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff in this step or submit additional images or PDFs in subsequent steps using the uploadAdditionalImage endpoint
         /// </remarks>
         /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="stream">The binary image or PDF (file/inputstream) to convert to PDF</param>
+        /// <param name="stream">The first binary image or PDF (file/inputstream) to convert to PDF</param>
         /// <returns>Task of ApiResponse (PDFJobResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<PDFJobResponse>> UploadImageAsyncWithHttpInfo (System.IO.Stream stream);
         #endregion Asynchronous Operations
@@ -1011,10 +1057,177 @@ namespace Sphereon.SDK.Pdf.Api
         }
 
         /// <summary>
-        /// Upload (first) image Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff
+        /// Upload an additional image Upload an additional image for conversion to PDF. Conversion will not be started yet.
         /// </summary>
         /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="stream">The binary image or PDF (file/inputstream) to convert to PDF</param>
+        /// <param name="jobid">jobid</param>
+        /// <param name="stream">The additional binary image or PDF (file/inputstream) to convert to PDF</param>
+        /// <returns>PDFJobResponse</returns>
+        public PDFJobResponse UploadAdditionalImage (string jobid, System.IO.Stream stream)
+        {
+             ApiResponse<PDFJobResponse> localVarResponse = UploadAdditionalImageWithHttpInfo(jobid, stream);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Upload an additional image Upload an additional image for conversion to PDF. Conversion will not be started yet.
+        /// </summary>
+        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="jobid">jobid</param>
+        /// <param name="stream">The additional binary image or PDF (file/inputstream) to convert to PDF</param>
+        /// <returns>ApiResponse of PDFJobResponse</returns>
+        public ApiResponse< PDFJobResponse > UploadAdditionalImageWithHttpInfo (string jobid, System.IO.Stream stream)
+        {
+            // verify the required parameter 'jobid' is set
+            if (jobid == null)
+                throw new ApiException(400, "Missing required parameter 'jobid' when calling ImagePDFApi->UploadAdditionalImage");
+            // verify the required parameter 'stream' is set
+            if (stream == null)
+                throw new ApiException(400, "Missing required parameter 'stream' when calling ImagePDFApi->UploadAdditionalImage");
+
+            var localVarPath = "/pdf/0.1.5/image2pdf/{jobid}";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "multipart/form-data"
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json;charset=UTF-8"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (jobid != null) localVarPathParams.Add("jobid", Configuration.ApiClient.ParameterToString(jobid)); // path parameter
+            if (stream != null) localVarFileParams.Add("stream", Configuration.ApiClient.ParameterToFile("stream", stream));
+
+            // authentication (oauth2schema) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("UploadAdditionalImage", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<PDFJobResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (PDFJobResponse) Configuration.ApiClient.Deserialize(localVarResponse, typeof(PDFJobResponse)));
+            
+        }
+
+        /// <summary>
+        /// Upload an additional image Upload an additional image for conversion to PDF. Conversion will not be started yet.
+        /// </summary>
+        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="jobid">jobid</param>
+        /// <param name="stream">The additional binary image or PDF (file/inputstream) to convert to PDF</param>
+        /// <returns>Task of PDFJobResponse</returns>
+        public async System.Threading.Tasks.Task<PDFJobResponse> UploadAdditionalImageAsync (string jobid, System.IO.Stream stream)
+        {
+             ApiResponse<PDFJobResponse> localVarResponse = await UploadAdditionalImageAsyncWithHttpInfo(jobid, stream);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        /// Upload an additional image Upload an additional image for conversion to PDF. Conversion will not be started yet.
+        /// </summary>
+        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="jobid">jobid</param>
+        /// <param name="stream">The additional binary image or PDF (file/inputstream) to convert to PDF</param>
+        /// <returns>Task of ApiResponse (PDFJobResponse)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<PDFJobResponse>> UploadAdditionalImageAsyncWithHttpInfo (string jobid, System.IO.Stream stream)
+        {
+            // verify the required parameter 'jobid' is set
+            if (jobid == null)
+                throw new ApiException(400, "Missing required parameter 'jobid' when calling ImagePDFApi->UploadAdditionalImage");
+            // verify the required parameter 'stream' is set
+            if (stream == null)
+                throw new ApiException(400, "Missing required parameter 'stream' when calling ImagePDFApi->UploadAdditionalImage");
+
+            var localVarPath = "/pdf/0.1.5/image2pdf/{jobid}";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "multipart/form-data"
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json;charset=UTF-8"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (jobid != null) localVarPathParams.Add("jobid", Configuration.ApiClient.ParameterToString(jobid)); // path parameter
+            if (stream != null) localVarFileParams.Add("stream", Configuration.ApiClient.ParameterToFile("stream", stream));
+
+            // authentication (oauth2schema) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("UploadAdditionalImage", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<PDFJobResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (PDFJobResponse) Configuration.ApiClient.Deserialize(localVarResponse, typeof(PDFJobResponse)));
+            
+        }
+
+        /// <summary>
+        /// Upload (first) image Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff in this step or submit additional images or PDFs in subsequent steps using the uploadAdditionalImage endpoint
+        /// </summary>
+        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="stream">The first binary image or PDF (file/inputstream) to convert to PDF</param>
         /// <returns>PDFJobResponse</returns>
         public PDFJobResponse UploadImage (System.IO.Stream stream)
         {
@@ -1023,10 +1236,10 @@ namespace Sphereon.SDK.Pdf.Api
         }
 
         /// <summary>
-        /// Upload (first) image Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff
+        /// Upload (first) image Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff in this step or submit additional images or PDFs in subsequent steps using the uploadAdditionalImage endpoint
         /// </summary>
         /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="stream">The binary image or PDF (file/inputstream) to convert to PDF</param>
+        /// <param name="stream">The first binary image or PDF (file/inputstream) to convert to PDF</param>
         /// <returns>ApiResponse of PDFJobResponse</returns>
         public ApiResponse< PDFJobResponse > UploadImageWithHttpInfo (System.IO.Stream stream)
         {
@@ -1088,10 +1301,10 @@ namespace Sphereon.SDK.Pdf.Api
         }
 
         /// <summary>
-        /// Upload (first) image Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff
+        /// Upload (first) image Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff in this step or submit additional images or PDFs in subsequent steps using the uploadAdditionalImage endpoint
         /// </summary>
         /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="stream">The binary image or PDF (file/inputstream) to convert to PDF</param>
+        /// <param name="stream">The first binary image or PDF (file/inputstream) to convert to PDF</param>
         /// <returns>Task of PDFJobResponse</returns>
         public async System.Threading.Tasks.Task<PDFJobResponse> UploadImageAsync (System.IO.Stream stream)
         {
@@ -1101,10 +1314,10 @@ namespace Sphereon.SDK.Pdf.Api
         }
 
         /// <summary>
-        /// Upload (first) image Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff
+        /// Upload (first) image Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff in this step or submit additional images or PDFs in subsequent steps using the uploadAdditionalImage endpoint
         /// </summary>
         /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="stream">The binary image or PDF (file/inputstream) to convert to PDF</param>
+        /// <param name="stream">The first binary image or PDF (file/inputstream) to convert to PDF</param>
         /// <returns>Task of ApiResponse (PDFJobResponse)</returns>
         public async System.Threading.Tasks.Task<ApiResponse<PDFJobResponse>> UploadImageAsyncWithHttpInfo (System.IO.Stream stream)
         {

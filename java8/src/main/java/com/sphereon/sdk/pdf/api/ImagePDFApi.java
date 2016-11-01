@@ -1,6 +1,6 @@
 /**
  * Sphereon :: DOC :: PDF
- * <b>The PDF conversion API 'image2pdf' converts images to (searcheable) PDF files.</b>    The flow is generally as follows:  1. First upload an image using the /image2pdf POST endpoint. You will get back a response that contains a job with its associated settings.  2. Start the job from a PUT request to the /image2pdf/{jobid} endpoint, with the Job and Settings JSON as request body. The conversion to PDF will now start  3. Check the job status from the /image2pdf/{jobid} GET endpoint until the status has changed to DONE or ERROR. Messaging using a websocket will be available as an alternative in a future version  4. Retrieve the PDF file using the /image2pdf/{jobid}/stream GET endpoint. This will return the PDF file only when the status is DONE. In other cases it will return the Job Response JSON (with http code 202 instead of 200)      <b>Interactive testing: </b>A web based test console is available in the <a href=\"https://store.sphereon.com\">Sphereon API Store</a>
+ * <b>The PDF conversion API 'image2pdf' converts images to (searcheable) PDF files.</b>    The flow is generally as follows:  1. First upload an image using the /image2pdf POST endpoint. You will get back a job response that contains a job with its associated settings.  2. Upload any additional images using the /image2pdf/{jobId} POST endpoint when you want to merge additional images or PDFs. You will get back the update job response that contains a job with its associated settings.  3. Start the job from a PUT request to the /image2pdf/{jobid} endpoint, with the Job and Settings JSON as request body. The conversion to PDF will now start  4. Check the job status from the /image2pdf/{jobid} GET endpoint until the status has changed to DONE or ERROR. Messaging using a websocket will be available as an alternative in a future version  5. Retrieve the PDF file using the /image2pdf/{jobid}/stream GET endpoint. This will return the PDF file only when the status is DONE. In other cases it will return the Job Response JSON (with http code 202 instead of 200)      <b>Interactive testing: </b>A web based test console is available in the <a href=\"https://store.sphereon.com\">Sphereon API Store</a>
  *
  * OpenAPI spec version: 0.1.5
  * Contact: dev@sphereon.com
@@ -504,6 +504,123 @@ public class ImagePDFApi {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
+    /* Build call for uploadAdditionalImage */
+    private com.squareup.okhttp.Call uploadAdditionalImageCall(String jobid, File stream, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = null;
+        
+        // verify the required parameter 'jobid' is set
+        if (jobid == null) {
+            throw new ApiException("Missing the required parameter 'jobid' when calling uploadAdditionalImage(Async)");
+        }
+        
+        // verify the required parameter 'stream' is set
+        if (stream == null) {
+            throw new ApiException("Missing the required parameter 'stream' when calling uploadAdditionalImage(Async)");
+        }
+        
+
+        // create path and map variables
+        String localVarPath = "/pdf/0.1.5/image2pdf/{jobid}".replaceAll("\\{format\\}","json")
+        .replaceAll("\\{" + "jobid" + "\\}", apiClient.escapeString(jobid.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+        if (stream != null)
+        localVarFormParams.put("stream", stream);
+
+        final String[] localVarAccepts = {
+            "application/json;charset=UTF-8"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "multipart/form-data"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "oauth2schema" };
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    /**
+     * Upload an additional image
+     * Upload an additional image for conversion to PDF. Conversion will not be started yet.
+     * @param jobid jobid (required)
+     * @param stream The additional binary image or PDF (file/inputstream) to convert to PDF (required)
+     * @return PDFJobResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public PDFJobResponse uploadAdditionalImage(String jobid, File stream) throws ApiException {
+        ApiResponse<PDFJobResponse> resp = uploadAdditionalImageWithHttpInfo(jobid, stream);
+        return resp.getData();
+    }
+
+    /**
+     * Upload an additional image
+     * Upload an additional image for conversion to PDF. Conversion will not be started yet.
+     * @param jobid jobid (required)
+     * @param stream The additional binary image or PDF (file/inputstream) to convert to PDF (required)
+     * @return ApiResponse&lt;PDFJobResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<PDFJobResponse> uploadAdditionalImageWithHttpInfo(String jobid, File stream) throws ApiException {
+        com.squareup.okhttp.Call call = uploadAdditionalImageCall(jobid, stream, null, null);
+        Type localVarReturnType = new TypeToken<PDFJobResponse>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     * Upload an additional image (asynchronously)
+     * Upload an additional image for conversion to PDF. Conversion will not be started yet.
+     * @param jobid jobid (required)
+     * @param stream The additional binary image or PDF (file/inputstream) to convert to PDF (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call uploadAdditionalImageAsync(String jobid, File stream, final ApiCallback<PDFJobResponse> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = uploadAdditionalImageCall(jobid, stream, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<PDFJobResponse>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
     /* Build call for uploadImage */
     private com.squareup.okhttp.Call uploadImageCall(File stream, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
@@ -555,8 +672,8 @@ public class ImagePDFApi {
 
     /**
      * Upload (first) image
-     * Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff
-     * @param stream The binary image or PDF (file/inputstream) to convert to PDF (required)
+     * Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff in this step or submit additional images or PDFs in subsequent steps using the uploadAdditionalImage endpoint
+     * @param stream The first binary image or PDF (file/inputstream) to convert to PDF (required)
      * @return PDFJobResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
@@ -567,8 +684,8 @@ public class ImagePDFApi {
 
     /**
      * Upload (first) image
-     * Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff
-     * @param stream The binary image or PDF (file/inputstream) to convert to PDF (required)
+     * Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff in this step or submit additional images or PDFs in subsequent steps using the uploadAdditionalImage endpoint
+     * @param stream The first binary image or PDF (file/inputstream) to convert to PDF (required)
      * @return ApiResponse&lt;PDFJobResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
@@ -580,8 +697,8 @@ public class ImagePDFApi {
 
     /**
      * Upload (first) image (asynchronously)
-     * Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff
-     * @param stream The binary image or PDF (file/inputstream) to convert to PDF (required)
+     * Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff in this step or submit additional images or PDFs in subsequent steps using the uploadAdditionalImage endpoint
+     * @param stream The first binary image or PDF (file/inputstream) to convert to PDF (required)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object

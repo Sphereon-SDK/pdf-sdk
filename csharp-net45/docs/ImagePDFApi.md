@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**GetJob**](ImagePDFApi.md#getjob) | **GET** /pdf/0.1.5/image2pdf/{jobid} | Job definition and state
 [**GetStream**](ImagePDFApi.md#getstream) | **GET** /pdf/0.1.5/image2pdf/{jobid}/stream | Get the current result stream
 [**SubmitJob**](ImagePDFApi.md#submitjob) | **PUT** /pdf/0.1.5/image2pdf/{jobid} | Submit PDF job for processing
+[**UploadAdditionalImage**](ImagePDFApi.md#uploadadditionalimage) | **POST** /pdf/0.1.5/image2pdf/{jobid} | Upload an additional image
 [**UploadImage**](ImagePDFApi.md#uploadimage) | **POST** /pdf/0.1.5/image2pdf | Upload (first) image
 
 
@@ -273,13 +274,80 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a name="uploadadditionalimage"></a>
+# **UploadAdditionalImage**
+> PDFJobResponse UploadAdditionalImage (string jobid, System.IO.Stream stream)
+
+Upload an additional image
+
+Upload an additional image for conversion to PDF. Conversion will not be started yet.
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using Sphereon.SDK.Pdf.Api;
+using Sphereon.SDK.Pdf.Client;
+using Sphereon.SDK.Pdf.Model;
+
+namespace Example
+{
+    public class UploadAdditionalImageExample
+    {
+        public void main()
+        {
+            
+            // Configure OAuth2 access token for authorization: oauth2schema
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
+            var apiInstance = new ImagePDFApi();
+            var jobid = jobid_example;  // string | jobid
+            var stream = new System.IO.Stream(); // System.IO.Stream | The additional binary image or PDF (file/inputstream) to convert to PDF
+
+            try
+            {
+                // Upload an additional image
+                PDFJobResponse result = apiInstance.UploadAdditionalImage(jobid, stream);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling ImagePDFApi.UploadAdditionalImage: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **jobid** | **string**| jobid | 
+ **stream** | **System.IO.Stream**| The additional binary image or PDF (file/inputstream) to convert to PDF | 
+
+### Return type
+
+[**PDFJobResponse**](PDFJobResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: application/json;charset=UTF-8
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 <a name="uploadimage"></a>
 # **UploadImage**
 > PDFJobResponse UploadImage (System.IO.Stream stream)
 
 Upload (first) image
 
-Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff
+Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff in this step or submit additional images or PDFs in subsequent steps using the uploadAdditionalImage endpoint
 
 ### Example
 ```csharp
@@ -300,7 +368,7 @@ namespace Example
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new ImagePDFApi();
-            var stream = new System.IO.Stream(); // System.IO.Stream | The binary image or PDF (file/inputstream) to convert to PDF
+            var stream = new System.IO.Stream(); // System.IO.Stream | The first binary image or PDF (file/inputstream) to convert to PDF
 
             try
             {
@@ -321,7 +389,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **stream** | **System.IO.Stream**| The binary image or PDF (file/inputstream) to convert to PDF | 
+ **stream** | **System.IO.Stream**| The first binary image or PDF (file/inputstream) to convert to PDF | 
 
 ### Return type
 

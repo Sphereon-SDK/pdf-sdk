@@ -53,7 +53,7 @@ public class ImagePDFApiTest {
 
     private final ImagePDFApi api = new ImagePDFApi();
     private static PDFJob pdfJob;
-    private static final String IMAGE_NAME = /*"image.png";*/ "test.tif";
+    private static final String IMAGE_NAME = "image.png";// "test.tif";
     private static final URL IMAGE_URL = ImagePDFApiTest.class.getResource("/" + IMAGE_NAME);
     private static final String ACCESS_TOKEN = "1b1fb0ea-4e34-36b5-bc87-945daa2b5240";
 
@@ -67,7 +67,6 @@ public class ImagePDFApiTest {
      */
     @Test
     public void _01UploadImageUsingPOSTTest() throws ApiException {
-//        api.getApiClient().setBasePath("https://gw.api.cloud.sphereon.com/pdf/0.1.4");
         api.getApiClient().setAccessToken(ACCESS_TOKEN);
         File stream = new File(IMAGE_URL.getFile());
         PDFJobResponse response = api.uploadImage(stream);
@@ -89,7 +88,7 @@ public class ImagePDFApiTest {
     public void _02submitJob() throws ApiException {
         // Change the default deletion after first retrieval to manual deletion for the manual deletion test
         pdfJob.getSettings().getLifecycle().setType(Lifecycle.TypeEnum.TIME);
-        pdfJob.getSettings().engine(Image2PDFSettings.EngineEnum.PREMIUM);
+        pdfJob.getSettings().engine(Image2PDFSettings.EngineEnum.ADVANCED);
         pdfJob.getSettings().getCompression().setType(Compression.TypeEnum.ADVANCED);
         PDFJobResponse response = api.submitJob(pdfJob.getJobId(), pdfJob);
         Assert.assertNotNull(response);

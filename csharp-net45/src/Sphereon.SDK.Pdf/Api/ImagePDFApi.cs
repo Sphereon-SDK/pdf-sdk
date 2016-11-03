@@ -79,6 +79,27 @@ namespace Sphereon.SDK.Pdf.Api
         /// <returns>ApiResponse of PDFJobResponse</returns>
         ApiResponse<PDFJobResponse> GetJobWithHttpInfo (string jobid);
         /// <summary>
+        /// Get all jobs
+        /// </summary>
+        /// <remarks>
+        /// Get all PDF job definitions and their current state.
+        /// </remarks>
+        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="status">A list of status to filter on. (optional)</param>
+        /// <returns>PDFJobResponse</returns>
+        PDFJobResponse GetJobs (List<string> status = null);
+
+        /// <summary>
+        /// Get all jobs
+        /// </summary>
+        /// <remarks>
+        /// Get all PDF job definitions and their current state.
+        /// </remarks>
+        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="status">A list of status to filter on. (optional)</param>
+        /// <returns>ApiResponse of PDFJobResponse</returns>
+        ApiResponse<PDFJobResponse> GetJobsWithHttpInfo (List<string> status = null);
+        /// <summary>
         /// Get the current result stream
         /// </summary>
         /// <remarks>
@@ -210,6 +231,27 @@ namespace Sphereon.SDK.Pdf.Api
         /// <param name="jobid">jobid</param>
         /// <returns>Task of ApiResponse (PDFJobResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<PDFJobResponse>> GetJobAsyncWithHttpInfo (string jobid);
+        /// <summary>
+        /// Get all jobs
+        /// </summary>
+        /// <remarks>
+        /// Get all PDF job definitions and their current state.
+        /// </remarks>
+        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="status">A list of status to filter on. (optional)</param>
+        /// <returns>Task of PDFJobResponse</returns>
+        System.Threading.Tasks.Task<PDFJobResponse> GetJobsAsync (List<string> status = null);
+
+        /// <summary>
+        /// Get all jobs
+        /// </summary>
+        /// <remarks>
+        /// Get all PDF job definitions and their current state.
+        /// </remarks>
+        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="status">A list of status to filter on. (optional)</param>
+        /// <returns>Task of ApiResponse (PDFJobResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<PDFJobResponse>> GetJobsAsyncWithHttpInfo (List<string> status = null);
         /// <summary>
         /// Get the current result stream
         /// </summary>
@@ -711,6 +753,155 @@ namespace Sphereon.SDK.Pdf.Api
             if (ExceptionFactory != null)
             {
                 Exception exception = ExceptionFactory("GetJob", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<PDFJobResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (PDFJobResponse) Configuration.ApiClient.Deserialize(localVarResponse, typeof(PDFJobResponse)));
+            
+        }
+
+        /// <summary>
+        /// Get all jobs Get all PDF job definitions and their current state.
+        /// </summary>
+        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="status">A list of status to filter on. (optional)</param>
+        /// <returns>PDFJobResponse</returns>
+        public PDFJobResponse GetJobs (List<string> status = null)
+        {
+             ApiResponse<PDFJobResponse> localVarResponse = GetJobsWithHttpInfo(status);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Get all jobs Get all PDF job definitions and their current state.
+        /// </summary>
+        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="status">A list of status to filter on. (optional)</param>
+        /// <returns>ApiResponse of PDFJobResponse</returns>
+        public ApiResponse< PDFJobResponse > GetJobsWithHttpInfo (List<string> status = null)
+        {
+
+            var localVarPath = "/pdf/0.1.5/image2pdf{?status}";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json"
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json;charset=UTF-8"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (status != null) localVarQueryParams.Add("status", Configuration.ApiClient.ParameterToString(status)); // query parameter
+
+            // authentication (oauth2schema) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetJobs", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<PDFJobResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (PDFJobResponse) Configuration.ApiClient.Deserialize(localVarResponse, typeof(PDFJobResponse)));
+            
+        }
+
+        /// <summary>
+        /// Get all jobs Get all PDF job definitions and their current state.
+        /// </summary>
+        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="status">A list of status to filter on. (optional)</param>
+        /// <returns>Task of PDFJobResponse</returns>
+        public async System.Threading.Tasks.Task<PDFJobResponse> GetJobsAsync (List<string> status = null)
+        {
+             ApiResponse<PDFJobResponse> localVarResponse = await GetJobsAsyncWithHttpInfo(status);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        /// Get all jobs Get all PDF job definitions and their current state.
+        /// </summary>
+        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="status">A list of status to filter on. (optional)</param>
+        /// <returns>Task of ApiResponse (PDFJobResponse)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<PDFJobResponse>> GetJobsAsyncWithHttpInfo (List<string> status = null)
+        {
+
+            var localVarPath = "/pdf/0.1.5/image2pdf{?status}";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json"
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json;charset=UTF-8"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (status != null) localVarQueryParams.Add("status", Configuration.ApiClient.ParameterToString(status)); // query parameter
+
+            // authentication (oauth2schema) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetJobs", localVarResponse);
                 if (exception != null) throw exception;
             }
 

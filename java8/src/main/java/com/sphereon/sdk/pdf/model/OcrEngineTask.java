@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * OcrEngineTask
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-11-01T18:16:14.907+01:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-11-03T12:07:24.493+01:00")
 public class OcrEngineTask   {
   @SerializedName("documentId")
   private String documentId = null;

@@ -4,6 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**links** | [**Map&lt;String, Link&gt;**](Link.md) |  |  [optional]
 **compression** | [**Compression**](Compression.md) |  |  [optional]
 **engine** | [**EngineEnum**](#EngineEnum) |  |  [optional]
 **lifecycle** | [**Lifecycle**](Lifecycle.md) |  |  [optional]

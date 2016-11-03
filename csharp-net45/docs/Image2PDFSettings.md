@@ -3,6 +3,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**Links** | [**Dictionary&lt;string, Link&gt;**](Link.md) |  | [optional] 
 **Compression** | [**Compression**](Compression.md) |  | [optional] 
 **Engine** | **string** |  | [optional] 
 **Lifecycle** | [**Lifecycle**](Lifecycle.md) |  | [optional] 

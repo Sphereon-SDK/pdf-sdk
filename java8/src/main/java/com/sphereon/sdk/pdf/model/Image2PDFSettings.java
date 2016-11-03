@@ -29,16 +29,23 @@ import java.util.Objects;
 import com.google.gson.annotations.SerializedName;
 import com.sphereon.sdk.pdf.model.Compression;
 import com.sphereon.sdk.pdf.model.Lifecycle;
+import com.sphereon.sdk.pdf.model.Link;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
  * Image to PDF settings
  */
 @ApiModel(description = "Image to PDF settings")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-11-01T18:16:14.907+01:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-11-03T12:07:24.493+01:00")
 public class Image2PDFSettings   {
+  @SerializedName("_links")
+  private Map<String, Link> links = new HashMap<String, Link>();
+
   @SerializedName("compression")
   private Compression compression = null;
 
@@ -115,6 +122,29 @@ public class Image2PDFSettings   {
 
   @SerializedName("version")
   private VersionEnum version = null;
+
+  public Image2PDFSettings links(Map<String, Link> links) {
+    this.links = links;
+    return this;
+  }
+
+  public Image2PDFSettings putLinksItem(String key, Link linksItem) {
+    this.links.put(key, linksItem);
+    return this;
+  }
+
+   /**
+   * Get links
+   * @return links
+  **/
+  @ApiModelProperty(example = "null", value = "")
+  public Map<String, Link> getLinks() {
+    return links;
+  }
+
+  public void setLinks(Map<String, Link> links) {
+    this.links = links;
+  }
 
   public Image2PDFSettings compression(Compression compression) {
     this.compression = compression;
@@ -254,7 +284,8 @@ public class Image2PDFSettings   {
       return false;
     }
     Image2PDFSettings image2PDFSettings = (Image2PDFSettings) o;
-    return Objects.equals(this.compression, image2PDFSettings.compression) &&
+    return Objects.equals(this.links, image2PDFSettings.links) &&
+        Objects.equals(this.compression, image2PDFSettings.compression) &&
         Objects.equals(this.engine, image2PDFSettings.engine) &&
         Objects.equals(this.lifecycle, image2PDFSettings.lifecycle) &&
         Objects.equals(this.ocr, image2PDFSettings.ocr) &&
@@ -265,7 +296,7 @@ public class Image2PDFSettings   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(compression, engine, lifecycle, ocr, qualityFactor, resultFileName, version);
+    return Objects.hash(links, compression, engine, lifecycle, ocr, qualityFactor, resultFileName, version);
   }
 
   @Override
@@ -273,6 +304,7 @@ public class Image2PDFSettings   {
     StringBuilder sb = new StringBuilder();
     sb.append("class Image2PDFSettings {\n");
     
+    sb.append("    links: ").append(toIndentedString(links)).append("\n");
     sb.append("    compression: ").append(toIndentedString(compression)).append("\n");
     sb.append("    engine: ").append(toIndentedString(engine)).append("\n");
     sb.append("    lifecycle: ").append(toIndentedString(lifecycle)).append("\n");

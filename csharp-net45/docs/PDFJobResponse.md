@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **Images** | **List&lt;string&gt;** | The original images. Currently only a single image is supported. The image can be a multipage tiff however | 
 **Job** | [**PDFJob**](PDFJob.md) |  | [optional] 
 **JobId** | **string** |  | [optional] 
+**Owner** | **string** |  | [optional] 
 **QueueTime** | **DateTime?** | The conversion queue date/time of this job in ISO 8601 format | [optional] 
 **Status** | **string** | The status of the job | 
 **StatusMessage** | **string** | A status message, which can be informational, warning or error. AA message here does not indicate an error perse | [optional] 

@@ -116,6 +116,7 @@ namespace Sphereon.SDK.Pdf.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="Image2PDFSettings" /> class.
         /// </summary>
+        /// <param name="Links">Links.</param>
         /// <param name="Compression">Compression.</param>
         /// <param name="Engine">Engine.</param>
         /// <param name="Lifecycle">Lifecycle.</param>
@@ -123,8 +124,9 @@ namespace Sphereon.SDK.Pdf.Model
         /// <param name="QualityFactor">Set the quality factor for the resulting PDF. Range from 0 (lowest) to 10 (highest).</param>
         /// <param name="ResultFileName">ResultFileName.</param>
         /// <param name="Version">Version.</param>
-        public Image2PDFSettings(Compression Compression = null, EngineEnum? Engine = null, Lifecycle Lifecycle = null, bool? Ocr = null, int? QualityFactor = null, string ResultFileName = null, VersionEnum? Version = null)
+        public Image2PDFSettings(Dictionary<string, Link> Links = null, Compression Compression = null, EngineEnum? Engine = null, Lifecycle Lifecycle = null, bool? Ocr = null, int? QualityFactor = null, string ResultFileName = null, VersionEnum? Version = null)
         {
+            this.Links = Links;
             this.Compression = Compression;
             this.Engine = Engine;
             this.Lifecycle = Lifecycle;
@@ -134,6 +136,11 @@ namespace Sphereon.SDK.Pdf.Model
             this.Version = Version;
         }
         
+        /// <summary>
+        /// Gets or Sets Links
+        /// </summary>
+        [DataMember(Name="_links", EmitDefaultValue=false)]
+        public Dictionary<string, Link> Links { get; set; }
         /// <summary>
         /// Gets or Sets Compression
         /// </summary>
@@ -169,6 +176,7 @@ namespace Sphereon.SDK.Pdf.Model
         {
             var sb = new StringBuilder();
             sb.Append("class Image2PDFSettings {\n");
+            sb.Append("  Links: ").Append(Links).Append("\n");
             sb.Append("  Compression: ").Append(Compression).Append("\n");
             sb.Append("  Engine: ").Append(Engine).Append("\n");
             sb.Append("  Lifecycle: ").Append(Lifecycle).Append("\n");
@@ -212,6 +220,11 @@ namespace Sphereon.SDK.Pdf.Model
                 return false;
 
             return 
+                (
+                    this.Links == other.Links ||
+                    this.Links != null &&
+                    this.Links.SequenceEqual(other.Links)
+                ) && 
                 (
                     this.Compression == other.Compression ||
                     this.Compression != null &&
@@ -260,6 +273,8 @@ namespace Sphereon.SDK.Pdf.Model
             {
                 int hash = 41;
                 // Suitable nullity checks etc, of course :)
+                if (this.Links != null)
+                    hash = hash * 59 + this.Links.GetHashCode();
                 if (this.Compression != null)
                     hash = hash * 59 + this.Compression.GetHashCode();
                 if (this.Engine != null)

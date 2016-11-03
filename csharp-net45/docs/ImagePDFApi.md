@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**DeleteJob**](ImagePDFApi.md#deletejob) | **DELETE** /pdf/0.1.5/image2pdf/{jobid} | Delete a job manually
 [**GetJob**](ImagePDFApi.md#getjob) | **GET** /pdf/0.1.5/image2pdf/{jobid} | Job definition and state
+[**GetJobs**](ImagePDFApi.md#getjobs) | **GET** /pdf/0.1.5/image2pdf{?status} | Get all jobs
 [**GetStream**](ImagePDFApi.md#getstream) | **GET** /pdf/0.1.5/image2pdf/{jobid}/stream | Get the current result stream
 [**SubmitJob**](ImagePDFApi.md#submitjob) | **PUT** /pdf/0.1.5/image2pdf/{jobid} | Submit PDF job for processing
 [**UploadAdditionalImage**](ImagePDFApi.md#uploadadditionalimage) | **POST** /pdf/0.1.5/image2pdf/{jobid} | Upload an additional image
@@ -126,6 +127,71 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **jobid** | **string**| jobid | 
+
+### Return type
+
+[**PDFJobResponse**](PDFJobResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json;charset=UTF-8
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="getjobs"></a>
+# **GetJobs**
+> PDFJobResponse GetJobs (List<string> status = null)
+
+Get all jobs
+
+Get all PDF job definitions and their current state.
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using Sphereon.SDK.Pdf.Api;
+using Sphereon.SDK.Pdf.Client;
+using Sphereon.SDK.Pdf.Model;
+
+namespace Example
+{
+    public class GetJobsExample
+    {
+        public void main()
+        {
+            
+            // Configure OAuth2 access token for authorization: oauth2schema
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
+            var apiInstance = new ImagePDFApi();
+            var status = new List<string>(); // List<string> | A list of status to filter on. (optional) 
+
+            try
+            {
+                // Get all jobs
+                PDFJobResponse result = apiInstance.GetJobs(status);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling ImagePDFApi.GetJobs: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **status** | [**List<string>**](string.md)| A list of status to filter on. | [optional] 
 
 ### Return type
 

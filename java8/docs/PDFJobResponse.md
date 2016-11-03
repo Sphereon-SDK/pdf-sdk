@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **images** | **List&lt;String&gt;** | The original images. Currently only a single image is supported. The image can be a multipage tiff however | 
 **job** | [**PDFJob**](PDFJob.md) |  |  [optional]
 **jobId** | **String** |  |  [optional]
+**owner** | **String** |  |  [optional]
 **queueTime** | [**OffsetDateTime**](OffsetDateTime.md) | The conversion queue date/time of this job in ISO 8601 format |  [optional]
 **status** | [**StatusEnum**](#StatusEnum) | The status of the job | 
 **statusMessage** | **String** | A status message, which can be informational, warning or error. AA message here does not indicate an error perse |  [optional]

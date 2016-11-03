@@ -27,10 +27,7 @@ package com.sphereon.sdk.pdf.api;
 
 import com.sphereon.sdk.pdf.handler.ApiException;
 import com.sphereon.sdk.pdf.handler.auth.OAuth;
-import com.sphereon.sdk.pdf.model.Lifecycle;
-import com.sphereon.sdk.pdf.model.PDFJobResponse;
-import com.sphereon.sdk.pdf.model.VndErrors;
-import com.sphereon.sdk.pdf.model.PDFJob;
+import com.sphereon.sdk.pdf.model.*;
 
 import java.io.File;
 
@@ -39,8 +36,10 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -90,6 +89,8 @@ public class ImagePDFApiTest {
     public void _02submitJob() throws ApiException {
         // Change the default deletion after first retrieval to manual deletion for the manual deletion test
         pdfJob.getSettings().getLifecycle().setType(Lifecycle.TypeEnum.TIME);
+        pdfJob.getSettings().engine(Image2PDFSettings.EngineEnum.PREMIUM);
+        pdfJob.getSettings().getCompression().setType(Compression.TypeEnum.ADVANCED);
         PDFJobResponse response = api.submitJob(pdfJob.getJobId(), pdfJob);
         Assert.assertNotNull(response);
         Assert.assertNotNull(response.getJob());
@@ -120,7 +121,7 @@ public class ImagePDFApiTest {
      * @throws ApiException if the Api call fails
      */
     @Test
-    public void _04getPDF() throws ApiException, InterruptedException {
+    public void _04getPDF() throws ApiException, InterruptedException, IOException {
         PDFJobResponse response = null;
         int count = 0;
         do {
@@ -133,6 +134,8 @@ public class ImagePDFApiTest {
         String result = new String(pdfOutput);
         Assert.assertTrue(result.startsWith("%PDF-1"));
         Assert.assertTrue(result.contains("EOF"));
+
+        Files.write(new File("/tmp/out.pdf").toPath(), pdfOutput);
         // We could write the output to file of course
     }
 

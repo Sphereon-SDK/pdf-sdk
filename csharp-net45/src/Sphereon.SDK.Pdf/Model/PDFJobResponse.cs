@@ -96,8 +96,9 @@ namespace Sphereon.SDK.Pdf.Model
         /// <param name="Images">The original images. Currently only a single image is supported. The image can be a multipage tiff however (required).</param>
         /// <param name="Job">Job.</param>
         /// <param name="JobId">JobId.</param>
+        /// <param name="Owner">Owner.</param>
         /// <param name="Tasks">The server supplied engine task(s).</param>
-        public PDFJobResponse(Dictionary<string, Link> Links = null, List<string> Images = null, PDFJob Job = null, string JobId = null, List<OcrEngineTask> Tasks = null)
+        public PDFJobResponse(Dictionary<string, Link> Links = null, List<string> Images = null, PDFJob Job = null, string JobId = null, string Owner = null, List<OcrEngineTask> Tasks = null)
         {
             // to ensure "Images" is required (not null)
             if (Images == null)
@@ -111,6 +112,7 @@ namespace Sphereon.SDK.Pdf.Model
             this.Links = Links;
             this.Job = Job;
             this.JobId = JobId;
+            this.Owner = Owner;
             this.Tasks = Tasks;
         }
         
@@ -147,6 +149,11 @@ namespace Sphereon.SDK.Pdf.Model
         /// </summary>
         [DataMember(Name="jobId", EmitDefaultValue=false)]
         public string JobId { get; set; }
+        /// <summary>
+        /// Gets or Sets Owner
+        /// </summary>
+        [DataMember(Name="owner", EmitDefaultValue=false)]
+        public string Owner { get; set; }
         /// <summary>
         /// The conversion queue date/time of this job in ISO 8601 format
         /// </summary>
@@ -185,6 +192,7 @@ namespace Sphereon.SDK.Pdf.Model
             sb.Append("  Images: ").Append(Images).Append("\n");
             sb.Append("  Job: ").Append(Job).Append("\n");
             sb.Append("  JobId: ").Append(JobId).Append("\n");
+            sb.Append("  Owner: ").Append(Owner).Append("\n");
             sb.Append("  QueueTime: ").Append(QueueTime).Append("\n");
             sb.Append("  Status: ").Append(Status).Append("\n");
             sb.Append("  StatusMessage: ").Append(StatusMessage).Append("\n");
@@ -257,6 +265,11 @@ namespace Sphereon.SDK.Pdf.Model
                     this.JobId.Equals(other.JobId)
                 ) && 
                 (
+                    this.Owner == other.Owner ||
+                    this.Owner != null &&
+                    this.Owner.Equals(other.Owner)
+                ) && 
+                (
                     this.QueueTime == other.QueueTime ||
                     this.QueueTime != null &&
                     this.QueueTime.Equals(other.QueueTime)
@@ -306,6 +319,8 @@ namespace Sphereon.SDK.Pdf.Model
                     hash = hash * 59 + this.Job.GetHashCode();
                 if (this.JobId != null)
                     hash = hash * 59 + this.JobId.GetHashCode();
+                if (this.Owner != null)
+                    hash = hash * 59 + this.Owner.GetHashCode();
                 if (this.QueueTime != null)
                     hash = hash * 59 + this.QueueTime.GetHashCode();
                 if (this.Status != null)

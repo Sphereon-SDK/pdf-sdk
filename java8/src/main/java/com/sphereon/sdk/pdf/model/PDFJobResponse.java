@@ -43,7 +43,7 @@ import java.util.Map;
  * The PDF job. Has access to the job settings as well as ocr engine tasks
  */
 @ApiModel(description = "The PDF job. Has access to the job settings as well as ocr engine tasks")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-11-01T18:16:14.907+01:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-11-03T12:07:24.493+01:00")
 public class PDFJobResponse   {
   @SerializedName("_links")
   private Map<String, Link> links = new HashMap<String, Link>();
@@ -62,6 +62,9 @@ public class PDFJobResponse   {
 
   @SerializedName("jobId")
   private String jobId = null;
+
+  @SerializedName("owner")
+  private String owner = null;
 
   @SerializedName("queueTime")
   private OffsetDateTime queueTime = null;
@@ -209,6 +212,24 @@ public class PDFJobResponse   {
     this.jobId = jobId;
   }
 
+  public PDFJobResponse owner(String owner) {
+    this.owner = owner;
+    return this;
+  }
+
+   /**
+   * Get owner
+   * @return owner
+  **/
+  @ApiModelProperty(example = "null", value = "")
+  public String getOwner() {
+    return owner;
+  }
+
+  public void setOwner(String owner) {
+    this.owner = owner;
+  }
+
    /**
    * The conversion queue date/time of this job in ISO 8601 format
    * @return queueTime
@@ -284,6 +305,7 @@ public class PDFJobResponse   {
         Objects.equals(this.images, pDFJobResponse.images) &&
         Objects.equals(this.job, pDFJobResponse.job) &&
         Objects.equals(this.jobId, pDFJobResponse.jobId) &&
+        Objects.equals(this.owner, pDFJobResponse.owner) &&
         Objects.equals(this.queueTime, pDFJobResponse.queueTime) &&
         Objects.equals(this.status, pDFJobResponse.status) &&
         Objects.equals(this.statusMessage, pDFJobResponse.statusMessage) &&
@@ -293,7 +315,7 @@ public class PDFJobResponse   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(links, completionTime, creationTime, images, job, jobId, queueTime, status, statusMessage, tasks, updateTime);
+    return Objects.hash(links, completionTime, creationTime, images, job, jobId, owner, queueTime, status, statusMessage, tasks, updateTime);
   }
 
   @Override
@@ -307,6 +329,7 @@ public class PDFJobResponse   {
     sb.append("    images: ").append(toIndentedString(images)).append("\n");
     sb.append("    job: ").append(toIndentedString(job)).append("\n");
     sb.append("    jobId: ").append(toIndentedString(jobId)).append("\n");
+    sb.append("    owner: ").append(toIndentedString(owner)).append("\n");
     sb.append("    queueTime: ").append(toIndentedString(queueTime)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    statusMessage: ").append(toIndentedString(statusMessage)).append("\n");

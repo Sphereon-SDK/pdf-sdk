@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**deleteJob**](ImagePDFApi.md#deleteJob) | **DELETE** /pdf/0.1.5/image2pdf/{jobid} | Delete a job manually
 [**getJob**](ImagePDFApi.md#getJob) | **GET** /pdf/0.1.5/image2pdf/{jobid} | Job definition and state
+[**getJobs**](ImagePDFApi.md#getJobs) | **GET** /pdf/0.1.5/image2pdf{?status} | Get all jobs
 [**getStream**](ImagePDFApi.md#getStream) | **GET** /pdf/0.1.5/image2pdf/{jobid}/stream | Get the current result stream
 [**submitJob**](ImagePDFApi.md#submitJob) | **PUT** /pdf/0.1.5/image2pdf/{jobid} | Submit PDF job for processing
 [**uploadAdditionalImage**](ImagePDFApi.md#uploadAdditionalImage) | **POST** /pdf/0.1.5/image2pdf/{jobid} | Upload an additional image
@@ -104,6 +105,59 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **jobid** | **String**| jobid |
+
+### Return type
+
+[**PDFJobResponse**](PDFJobResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json;charset=UTF-8
+
+<a name="getJobs"></a>
+# **getJobs**
+> PDFJobResponse getJobs(status)
+
+Get all jobs
+
+Get all PDF job definitions and their current state.
+
+### Example
+```java
+// Import classes:
+//import com.sphereon.sdk.pdf.handler.ApiClient;
+//import com.sphereon.sdk.pdf.handler.ApiException;
+//import com.sphereon.sdk.pdf.handler.Configuration;
+//import com.sphereon.sdk.pdf.handler.auth.*;
+//import com.sphereon.sdk.pdf.api.ImagePDFApi;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure OAuth2 access token for authorization: oauth2schema
+OAuth oauth2schema = (OAuth) defaultClient.getAuthentication("oauth2schema");
+oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
+
+ImagePDFApi apiInstance = new ImagePDFApi();
+List<String> status = Arrays.asList("status_example"); // List<String> | A list of status to filter on.
+try {
+    PDFJobResponse result = apiInstance.getJobs(status);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling ImagePDFApi#getJobs");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **status** | [**List&lt;String&gt;**](String.md)| A list of status to filter on. | [optional] [enum: IMAGE_UPLOADED, PROCESSING, DONE, ERROR, DELETED]
 
 ### Return type
 

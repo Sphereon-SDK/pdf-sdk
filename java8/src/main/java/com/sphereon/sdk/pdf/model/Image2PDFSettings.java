@@ -41,13 +41,19 @@ import java.util.Map;
  * Image to PDF settings
  */
 @ApiModel(description = "Image to PDF settings")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-11-03T12:07:24.493+01:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-11-03T18:26:18.794+01:00")
 public class Image2PDFSettings   {
+  @SerializedName("lifecycle")
+  private Lifecycle lifecycle = null;
+
+  @SerializedName("qualityFactor")
+  private Integer qualityFactor = null;
+
+  @SerializedName("resultFileName")
+  private String resultFileName = null;
+
   @SerializedName("_links")
   private Map<String, Link> links = new HashMap<String, Link>();
-
-  @SerializedName("compression")
-  private Compression compression = null;
 
   /**
    * Gets or Sets engine
@@ -77,17 +83,8 @@ public class Image2PDFSettings   {
   @SerializedName("engine")
   private EngineEnum engine = null;
 
-  @SerializedName("lifecycle")
-  private Lifecycle lifecycle = null;
-
-  @SerializedName("ocr")
-  private Boolean ocr = null;
-
-  @SerializedName("qualityFactor")
-  private Integer qualityFactor = null;
-
-  @SerializedName("resultFileName")
-  private String resultFileName = null;
+  @SerializedName("compression")
+  private Compression compression = null;
 
   /**
    * Gets or Sets version
@@ -123,64 +120,8 @@ public class Image2PDFSettings   {
   @SerializedName("version")
   private VersionEnum version = null;
 
-  public Image2PDFSettings links(Map<String, Link> links) {
-    this.links = links;
-    return this;
-  }
-
-  public Image2PDFSettings putLinksItem(String key, Link linksItem) {
-    this.links.put(key, linksItem);
-    return this;
-  }
-
-   /**
-   * Get links
-   * @return links
-  **/
-  @ApiModelProperty(example = "null", value = "")
-  public Map<String, Link> getLinks() {
-    return links;
-  }
-
-  public void setLinks(Map<String, Link> links) {
-    this.links = links;
-  }
-
-  public Image2PDFSettings compression(Compression compression) {
-    this.compression = compression;
-    return this;
-  }
-
-   /**
-   * Get compression
-   * @return compression
-  **/
-  @ApiModelProperty(example = "null", value = "")
-  public Compression getCompression() {
-    return compression;
-  }
-
-  public void setCompression(Compression compression) {
-    this.compression = compression;
-  }
-
-  public Image2PDFSettings engine(EngineEnum engine) {
-    this.engine = engine;
-    return this;
-  }
-
-   /**
-   * Get engine
-   * @return engine
-  **/
-  @ApiModelProperty(example = "null", value = "")
-  public EngineEnum getEngine() {
-    return engine;
-  }
-
-  public void setEngine(EngineEnum engine) {
-    this.engine = engine;
-  }
+  @SerializedName("ocr")
+  private Boolean ocr = null;
 
   public Image2PDFSettings lifecycle(Lifecycle lifecycle) {
     this.lifecycle = lifecycle;
@@ -198,24 +139,6 @@ public class Image2PDFSettings   {
 
   public void setLifecycle(Lifecycle lifecycle) {
     this.lifecycle = lifecycle;
-  }
-
-  public Image2PDFSettings ocr(Boolean ocr) {
-    this.ocr = ocr;
-    return this;
-  }
-
-   /**
-   * Whether to perform OCR. When set to false the text in the PDF will not be searchable
-   * @return ocr
-  **/
-  @ApiModelProperty(example = "false", value = "Whether to perform OCR. When set to false the text in the PDF will not be searchable")
-  public Boolean getOcr() {
-    return ocr;
-  }
-
-  public void setOcr(Boolean ocr) {
-    this.ocr = ocr;
   }
 
   public Image2PDFSettings qualityFactor(Integer qualityFactor) {
@@ -256,6 +179,65 @@ public class Image2PDFSettings   {
     this.resultFileName = resultFileName;
   }
 
+  public Image2PDFSettings links(Map<String, Link> links) {
+    this.links = links;
+    return this;
+  }
+
+  public Image2PDFSettings putLinksItem(String key, Link linksItem) {
+    this.links.put(key, linksItem);
+    return this;
+  }
+
+   /**
+   * Get links
+   * @return links
+  **/
+  @ApiModelProperty(example = "null", value = "")
+  public Map<String, Link> getLinks() {
+    return links;
+  }
+
+  public void setLinks(Map<String, Link> links) {
+    this.links = links;
+  }
+
+  public Image2PDFSettings engine(EngineEnum engine) {
+    this.engine = engine;
+    return this;
+  }
+
+   /**
+   * Get engine
+   * @return engine
+  **/
+  @ApiModelProperty(example = "null", value = "")
+  public EngineEnum getEngine() {
+    return engine;
+  }
+
+  public void setEngine(EngineEnum engine) {
+    this.engine = engine;
+  }
+
+  public Image2PDFSettings compression(Compression compression) {
+    this.compression = compression;
+    return this;
+  }
+
+   /**
+   * Get compression
+   * @return compression
+  **/
+  @ApiModelProperty(example = "null", value = "")
+  public Compression getCompression() {
+    return compression;
+  }
+
+  public void setCompression(Compression compression) {
+    this.compression = compression;
+  }
+
   public Image2PDFSettings version(VersionEnum version) {
     this.version = version;
     return this;
@@ -274,6 +256,24 @@ public class Image2PDFSettings   {
     this.version = version;
   }
 
+  public Image2PDFSettings ocr(Boolean ocr) {
+    this.ocr = ocr;
+    return this;
+  }
+
+   /**
+   * Whether to perform OCR. When set to false the text in the PDF will not be searchable
+   * @return ocr
+  **/
+  @ApiModelProperty(example = "false", value = "Whether to perform OCR. When set to false the text in the PDF will not be searchable")
+  public Boolean getOcr() {
+    return ocr;
+  }
+
+  public void setOcr(Boolean ocr) {
+    this.ocr = ocr;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -284,19 +284,19 @@ public class Image2PDFSettings   {
       return false;
     }
     Image2PDFSettings image2PDFSettings = (Image2PDFSettings) o;
-    return Objects.equals(this.links, image2PDFSettings.links) &&
-        Objects.equals(this.compression, image2PDFSettings.compression) &&
-        Objects.equals(this.engine, image2PDFSettings.engine) &&
-        Objects.equals(this.lifecycle, image2PDFSettings.lifecycle) &&
-        Objects.equals(this.ocr, image2PDFSettings.ocr) &&
+    return Objects.equals(this.lifecycle, image2PDFSettings.lifecycle) &&
         Objects.equals(this.qualityFactor, image2PDFSettings.qualityFactor) &&
         Objects.equals(this.resultFileName, image2PDFSettings.resultFileName) &&
-        Objects.equals(this.version, image2PDFSettings.version);
+        Objects.equals(this.links, image2PDFSettings.links) &&
+        Objects.equals(this.engine, image2PDFSettings.engine) &&
+        Objects.equals(this.compression, image2PDFSettings.compression) &&
+        Objects.equals(this.version, image2PDFSettings.version) &&
+        Objects.equals(this.ocr, image2PDFSettings.ocr);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(links, compression, engine, lifecycle, ocr, qualityFactor, resultFileName, version);
+    return Objects.hash(lifecycle, qualityFactor, resultFileName, links, engine, compression, version, ocr);
   }
 
   @Override
@@ -304,14 +304,14 @@ public class Image2PDFSettings   {
     StringBuilder sb = new StringBuilder();
     sb.append("class Image2PDFSettings {\n");
     
-    sb.append("    links: ").append(toIndentedString(links)).append("\n");
-    sb.append("    compression: ").append(toIndentedString(compression)).append("\n");
-    sb.append("    engine: ").append(toIndentedString(engine)).append("\n");
     sb.append("    lifecycle: ").append(toIndentedString(lifecycle)).append("\n");
-    sb.append("    ocr: ").append(toIndentedString(ocr)).append("\n");
     sb.append("    qualityFactor: ").append(toIndentedString(qualityFactor)).append("\n");
     sb.append("    resultFileName: ").append(toIndentedString(resultFileName)).append("\n");
+    sb.append("    links: ").append(toIndentedString(links)).append("\n");
+    sb.append("    engine: ").append(toIndentedString(engine)).append("\n");
+    sb.append("    compression: ").append(toIndentedString(compression)).append("\n");
     sb.append("    version: ").append(toIndentedString(version)).append("\n");
+    sb.append("    ocr: ").append(toIndentedString(ocr)).append("\n");
     sb.append("}");
     return sb.toString();
   }

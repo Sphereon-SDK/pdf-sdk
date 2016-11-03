@@ -4,13 +4,13 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**documentId** | **String** | The document Id provided by a backend system |  [optional]
-**engine** | [**EngineEnum**](#EngineEnum) | The Engine being used |  [optional]
-**images** | **List&lt;String&gt;** | The names of the supplied images |  [optional]
 **jobId** | **String** | The current job Id |  [optional]
 **queueId** | **String** | The queue Id provided by a backend system |  [optional]
-**status** | [**StatusEnum**](#StatusEnum) | The status of the Ocr engine task itself |  [optional]
+**images** | **List&lt;String&gt;** | The names of the supplied images |  [optional]
+**engine** | [**EngineEnum**](#EngineEnum) | The Engine being used |  [optional]
+**documentId** | **String** | The document Id provided by a backend system |  [optional]
 **url** | **String** | The URL on the bucketstore for the PDF. Only available once the status is DONE |  [optional]
+**status** | [**StatusEnum**](#StatusEnum) | The status of the Ocr engine task itself |  [optional]
 
 
 <a name="EngineEnum"></a>

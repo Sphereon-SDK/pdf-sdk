@@ -127,18 +127,6 @@ namespace Sphereon.SDK.Pdf.Model
         }
         
         /// <summary>
-        /// The document Id provided by a backend system
-        /// </summary>
-        /// <value>The document Id provided by a backend system</value>
-        [DataMember(Name="documentId", EmitDefaultValue=false)]
-        public string DocumentId { get; private set; }
-        /// <summary>
-        /// The names of the supplied images
-        /// </summary>
-        /// <value>The names of the supplied images</value>
-        [DataMember(Name="images", EmitDefaultValue=false)]
-        public List<string> Images { get; set; }
-        /// <summary>
         /// The current job Id
         /// </summary>
         /// <value>The current job Id</value>
@@ -150,6 +138,18 @@ namespace Sphereon.SDK.Pdf.Model
         /// <value>The queue Id provided by a backend system</value>
         [DataMember(Name="queueId", EmitDefaultValue=false)]
         public string QueueId { get; private set; }
+        /// <summary>
+        /// The names of the supplied images
+        /// </summary>
+        /// <value>The names of the supplied images</value>
+        [DataMember(Name="images", EmitDefaultValue=false)]
+        public List<string> Images { get; set; }
+        /// <summary>
+        /// The document Id provided by a backend system
+        /// </summary>
+        /// <value>The document Id provided by a backend system</value>
+        [DataMember(Name="documentId", EmitDefaultValue=false)]
+        public string DocumentId { get; private set; }
         /// <summary>
         /// The URL on the bucketstore for the PDF. Only available once the status is DONE
         /// </summary>
@@ -164,13 +164,13 @@ namespace Sphereon.SDK.Pdf.Model
         {
             var sb = new StringBuilder();
             sb.Append("class OcrEngineTask {\n");
-            sb.Append("  DocumentId: ").Append(DocumentId).Append("\n");
-            sb.Append("  Engine: ").Append(Engine).Append("\n");
-            sb.Append("  Images: ").Append(Images).Append("\n");
             sb.Append("  JobId: ").Append(JobId).Append("\n");
             sb.Append("  QueueId: ").Append(QueueId).Append("\n");
-            sb.Append("  Status: ").Append(Status).Append("\n");
+            sb.Append("  Images: ").Append(Images).Append("\n");
+            sb.Append("  Engine: ").Append(Engine).Append("\n");
+            sb.Append("  DocumentId: ").Append(DocumentId).Append("\n");
             sb.Append("  Url: ").Append(Url).Append("\n");
+            sb.Append("  Status: ").Append(Status).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -208,21 +208,6 @@ namespace Sphereon.SDK.Pdf.Model
 
             return 
                 (
-                    this.DocumentId == other.DocumentId ||
-                    this.DocumentId != null &&
-                    this.DocumentId.Equals(other.DocumentId)
-                ) && 
-                (
-                    this.Engine == other.Engine ||
-                    this.Engine != null &&
-                    this.Engine.Equals(other.Engine)
-                ) && 
-                (
-                    this.Images == other.Images ||
-                    this.Images != null &&
-                    this.Images.SequenceEqual(other.Images)
-                ) && 
-                (
                     this.JobId == other.JobId ||
                     this.JobId != null &&
                     this.JobId.Equals(other.JobId)
@@ -233,14 +218,29 @@ namespace Sphereon.SDK.Pdf.Model
                     this.QueueId.Equals(other.QueueId)
                 ) && 
                 (
-                    this.Status == other.Status ||
-                    this.Status != null &&
-                    this.Status.Equals(other.Status)
+                    this.Images == other.Images ||
+                    this.Images != null &&
+                    this.Images.SequenceEqual(other.Images)
+                ) && 
+                (
+                    this.Engine == other.Engine ||
+                    this.Engine != null &&
+                    this.Engine.Equals(other.Engine)
+                ) && 
+                (
+                    this.DocumentId == other.DocumentId ||
+                    this.DocumentId != null &&
+                    this.DocumentId.Equals(other.DocumentId)
                 ) && 
                 (
                     this.Url == other.Url ||
                     this.Url != null &&
                     this.Url.Equals(other.Url)
+                ) && 
+                (
+                    this.Status == other.Status ||
+                    this.Status != null &&
+                    this.Status.Equals(other.Status)
                 );
         }
 
@@ -255,20 +255,20 @@ namespace Sphereon.SDK.Pdf.Model
             {
                 int hash = 41;
                 // Suitable nullity checks etc, of course :)
-                if (this.DocumentId != null)
-                    hash = hash * 59 + this.DocumentId.GetHashCode();
-                if (this.Engine != null)
-                    hash = hash * 59 + this.Engine.GetHashCode();
-                if (this.Images != null)
-                    hash = hash * 59 + this.Images.GetHashCode();
                 if (this.JobId != null)
                     hash = hash * 59 + this.JobId.GetHashCode();
                 if (this.QueueId != null)
                     hash = hash * 59 + this.QueueId.GetHashCode();
-                if (this.Status != null)
-                    hash = hash * 59 + this.Status.GetHashCode();
+                if (this.Images != null)
+                    hash = hash * 59 + this.Images.GetHashCode();
+                if (this.Engine != null)
+                    hash = hash * 59 + this.Engine.GetHashCode();
+                if (this.DocumentId != null)
+                    hash = hash * 59 + this.DocumentId.GetHashCode();
                 if (this.Url != null)
                     hash = hash * 59 + this.Url.GetHashCode();
+                if (this.Status != null)
+                    hash = hash * 59 + this.Status.GetHashCode();
                 return hash;
             }
         }

@@ -116,47 +116,31 @@ namespace Sphereon.SDK.Pdf.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="Image2PDFSettings" /> class.
         /// </summary>
-        /// <param name="Links">Links.</param>
-        /// <param name="Compression">Compression.</param>
-        /// <param name="Engine">Engine.</param>
         /// <param name="Lifecycle">Lifecycle.</param>
-        /// <param name="Ocr">Whether to perform OCR. When set to false the text in the PDF will not be searchable.</param>
         /// <param name="QualityFactor">Set the quality factor for the resulting PDF. Range from 0 (lowest) to 10 (highest).</param>
         /// <param name="ResultFileName">ResultFileName.</param>
+        /// <param name="Links">Links.</param>
+        /// <param name="Engine">Engine.</param>
+        /// <param name="Compression">Compression.</param>
         /// <param name="Version">Version.</param>
-        public Image2PDFSettings(Dictionary<string, Link> Links = null, Compression Compression = null, EngineEnum? Engine = null, Lifecycle Lifecycle = null, bool? Ocr = null, int? QualityFactor = null, string ResultFileName = null, VersionEnum? Version = null)
+        /// <param name="Ocr">Whether to perform OCR. When set to false the text in the PDF will not be searchable.</param>
+        public Image2PDFSettings(Lifecycle Lifecycle = null, int? QualityFactor = null, string ResultFileName = null, Dictionary<string, Link> Links = null, EngineEnum? Engine = null, Compression Compression = null, VersionEnum? Version = null, bool? Ocr = null)
         {
-            this.Links = Links;
-            this.Compression = Compression;
-            this.Engine = Engine;
             this.Lifecycle = Lifecycle;
-            this.Ocr = Ocr;
             this.QualityFactor = QualityFactor;
             this.ResultFileName = ResultFileName;
+            this.Links = Links;
+            this.Engine = Engine;
+            this.Compression = Compression;
             this.Version = Version;
+            this.Ocr = Ocr;
         }
         
-        /// <summary>
-        /// Gets or Sets Links
-        /// </summary>
-        [DataMember(Name="_links", EmitDefaultValue=false)]
-        public Dictionary<string, Link> Links { get; set; }
-        /// <summary>
-        /// Gets or Sets Compression
-        /// </summary>
-        [DataMember(Name="compression", EmitDefaultValue=false)]
-        public Compression Compression { get; set; }
         /// <summary>
         /// Gets or Sets Lifecycle
         /// </summary>
         [DataMember(Name="lifecycle", EmitDefaultValue=false)]
         public Lifecycle Lifecycle { get; set; }
-        /// <summary>
-        /// Whether to perform OCR. When set to false the text in the PDF will not be searchable
-        /// </summary>
-        /// <value>Whether to perform OCR. When set to false the text in the PDF will not be searchable</value>
-        [DataMember(Name="ocr", EmitDefaultValue=false)]
-        public bool? Ocr { get; set; }
         /// <summary>
         /// Set the quality factor for the resulting PDF. Range from 0 (lowest) to 10 (highest)
         /// </summary>
@@ -169,6 +153,22 @@ namespace Sphereon.SDK.Pdf.Model
         [DataMember(Name="resultFileName", EmitDefaultValue=false)]
         public string ResultFileName { get; set; }
         /// <summary>
+        /// Gets or Sets Links
+        /// </summary>
+        [DataMember(Name="_links", EmitDefaultValue=false)]
+        public Dictionary<string, Link> Links { get; set; }
+        /// <summary>
+        /// Gets or Sets Compression
+        /// </summary>
+        [DataMember(Name="compression", EmitDefaultValue=false)]
+        public Compression Compression { get; set; }
+        /// <summary>
+        /// Whether to perform OCR. When set to false the text in the PDF will not be searchable
+        /// </summary>
+        /// <value>Whether to perform OCR. When set to false the text in the PDF will not be searchable</value>
+        [DataMember(Name="ocr", EmitDefaultValue=false)]
+        public bool? Ocr { get; set; }
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -176,14 +176,14 @@ namespace Sphereon.SDK.Pdf.Model
         {
             var sb = new StringBuilder();
             sb.Append("class Image2PDFSettings {\n");
-            sb.Append("  Links: ").Append(Links).Append("\n");
-            sb.Append("  Compression: ").Append(Compression).Append("\n");
-            sb.Append("  Engine: ").Append(Engine).Append("\n");
             sb.Append("  Lifecycle: ").Append(Lifecycle).Append("\n");
-            sb.Append("  Ocr: ").Append(Ocr).Append("\n");
             sb.Append("  QualityFactor: ").Append(QualityFactor).Append("\n");
             sb.Append("  ResultFileName: ").Append(ResultFileName).Append("\n");
+            sb.Append("  Links: ").Append(Links).Append("\n");
+            sb.Append("  Engine: ").Append(Engine).Append("\n");
+            sb.Append("  Compression: ").Append(Compression).Append("\n");
             sb.Append("  Version: ").Append(Version).Append("\n");
+            sb.Append("  Ocr: ").Append(Ocr).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -221,29 +221,9 @@ namespace Sphereon.SDK.Pdf.Model
 
             return 
                 (
-                    this.Links == other.Links ||
-                    this.Links != null &&
-                    this.Links.SequenceEqual(other.Links)
-                ) && 
-                (
-                    this.Compression == other.Compression ||
-                    this.Compression != null &&
-                    this.Compression.Equals(other.Compression)
-                ) && 
-                (
-                    this.Engine == other.Engine ||
-                    this.Engine != null &&
-                    this.Engine.Equals(other.Engine)
-                ) && 
-                (
                     this.Lifecycle == other.Lifecycle ||
                     this.Lifecycle != null &&
                     this.Lifecycle.Equals(other.Lifecycle)
-                ) && 
-                (
-                    this.Ocr == other.Ocr ||
-                    this.Ocr != null &&
-                    this.Ocr.Equals(other.Ocr)
                 ) && 
                 (
                     this.QualityFactor == other.QualityFactor ||
@@ -256,9 +236,29 @@ namespace Sphereon.SDK.Pdf.Model
                     this.ResultFileName.Equals(other.ResultFileName)
                 ) && 
                 (
+                    this.Links == other.Links ||
+                    this.Links != null &&
+                    this.Links.SequenceEqual(other.Links)
+                ) && 
+                (
+                    this.Engine == other.Engine ||
+                    this.Engine != null &&
+                    this.Engine.Equals(other.Engine)
+                ) && 
+                (
+                    this.Compression == other.Compression ||
+                    this.Compression != null &&
+                    this.Compression.Equals(other.Compression)
+                ) && 
+                (
                     this.Version == other.Version ||
                     this.Version != null &&
                     this.Version.Equals(other.Version)
+                ) && 
+                (
+                    this.Ocr == other.Ocr ||
+                    this.Ocr != null &&
+                    this.Ocr.Equals(other.Ocr)
                 );
         }
 
@@ -273,22 +273,22 @@ namespace Sphereon.SDK.Pdf.Model
             {
                 int hash = 41;
                 // Suitable nullity checks etc, of course :)
-                if (this.Links != null)
-                    hash = hash * 59 + this.Links.GetHashCode();
-                if (this.Compression != null)
-                    hash = hash * 59 + this.Compression.GetHashCode();
-                if (this.Engine != null)
-                    hash = hash * 59 + this.Engine.GetHashCode();
                 if (this.Lifecycle != null)
                     hash = hash * 59 + this.Lifecycle.GetHashCode();
-                if (this.Ocr != null)
-                    hash = hash * 59 + this.Ocr.GetHashCode();
                 if (this.QualityFactor != null)
                     hash = hash * 59 + this.QualityFactor.GetHashCode();
                 if (this.ResultFileName != null)
                     hash = hash * 59 + this.ResultFileName.GetHashCode();
+                if (this.Links != null)
+                    hash = hash * 59 + this.Links.GetHashCode();
+                if (this.Engine != null)
+                    hash = hash * 59 + this.Engine.GetHashCode();
+                if (this.Compression != null)
+                    hash = hash * 59 + this.Compression.GetHashCode();
                 if (this.Version != null)
                     hash = hash * 59 + this.Version.GetHashCode();
+                if (this.Ocr != null)
+                    hash = hash * 59 + this.Ocr.GetHashCode();
                 return hash;
             }
         }

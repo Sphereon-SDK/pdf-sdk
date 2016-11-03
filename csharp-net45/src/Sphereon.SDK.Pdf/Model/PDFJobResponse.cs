@@ -92,13 +92,12 @@ namespace Sphereon.SDK.Pdf.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="PDFJobResponse" /> class.
         /// </summary>
-        /// <param name="Links">Links.</param>
-        /// <param name="Images">The original images. Currently only a single image is supported. The image can be a multipage tiff however (required).</param>
-        /// <param name="Job">Job.</param>
         /// <param name="JobId">JobId.</param>
-        /// <param name="Owner">Owner.</param>
+        /// <param name="Images">The original images. Currently only a single image is supported. The image can be a multipage tiff however (required).</param>
+        /// <param name="Links">Links.</param>
+        /// <param name="Job">Job.</param>
         /// <param name="Tasks">The server supplied engine task(s).</param>
-        public PDFJobResponse(Dictionary<string, Link> Links = null, List<string> Images = null, PDFJob Job = null, string JobId = null, string Owner = null, List<OcrEngineTask> Tasks = null)
+        public PDFJobResponse(string JobId = null, List<string> Images = null, Dictionary<string, Link> Links = null, PDFJob Job = null, List<OcrEngineTask> Tasks = null)
         {
             // to ensure "Images" is required (not null)
             if (Images == null)
@@ -109,18 +108,12 @@ namespace Sphereon.SDK.Pdf.Model
             {
                 this.Images = Images;
             }
+            this.JobId = JobId;
             this.Links = Links;
             this.Job = Job;
-            this.JobId = JobId;
-            this.Owner = Owner;
             this.Tasks = Tasks;
         }
         
-        /// <summary>
-        /// Gets or Sets Links
-        /// </summary>
-        [DataMember(Name="_links", EmitDefaultValue=false)]
-        public Dictionary<string, Link> Links { get; set; }
         /// <summary>
         /// The completion date/time of this job in ISO 8601 format
         /// </summary>
@@ -128,11 +121,10 @@ namespace Sphereon.SDK.Pdf.Model
         [DataMember(Name="completionTime", EmitDefaultValue=false)]
         public DateTime? CompletionTime { get; private set; }
         /// <summary>
-        /// The creation date/time of this job in ISO 8601 format
+        /// Gets or Sets JobId
         /// </summary>
-        /// <value>The creation date/time of this job in ISO 8601 format</value>
-        [DataMember(Name="creationTime", EmitDefaultValue=false)]
-        public DateTime? CreationTime { get; private set; }
+        [DataMember(Name="jobId", EmitDefaultValue=false)]
+        public string JobId { get; set; }
         /// <summary>
         /// The original images. Currently only a single image is supported. The image can be a multipage tiff however
         /// </summary>
@@ -140,26 +132,27 @@ namespace Sphereon.SDK.Pdf.Model
         [DataMember(Name="images", EmitDefaultValue=false)]
         public List<string> Images { get; set; }
         /// <summary>
+        /// The creation date/time of this job in ISO 8601 format
+        /// </summary>
+        /// <value>The creation date/time of this job in ISO 8601 format</value>
+        [DataMember(Name="creationTime", EmitDefaultValue=false)]
+        public DateTime? CreationTime { get; private set; }
+        /// <summary>
+        /// Gets or Sets Links
+        /// </summary>
+        [DataMember(Name="_links", EmitDefaultValue=false)]
+        public Dictionary<string, Link> Links { get; set; }
+        /// <summary>
+        /// The last update date/time of this job in ISO 8601 format
+        /// </summary>
+        /// <value>The last update date/time of this job in ISO 8601 format</value>
+        [DataMember(Name="updateTime", EmitDefaultValue=false)]
+        public DateTime? UpdateTime { get; private set; }
+        /// <summary>
         /// Gets or Sets Job
         /// </summary>
         [DataMember(Name="job", EmitDefaultValue=false)]
         public PDFJob Job { get; set; }
-        /// <summary>
-        /// Gets or Sets JobId
-        /// </summary>
-        [DataMember(Name="jobId", EmitDefaultValue=false)]
-        public string JobId { get; set; }
-        /// <summary>
-        /// Gets or Sets Owner
-        /// </summary>
-        [DataMember(Name="owner", EmitDefaultValue=false)]
-        public string Owner { get; set; }
-        /// <summary>
-        /// The conversion queue date/time of this job in ISO 8601 format
-        /// </summary>
-        /// <value>The conversion queue date/time of this job in ISO 8601 format</value>
-        [DataMember(Name="queueTime", EmitDefaultValue=false)]
-        public DateTime? QueueTime { get; private set; }
         /// <summary>
         /// A status message, which can be informational, warning or error. AA message here does not indicate an error perse
         /// </summary>
@@ -173,11 +166,11 @@ namespace Sphereon.SDK.Pdf.Model
         [DataMember(Name="tasks", EmitDefaultValue=false)]
         public List<OcrEngineTask> Tasks { get; set; }
         /// <summary>
-        /// The last update date/time of this job in ISO 8601 format
+        /// The conversion queue date/time of this job in ISO 8601 format
         /// </summary>
-        /// <value>The last update date/time of this job in ISO 8601 format</value>
-        [DataMember(Name="updateTime", EmitDefaultValue=false)]
-        public DateTime? UpdateTime { get; private set; }
+        /// <value>The conversion queue date/time of this job in ISO 8601 format</value>
+        [DataMember(Name="queueTime", EmitDefaultValue=false)]
+        public DateTime? QueueTime { get; private set; }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -186,18 +179,17 @@ namespace Sphereon.SDK.Pdf.Model
         {
             var sb = new StringBuilder();
             sb.Append("class PDFJobResponse {\n");
-            sb.Append("  Links: ").Append(Links).Append("\n");
             sb.Append("  CompletionTime: ").Append(CompletionTime).Append("\n");
-            sb.Append("  CreationTime: ").Append(CreationTime).Append("\n");
-            sb.Append("  Images: ").Append(Images).Append("\n");
-            sb.Append("  Job: ").Append(Job).Append("\n");
             sb.Append("  JobId: ").Append(JobId).Append("\n");
-            sb.Append("  Owner: ").Append(Owner).Append("\n");
-            sb.Append("  QueueTime: ").Append(QueueTime).Append("\n");
-            sb.Append("  Status: ").Append(Status).Append("\n");
+            sb.Append("  Images: ").Append(Images).Append("\n");
+            sb.Append("  CreationTime: ").Append(CreationTime).Append("\n");
+            sb.Append("  Links: ").Append(Links).Append("\n");
+            sb.Append("  UpdateTime: ").Append(UpdateTime).Append("\n");
+            sb.Append("  Job: ").Append(Job).Append("\n");
             sb.Append("  StatusMessage: ").Append(StatusMessage).Append("\n");
             sb.Append("  Tasks: ").Append(Tasks).Append("\n");
-            sb.Append("  UpdateTime: ").Append(UpdateTime).Append("\n");
+            sb.Append("  QueueTime: ").Append(QueueTime).Append("\n");
+            sb.Append("  Status: ").Append(Status).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -235,29 +227,9 @@ namespace Sphereon.SDK.Pdf.Model
 
             return 
                 (
-                    this.Links == other.Links ||
-                    this.Links != null &&
-                    this.Links.SequenceEqual(other.Links)
-                ) && 
-                (
                     this.CompletionTime == other.CompletionTime ||
                     this.CompletionTime != null &&
                     this.CompletionTime.Equals(other.CompletionTime)
-                ) && 
-                (
-                    this.CreationTime == other.CreationTime ||
-                    this.CreationTime != null &&
-                    this.CreationTime.Equals(other.CreationTime)
-                ) && 
-                (
-                    this.Images == other.Images ||
-                    this.Images != null &&
-                    this.Images.SequenceEqual(other.Images)
-                ) && 
-                (
-                    this.Job == other.Job ||
-                    this.Job != null &&
-                    this.Job.Equals(other.Job)
                 ) && 
                 (
                     this.JobId == other.JobId ||
@@ -265,19 +237,29 @@ namespace Sphereon.SDK.Pdf.Model
                     this.JobId.Equals(other.JobId)
                 ) && 
                 (
-                    this.Owner == other.Owner ||
-                    this.Owner != null &&
-                    this.Owner.Equals(other.Owner)
+                    this.Images == other.Images ||
+                    this.Images != null &&
+                    this.Images.SequenceEqual(other.Images)
                 ) && 
                 (
-                    this.QueueTime == other.QueueTime ||
-                    this.QueueTime != null &&
-                    this.QueueTime.Equals(other.QueueTime)
+                    this.CreationTime == other.CreationTime ||
+                    this.CreationTime != null &&
+                    this.CreationTime.Equals(other.CreationTime)
                 ) && 
                 (
-                    this.Status == other.Status ||
-                    this.Status != null &&
-                    this.Status.Equals(other.Status)
+                    this.Links == other.Links ||
+                    this.Links != null &&
+                    this.Links.SequenceEqual(other.Links)
+                ) && 
+                (
+                    this.UpdateTime == other.UpdateTime ||
+                    this.UpdateTime != null &&
+                    this.UpdateTime.Equals(other.UpdateTime)
+                ) && 
+                (
+                    this.Job == other.Job ||
+                    this.Job != null &&
+                    this.Job.Equals(other.Job)
                 ) && 
                 (
                     this.StatusMessage == other.StatusMessage ||
@@ -290,9 +272,14 @@ namespace Sphereon.SDK.Pdf.Model
                     this.Tasks.SequenceEqual(other.Tasks)
                 ) && 
                 (
-                    this.UpdateTime == other.UpdateTime ||
-                    this.UpdateTime != null &&
-                    this.UpdateTime.Equals(other.UpdateTime)
+                    this.QueueTime == other.QueueTime ||
+                    this.QueueTime != null &&
+                    this.QueueTime.Equals(other.QueueTime)
+                ) && 
+                (
+                    this.Status == other.Status ||
+                    this.Status != null &&
+                    this.Status.Equals(other.Status)
                 );
         }
 
@@ -307,30 +294,28 @@ namespace Sphereon.SDK.Pdf.Model
             {
                 int hash = 41;
                 // Suitable nullity checks etc, of course :)
-                if (this.Links != null)
-                    hash = hash * 59 + this.Links.GetHashCode();
                 if (this.CompletionTime != null)
                     hash = hash * 59 + this.CompletionTime.GetHashCode();
-                if (this.CreationTime != null)
-                    hash = hash * 59 + this.CreationTime.GetHashCode();
-                if (this.Images != null)
-                    hash = hash * 59 + this.Images.GetHashCode();
-                if (this.Job != null)
-                    hash = hash * 59 + this.Job.GetHashCode();
                 if (this.JobId != null)
                     hash = hash * 59 + this.JobId.GetHashCode();
-                if (this.Owner != null)
-                    hash = hash * 59 + this.Owner.GetHashCode();
-                if (this.QueueTime != null)
-                    hash = hash * 59 + this.QueueTime.GetHashCode();
-                if (this.Status != null)
-                    hash = hash * 59 + this.Status.GetHashCode();
+                if (this.Images != null)
+                    hash = hash * 59 + this.Images.GetHashCode();
+                if (this.CreationTime != null)
+                    hash = hash * 59 + this.CreationTime.GetHashCode();
+                if (this.Links != null)
+                    hash = hash * 59 + this.Links.GetHashCode();
+                if (this.UpdateTime != null)
+                    hash = hash * 59 + this.UpdateTime.GetHashCode();
+                if (this.Job != null)
+                    hash = hash * 59 + this.Job.GetHashCode();
                 if (this.StatusMessage != null)
                     hash = hash * 59 + this.StatusMessage.GetHashCode();
                 if (this.Tasks != null)
                     hash = hash * 59 + this.Tasks.GetHashCode();
-                if (this.UpdateTime != null)
-                    hash = hash * 59 + this.UpdateTime.GetHashCode();
+                if (this.QueueTime != null)
+                    hash = hash * 59 + this.QueueTime.GetHashCode();
+                if (this.Status != null)
+                    hash = hash * 59 + this.Status.GetHashCode();
                 return hash;
             }
         }

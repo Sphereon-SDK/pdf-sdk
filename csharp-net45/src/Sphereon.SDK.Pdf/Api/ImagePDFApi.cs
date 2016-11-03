@@ -783,7 +783,7 @@ namespace Sphereon.SDK.Pdf.Api
         public ApiResponse< PDFJobResponse > GetJobsWithHttpInfo (List<string> status = null)
         {
 
-            var localVarPath = "/pdf/0.1.5/image2pdf{?status}";
+            var localVarPath = "/pdf/0.1.5/image2pdf";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
@@ -858,7 +858,7 @@ namespace Sphereon.SDK.Pdf.Api
         public async System.Threading.Tasks.Task<ApiResponse<PDFJobResponse>> GetJobsAsyncWithHttpInfo (List<string> status = null)
         {
 
-            var localVarPath = "/pdf/0.1.5/image2pdf{?status}";
+            var localVarPath = "/pdf/0.1.5/image2pdf";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);

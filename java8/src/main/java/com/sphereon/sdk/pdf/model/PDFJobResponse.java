@@ -43,28 +43,34 @@ import java.util.Map;
  * The PDF job. Has access to the job settings as well as ocr engine tasks
  */
 @ApiModel(description = "The PDF job. Has access to the job settings as well as ocr engine tasks")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-11-03T12:07:24.493+01:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-11-03T18:26:18.794+01:00")
 public class PDFJobResponse   {
-  @SerializedName("_links")
-  private Map<String, Link> links = new HashMap<String, Link>();
-
   @SerializedName("completionTime")
   private OffsetDateTime completionTime = null;
-
-  @SerializedName("creationTime")
-  private OffsetDateTime creationTime = null;
-
-  @SerializedName("images")
-  private List<String> images = new ArrayList<String>();
-
-  @SerializedName("job")
-  private PDFJob job = null;
 
   @SerializedName("jobId")
   private String jobId = null;
 
-  @SerializedName("owner")
-  private String owner = null;
+  @SerializedName("images")
+  private List<String> images = new ArrayList<String>();
+
+  @SerializedName("creationTime")
+  private OffsetDateTime creationTime = null;
+
+  @SerializedName("_links")
+  private Map<String, Link> links = new HashMap<String, Link>();
+
+  @SerializedName("updateTime")
+  private OffsetDateTime updateTime = null;
+
+  @SerializedName("job")
+  private PDFJob job = null;
+
+  @SerializedName("statusMessage")
+  private String statusMessage = null;
+
+  @SerializedName("tasks")
+  private List<OcrEngineTask> tasks = new ArrayList<OcrEngineTask>();
 
   @SerializedName("queueTime")
   private OffsetDateTime queueTime = null;
@@ -103,38 +109,6 @@ public class PDFJobResponse   {
   @SerializedName("status")
   private StatusEnum status = null;
 
-  @SerializedName("statusMessage")
-  private String statusMessage = null;
-
-  @SerializedName("tasks")
-  private List<OcrEngineTask> tasks = new ArrayList<OcrEngineTask>();
-
-  @SerializedName("updateTime")
-  private OffsetDateTime updateTime = null;
-
-  public PDFJobResponse links(Map<String, Link> links) {
-    this.links = links;
-    return this;
-  }
-
-  public PDFJobResponse putLinksItem(String key, Link linksItem) {
-    this.links.put(key, linksItem);
-    return this;
-  }
-
-   /**
-   * Get links
-   * @return links
-  **/
-  @ApiModelProperty(example = "null", value = "")
-  public Map<String, Link> getLinks() {
-    return links;
-  }
-
-  public void setLinks(Map<String, Link> links) {
-    this.links = links;
-  }
-
    /**
    * The completion date/time of this job in ISO 8601 format
    * @return completionTime
@@ -144,13 +118,22 @@ public class PDFJobResponse   {
     return completionTime;
   }
 
+  public PDFJobResponse jobId(String jobId) {
+    this.jobId = jobId;
+    return this;
+  }
+
    /**
-   * The creation date/time of this job in ISO 8601 format
-   * @return creationTime
+   * Get jobId
+   * @return jobId
   **/
-  @ApiModelProperty(example = "null", value = "The creation date/time of this job in ISO 8601 format")
-  public OffsetDateTime getCreationTime() {
-    return creationTime;
+  @ApiModelProperty(example = "null", value = "")
+  public String getJobId() {
+    return jobId;
+  }
+
+  public void setJobId(String jobId) {
+    this.jobId = jobId;
   }
 
   public PDFJobResponse images(List<String> images) {
@@ -176,6 +159,47 @@ public class PDFJobResponse   {
     this.images = images;
   }
 
+   /**
+   * The creation date/time of this job in ISO 8601 format
+   * @return creationTime
+  **/
+  @ApiModelProperty(example = "null", value = "The creation date/time of this job in ISO 8601 format")
+  public OffsetDateTime getCreationTime() {
+    return creationTime;
+  }
+
+  public PDFJobResponse links(Map<String, Link> links) {
+    this.links = links;
+    return this;
+  }
+
+  public PDFJobResponse putLinksItem(String key, Link linksItem) {
+    this.links.put(key, linksItem);
+    return this;
+  }
+
+   /**
+   * Get links
+   * @return links
+  **/
+  @ApiModelProperty(example = "null", value = "")
+  public Map<String, Link> getLinks() {
+    return links;
+  }
+
+  public void setLinks(Map<String, Link> links) {
+    this.links = links;
+  }
+
+   /**
+   * The last update date/time of this job in ISO 8601 format
+   * @return updateTime
+  **/
+  @ApiModelProperty(example = "null", value = "The last update date/time of this job in ISO 8601 format")
+  public OffsetDateTime getUpdateTime() {
+    return updateTime;
+  }
+
   public PDFJobResponse job(PDFJob job) {
     this.job = job;
     return this;
@@ -192,60 +216,6 @@ public class PDFJobResponse   {
 
   public void setJob(PDFJob job) {
     this.job = job;
-  }
-
-  public PDFJobResponse jobId(String jobId) {
-    this.jobId = jobId;
-    return this;
-  }
-
-   /**
-   * Get jobId
-   * @return jobId
-  **/
-  @ApiModelProperty(example = "null", value = "")
-  public String getJobId() {
-    return jobId;
-  }
-
-  public void setJobId(String jobId) {
-    this.jobId = jobId;
-  }
-
-  public PDFJobResponse owner(String owner) {
-    this.owner = owner;
-    return this;
-  }
-
-   /**
-   * Get owner
-   * @return owner
-  **/
-  @ApiModelProperty(example = "null", value = "")
-  public String getOwner() {
-    return owner;
-  }
-
-  public void setOwner(String owner) {
-    this.owner = owner;
-  }
-
-   /**
-   * The conversion queue date/time of this job in ISO 8601 format
-   * @return queueTime
-  **/
-  @ApiModelProperty(example = "null", value = "The conversion queue date/time of this job in ISO 8601 format")
-  public OffsetDateTime getQueueTime() {
-    return queueTime;
-  }
-
-   /**
-   * The status of the job
-   * @return status
-  **/
-  @ApiModelProperty(example = "null", required = true, value = "The status of the job")
-  public StatusEnum getStatus() {
-    return status;
   }
 
    /**
@@ -281,12 +251,21 @@ public class PDFJobResponse   {
   }
 
    /**
-   * The last update date/time of this job in ISO 8601 format
-   * @return updateTime
+   * The conversion queue date/time of this job in ISO 8601 format
+   * @return queueTime
   **/
-  @ApiModelProperty(example = "null", value = "The last update date/time of this job in ISO 8601 format")
-  public OffsetDateTime getUpdateTime() {
-    return updateTime;
+  @ApiModelProperty(example = "null", value = "The conversion queue date/time of this job in ISO 8601 format")
+  public OffsetDateTime getQueueTime() {
+    return queueTime;
+  }
+
+   /**
+   * The status of the job
+   * @return status
+  **/
+  @ApiModelProperty(example = "null", required = true, value = "The status of the job")
+  public StatusEnum getStatus() {
+    return status;
   }
 
 
@@ -299,23 +278,22 @@ public class PDFJobResponse   {
       return false;
     }
     PDFJobResponse pDFJobResponse = (PDFJobResponse) o;
-    return Objects.equals(this.links, pDFJobResponse.links) &&
-        Objects.equals(this.completionTime, pDFJobResponse.completionTime) &&
-        Objects.equals(this.creationTime, pDFJobResponse.creationTime) &&
-        Objects.equals(this.images, pDFJobResponse.images) &&
-        Objects.equals(this.job, pDFJobResponse.job) &&
+    return Objects.equals(this.completionTime, pDFJobResponse.completionTime) &&
         Objects.equals(this.jobId, pDFJobResponse.jobId) &&
-        Objects.equals(this.owner, pDFJobResponse.owner) &&
-        Objects.equals(this.queueTime, pDFJobResponse.queueTime) &&
-        Objects.equals(this.status, pDFJobResponse.status) &&
+        Objects.equals(this.images, pDFJobResponse.images) &&
+        Objects.equals(this.creationTime, pDFJobResponse.creationTime) &&
+        Objects.equals(this.links, pDFJobResponse.links) &&
+        Objects.equals(this.updateTime, pDFJobResponse.updateTime) &&
+        Objects.equals(this.job, pDFJobResponse.job) &&
         Objects.equals(this.statusMessage, pDFJobResponse.statusMessage) &&
         Objects.equals(this.tasks, pDFJobResponse.tasks) &&
-        Objects.equals(this.updateTime, pDFJobResponse.updateTime);
+        Objects.equals(this.queueTime, pDFJobResponse.queueTime) &&
+        Objects.equals(this.status, pDFJobResponse.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(links, completionTime, creationTime, images, job, jobId, owner, queueTime, status, statusMessage, tasks, updateTime);
+    return Objects.hash(completionTime, jobId, images, creationTime, links, updateTime, job, statusMessage, tasks, queueTime, status);
   }
 
   @Override
@@ -323,18 +301,17 @@ public class PDFJobResponse   {
     StringBuilder sb = new StringBuilder();
     sb.append("class PDFJobResponse {\n");
     
-    sb.append("    links: ").append(toIndentedString(links)).append("\n");
     sb.append("    completionTime: ").append(toIndentedString(completionTime)).append("\n");
-    sb.append("    creationTime: ").append(toIndentedString(creationTime)).append("\n");
-    sb.append("    images: ").append(toIndentedString(images)).append("\n");
-    sb.append("    job: ").append(toIndentedString(job)).append("\n");
     sb.append("    jobId: ").append(toIndentedString(jobId)).append("\n");
-    sb.append("    owner: ").append(toIndentedString(owner)).append("\n");
-    sb.append("    queueTime: ").append(toIndentedString(queueTime)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    images: ").append(toIndentedString(images)).append("\n");
+    sb.append("    creationTime: ").append(toIndentedString(creationTime)).append("\n");
+    sb.append("    links: ").append(toIndentedString(links)).append("\n");
+    sb.append("    updateTime: ").append(toIndentedString(updateTime)).append("\n");
+    sb.append("    job: ").append(toIndentedString(job)).append("\n");
     sb.append("    statusMessage: ").append(toIndentedString(statusMessage)).append("\n");
     sb.append("    tasks: ").append(toIndentedString(tasks)).append("\n");
-    sb.append("    updateTime: ").append(toIndentedString(updateTime)).append("\n");
+    sb.append("    queueTime: ").append(toIndentedString(queueTime)).append("\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");
     return sb.toString();
   }

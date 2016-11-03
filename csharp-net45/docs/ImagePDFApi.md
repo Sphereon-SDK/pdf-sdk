@@ -6,7 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**DeleteJob**](ImagePDFApi.md#deletejob) | **DELETE** /pdf/0.1.5/image2pdf/{jobid} | Delete a job manually
 [**GetJob**](ImagePDFApi.md#getjob) | **GET** /pdf/0.1.5/image2pdf/{jobid} | Job definition and state
-[**GetJobs**](ImagePDFApi.md#getjobs) | **GET** /pdf/0.1.5/image2pdf{?status} | Get all jobs
+[**GetJobs**](ImagePDFApi.md#getjobs) | **GET** /pdf/0.1.5/image2pdf | Get all jobs
 [**GetStream**](ImagePDFApi.md#getstream) | **GET** /pdf/0.1.5/image2pdf/{jobid}/stream | Get the current result stream
 [**SubmitJob**](ImagePDFApi.md#submitjob) | **PUT** /pdf/0.1.5/image2pdf/{jobid} | Submit PDF job for processing
 [**UploadAdditionalImage**](ImagePDFApi.md#uploadadditionalimage) | **POST** /pdf/0.1.5/image2pdf/{jobid} | Upload an additional image

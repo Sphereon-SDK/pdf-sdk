@@ -86,13 +86,13 @@ namespace Sphereon.SDK.Pdf.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="Lifecycle" /> class.
         /// </summary>
-        /// <param name="Action">Action.</param>
         /// <param name="ActionTime">The time at which the job and files will be deleted, regardless of whether it has been retrieved or not. Maximal time is 1 day from job creation.</param>
+        /// <param name="Action">Action.</param>
         /// <param name="Type">Type.</param>
-        public Lifecycle(ActionEnum? Action = null, DateTime? ActionTime = null, TypeEnum? Type = null)
+        public Lifecycle(DateTime? ActionTime = null, ActionEnum? Action = null, TypeEnum? Type = null)
         {
-            this.Action = Action;
             this.ActionTime = ActionTime;
+            this.Action = Action;
             this.Type = Type;
         }
         
@@ -110,8 +110,8 @@ namespace Sphereon.SDK.Pdf.Model
         {
             var sb = new StringBuilder();
             sb.Append("class Lifecycle {\n");
-            sb.Append("  Action: ").Append(Action).Append("\n");
             sb.Append("  ActionTime: ").Append(ActionTime).Append("\n");
+            sb.Append("  Action: ").Append(Action).Append("\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -150,14 +150,14 @@ namespace Sphereon.SDK.Pdf.Model
 
             return 
                 (
-                    this.Action == other.Action ||
-                    this.Action != null &&
-                    this.Action.Equals(other.Action)
-                ) && 
-                (
                     this.ActionTime == other.ActionTime ||
                     this.ActionTime != null &&
                     this.ActionTime.Equals(other.ActionTime)
+                ) && 
+                (
+                    this.Action == other.Action ||
+                    this.Action != null &&
+                    this.Action.Equals(other.Action)
                 ) && 
                 (
                     this.Type == other.Type ||
@@ -177,10 +177,10 @@ namespace Sphereon.SDK.Pdf.Model
             {
                 int hash = 41;
                 // Suitable nullity checks etc, of course :)
-                if (this.Action != null)
-                    hash = hash * 59 + this.Action.GetHashCode();
                 if (this.ActionTime != null)
                     hash = hash * 59 + this.ActionTime.GetHashCode();
+                if (this.Action != null)
+                    hash = hash * 59 + this.Action.GetHashCode();
                 if (this.Type != null)
                     hash = hash * 59 + this.Type.GetHashCode();
                 return hash;

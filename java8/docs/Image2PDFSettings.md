@@ -4,14 +4,14 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**links** | [**Map&lt;String, Link&gt;**](Link.md) |  |  [optional]
-**compression** | [**Compression**](Compression.md) |  |  [optional]
-**engine** | [**EngineEnum**](#EngineEnum) |  |  [optional]
 **lifecycle** | [**Lifecycle**](Lifecycle.md) |  |  [optional]
-**ocr** | **Boolean** | Whether to perform OCR. When set to false the text in the PDF will not be searchable |  [optional]
 **qualityFactor** | **Integer** | Set the quality factor for the resulting PDF. Range from 0 (lowest) to 10 (highest) |  [optional]
 **resultFileName** | **String** |  |  [optional]
+**links** | [**Map&lt;String, Link&gt;**](Link.md) |  |  [optional]
+**engine** | [**EngineEnum**](#EngineEnum) |  |  [optional]
+**compression** | [**Compression**](Compression.md) |  |  [optional]
 **version** | [**VersionEnum**](#VersionEnum) |  |  [optional]
+**ocr** | **Boolean** | Whether to perform OCR. When set to false the text in the PDF will not be searchable |  [optional]
 
 
 <a name="EngineEnum"></a>

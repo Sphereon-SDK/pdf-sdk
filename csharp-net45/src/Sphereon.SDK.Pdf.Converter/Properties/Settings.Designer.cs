@@ -52,7 +52,7 @@ namespace Sphereon.SDK.Pdf.Converter.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ac5c0469-aec5-31ca-8cf7-7cb508c8d4ab")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1b1fb0ea-4e34-36b5-bc87-945daa2b5240")]
         public string AccessToken {
             get {
                 return ((string)(this["AccessToken"]));
@@ -61,7 +61,7 @@ namespace Sphereon.SDK.Pdf.Converter.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://gw.api.cloud.sphereon.com/pdf/0.1.4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://gw.api.cloud.sphereon.com")]
         public string URL {
             get {
                 return ((string)(this["URL"]));

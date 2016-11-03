@@ -36,8 +36,11 @@ import java.time.OffsetDateTime;
  * Lifecycle settings. When no lifecycle settings are supplied, the job and files will be deleted directly after retrieval of the file
  */
 @ApiModel(description = "Lifecycle settings. When no lifecycle settings are supplied, the job and files will be deleted directly after retrieval of the file")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-11-03T12:07:24.493+01:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-11-03T18:26:18.794+01:00")
 public class Lifecycle   {
+  @SerializedName("actionTime")
+  private OffsetDateTime actionTime = null;
+
   /**
    * Gets or Sets action
    */
@@ -59,9 +62,6 @@ public class Lifecycle   {
 
   @SerializedName("action")
   private ActionEnum action = null;
-
-  @SerializedName("actionTime")
-  private OffsetDateTime actionTime = null;
 
   /**
    * Gets or Sets type
@@ -88,24 +88,6 @@ public class Lifecycle   {
   @SerializedName("type")
   private TypeEnum type = null;
 
-  public Lifecycle action(ActionEnum action) {
-    this.action = action;
-    return this;
-  }
-
-   /**
-   * Get action
-   * @return action
-  **/
-  @ApiModelProperty(example = "null", value = "")
-  public ActionEnum getAction() {
-    return action;
-  }
-
-  public void setAction(ActionEnum action) {
-    this.action = action;
-  }
-
   public Lifecycle actionTime(OffsetDateTime actionTime) {
     this.actionTime = actionTime;
     return this;
@@ -122,6 +104,24 @@ public class Lifecycle   {
 
   public void setActionTime(OffsetDateTime actionTime) {
     this.actionTime = actionTime;
+  }
+
+  public Lifecycle action(ActionEnum action) {
+    this.action = action;
+    return this;
+  }
+
+   /**
+   * Get action
+   * @return action
+  **/
+  @ApiModelProperty(example = "null", value = "")
+  public ActionEnum getAction() {
+    return action;
+  }
+
+  public void setAction(ActionEnum action) {
+    this.action = action;
   }
 
   public Lifecycle type(TypeEnum type) {
@@ -152,14 +152,14 @@ public class Lifecycle   {
       return false;
     }
     Lifecycle lifecycle = (Lifecycle) o;
-    return Objects.equals(this.action, lifecycle.action) &&
-        Objects.equals(this.actionTime, lifecycle.actionTime) &&
+    return Objects.equals(this.actionTime, lifecycle.actionTime) &&
+        Objects.equals(this.action, lifecycle.action) &&
         Objects.equals(this.type, lifecycle.type);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(action, actionTime, type);
+    return Objects.hash(actionTime, action, type);
   }
 
   @Override
@@ -167,8 +167,8 @@ public class Lifecycle   {
     StringBuilder sb = new StringBuilder();
     sb.append("class Lifecycle {\n");
     
-    sb.append("    action: ").append(toIndentedString(action)).append("\n");
     sb.append("    actionTime: ").append(toIndentedString(actionTime)).append("\n");
+    sb.append("    action: ").append(toIndentedString(action)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("}");
     return sb.toString();

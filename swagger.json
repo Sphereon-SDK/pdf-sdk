@@ -1,1 +1,527 @@
-{"swagger":"2.0","info":{"description":"<b>The PDF conversion API 'image2pdf' converts images to (searcheable) PDF files.</b>\r\n\r\nThe flow is generally as follows:\r\n1. First upload an image using the /image2pdf POST endpoint. You will get back a job response that contains a job with its associated settings.\r\n2. Upload any additional images using the /image2pdf/{jobId} POST endpoint when you want to merge additional images or PDFs. You will get back the update job response that contains a job with its associated settings.\r\n3. Start the job from a PUT request to the /image2pdf/{jobid} endpoint, with the Job and Settings JSON as request body. The conversion to PDF will now start\r\n4. Check the job status from the /image2pdf/{jobid} GET endpoint until the status has changed to DONE or ERROR. Messaging using a websocket will be available as an alternative in a future version\r\n5. Retrieve the PDF file using the /image2pdf/{jobid}/stream GET endpoint. This will return the PDF file only when the status is DONE. In other cases it will return the Job Response JSON (with http code 202 instead of 200)\r\n\r\n\r\n<b>Interactive testing: </b>A web based test console is available in the <a href=\"https://store.sphereon.com\">Sphereon API Store</a>","version":"0.1.5","title":"Sphereon :: DOC :: PDF","termsOfService":"https://sphereon.com","contact":{"name":"Sphereon DevOps Team","url":"https://sphereon.com","email":"dev@sphereon.com"},"license":{"name":"Apache License Version 2.0","url":"http://www.apache.org/licenses/LICENSE-2.0"}},"host":"gw.api.cloud.sphereon.com","basePath":"/","tags":[{"name":"Image2PDF","description":"Image to PDF API"}],"schemes":["https"],"paths":{"/pdf/0.1.5/image2pdf":{"post":{"tags":["Image2PDF"],"summary":"Upload (first) image","description":"Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff in this step or submit additional images or PDFs in subsequent steps using the uploadAdditionalImage endpoint","operationId":"uploadImage","consumes":["multipart/form-data"],"produces":["application/json;charset=UTF-8"],"parameters":[{"name":"stream","in":"formData","description":"The first binary image or PDF (file/inputstream) to convert to PDF","required":true,"type":"file"}],"responses":{"200":{"description":"Image uploaded. A JSON Job response will be returned in the body.","schema":{"$ref":"#/definitions/PDFJobResponse"}},"400":{"description":"Job could not be stored/processed","schema":{"$ref":"#/definitions/VndErrors"}},"404":{"description":"Invalid job id.","schema":{"$ref":"#/definitions/VndErrors"}}},"security":[{"oauth2schema":["global"]}]}},"/pdf/0.1.5/image2pdf/{jobid}":{"get":{"tags":["Image2PDF"],"summary":"Job definition and state","description":"Get the PDF job definition and current state. Please not that you can differentiate based on http response status","operationId":"getJob","consumes":["application/json"],"produces":["application/json;charset=UTF-8"],"parameters":[{"name":"jobid","in":"path","description":"jobid","required":true,"type":"string"}],"responses":{"200":{"description":"PDF job returned and Job is done or in error","schema":{"$ref":"#/definitions/PDFJobResponse"}},"202":{"description":"PDF job returned and Job is still processing","schema":{"$ref":"#/definitions/PDFJobResponse"}},"404":{"description":"Invalid job id","schema":{"$ref":"#/definitions/VndErrors"}}},"security":[{"oauth2schema":["global"]}]},"post":{"tags":["Image2PDF"],"summary":"Upload an additional image","description":"Upload an additional image for conversion to PDF. Conversion will not be started yet.","operationId":"uploadAdditionalImage","consumes":["multipart/form-data"],"produces":["application/json;charset=UTF-8"],"parameters":[{"name":"jobid","in":"path","description":"jobid","required":true,"type":"string"},{"name":"stream","in":"formData","description":"The additional binary image or PDF (file/inputstream) to convert to PDF","required":true,"type":"file"}],"responses":{"200":{"description":"Image uploaded. The JSON Job response will be returned in the body.","schema":{"$ref":"#/definitions/PDFJobResponse"}},"400":{"description":"Job could not be stored/processed","schema":{"$ref":"#/definitions/VndErrors"}},"404":{"description":"Invalid job id.","schema":{"$ref":"#/definitions/VndErrors"}}},"security":[{"oauth2schema":["global"]}]},"put":{"tags":["Image2PDF"],"summary":"Submit PDF job for processing","description":"Convert the previously uploaded image(s) to PDF, using the supplied settings associated with the job in the request body. You can only submit the job after a new Job is created with status IMAGE_UPLOADED or resubmit an existing Job with status ERROR. In all cases the job Id in the path must match the jobId in the request","operationId":"submitJob","consumes":["application/json;charset=UTF-8"],"produces":["application/json;charset=UTF-8"],"parameters":[{"name":"jobid","in":"path","description":"jobid","required":true,"type":"string"},{"in":"body","name":"job","description":"jobEntity","required":true,"schema":{"$ref":"#/definitions/PDFJob"}}],"responses":{"200":{"description":"Image processing submitted","schema":{"$ref":"#/definitions/PDFJobResponse"}},"400":{"description":"Resubmitted job not allowed because the job is currently processing or already processed and had status DONE","schema":{"$ref":"#/definitions/VndErrors"}},"404":{"description":"Invalid job id","schema":{"$ref":"#/definitions/VndErrors"}}},"security":[{"oauth2schema":["global"]}]},"delete":{"tags":["Image2PDF"],"summary":"Delete a job manually","description":"Delete the PDF job and all related files","operationId":"deleteJob","consumes":["application/json"],"produces":["application/json;charset=UTF-8"],"parameters":[{"name":"jobid","in":"path","description":"jobid","required":true,"type":"string"}],"responses":{"200":{"description":"PDF job returned and Job is done or in error","schema":{"$ref":"#/definitions/PDFJobResponse"}},"400":{"description":"Could not delete all parts","schema":{"$ref":"#/definitions/VndErrors"}},"404":{"description":"Invalid job id","schema":{"$ref":"#/definitions/VndErrors"}}},"security":[{"oauth2schema":["global"]}]}},"/pdf/0.1.5/image2pdf/{jobid}/stream":{"get":{"tags":["Image2PDF"],"summary":"Get the current result stream","description":"Get the PDF as binary stream/file.\r\nOur API generation does not allow changing the media type based on the Accepted header unfortunately.<br/>This means we use a seperate path postfix with the value '/stream'.\r\nThis API only returns the PDF when the response status code is zero! In other cases nothing is returned or the Job JSON when it is still being executed","operationId":"getStream","consumes":["application/json"],"produces":["application/octet-stream"],"parameters":[{"name":"jobid","in":"path","description":"jobid","required":true,"type":"string"}],"responses":{"200":{"description":"PDF successfully created and returned","schema":{"type":"string","format":"byte"}},"400":{"description":"PDF could not be created.","schema":{"$ref":"#/definitions/VndErrors"}},"202":{"description":"PDF not yet created. Job is still executing., Will return the JSON job instead of the PDF","schema":{"type":"string","format":"byte"}},"404":{"description":"Invalid job id. No response body is supplied","schema":{"$ref":"#/definitions/VndErrors"}}},"security":[{"oauth2schema":["global"]}]}},"/pdf/0.1.5/image2pdf{?status}":{"get":{"tags":["Image2PDF"],"summary":"Get all jobs","description":"Get all PDF job definitions and their current state.","operationId":"getJobs","consumes":["application/json"],"produces":["application/json;charset=UTF-8"],"parameters":[{"name":"status","in":"query","description":"A list of status to filter on.","required":false,"type":"array","items":{"type":"string","enum":["IMAGE_UPLOADED","PROCESSING","DONE","ERROR","DELETED"]},"collectionFormat":"multi","enum":["IMAGE_UPLOADED","PROCESSING","DONE","ERROR","DELETED"]}],"responses":{"200":{"description":"All PDF jobs that have not been deleted","schema":{"$ref":"#/definitions/PDFJobResponse"}}},"security":[{"oauth2schema":["global"]}]}}},"securityDefinitions":{"oauth2schema":{"type":"oauth2","tokenUrl":"https://gw.api.cloud.sphereon.com/token","flow":"application","scopes":{"global":"accessEverything"}}},"definitions":{"Image2PDFSettings":{"type":"object","properties":{"_links":{"type":"object","additionalProperties":{"$ref":"#/definitions/Link"}},"compression":{"$ref":"#/definitions/Compression"},"engine":{"type":"string","enum":["BASIC","ADVANCED","PREMIUM"]},"lifecycle":{"$ref":"#/definitions/Lifecycle"},"ocr":{"type":"boolean","example":false,"description":"Whether to perform OCR. When set to false the text in the PDF will not be searchable"},"qualityFactor":{"type":"integer","format":"int32","description":"Set the quality factor for the resulting PDF. Range from 0 (lowest) to 10 (highest)","minimum":0.0,"maximum":10.0},"resultFileName":{"type":"string"},"version":{"type":"string","enum":["PDF_1_4","PDF_1_5","PDF_1_6","PDF_1_7","PDF_A_1b"]}},"description":"Image to PDF settings"},"Compression":{"type":"object","properties":{"level":{"type":"integer","format":"int32","description":"Compression level. Valid range from 0 (minimal compression) to 10 (maximal compression)","minimum":0.0,"maximum":10.0},"type":{"type":"string","description":"Compression type. ADVANCED is only allowed and should be used with the ADVANCED engine","enum":["NONE","ADVANCED"]}},"description":"Compression settings"},"OcrEngineTask":{"type":"object","properties":{"documentId":{"type":"string","description":"The document Id provided by a backend system","readOnly":true},"engine":{"type":"string","description":"The Engine being used","readOnly":true,"enum":["ADVANCED","PREMIUM","BASIC"]},"images":{"type":"array","description":"The names of the supplied images","readOnly":true,"items":{"type":"string"}},"jobId":{"type":"string","description":"The current job Id","readOnly":true},"queueId":{"type":"string","description":"The queue Id provided by a backend system","readOnly":true},"status":{"type":"string","description":"The status of the Ocr engine task itself","readOnly":true,"enum":["REQUESTED","QUEUED","PROCESSING","DONE","ERROR"]},"url":{"type":"string","description":"The URL on the bucketstore for the PDF. Only available once the status is DONE","readOnly":true}}},"VndError":{"type":"object","properties":{"_links":{"type":"object","additionalProperties":{"$ref":"#/definitions/Link"}},"logref":{"type":"string"},"message":{"type":"string"}}},"Lifecycle":{"type":"object","properties":{"action":{"type":"string","enum":["DELETE"]},"actionTime":{"type":"string","format":"date-time","description":"The time at which the job and files will be deleted, regardless of whether it has been retrieved or not. Maximal time is 1 day from job creation"},"type":{"type":"string","enum":["RETRIEVAL","TIME"]}},"description":"Lifecycle settings. When no lifecycle settings are supplied, the job and files will be deleted directly after retrieval of the file"},"PDFJob":{"type":"object","required":["jobId"],"properties":{"jobId":{"type":"string","description":"The server generated job jobId. This jobId is checked against the jobId in the request path on overy invocation"},"settings":{"$ref":"#/definitions/Image2PDFSettings"}},"description":"The PDF job. Has access to the job settings."},"PDFJobResponse":{"type":"object","required":["images","status"],"properties":{"_links":{"type":"object","additionalProperties":{"$ref":"#/definitions/Link"}},"completionTime":{"type":"string","format":"date-time","description":"The completion date/time of this job in ISO 8601 format","readOnly":true},"creationTime":{"type":"string","format":"date-time","description":"The creation date/time of this job in ISO 8601 format","readOnly":true},"images":{"type":"array","description":"The original images. Currently only a single image is supported. The image can be a multipage tiff however","items":{"type":"string"}},"job":{"$ref":"#/definitions/PDFJob"},"jobId":{"type":"string"},"owner":{"type":"string"},"queueTime":{"type":"string","format":"date-time","description":"The conversion queue date/time of this job in ISO 8601 format","readOnly":true},"status":{"type":"string","description":"The status of the job","readOnly":true,"enum":["IMAGE_UPLOADED","PROCESSING","DONE","ERROR","DELETED"]},"statusMessage":{"type":"string","description":"A status message, which can be informational, warning or error. AA message here does not indicate an error perse","readOnly":true},"tasks":{"type":"array","description":"The server supplied engine task(s)","readOnly":true,"items":{"$ref":"#/definitions/OcrEngineTask"}},"updateTime":{"type":"string","format":"date-time","description":"The last update date/time of this job in ISO 8601 format","readOnly":true}},"description":"The PDF job. Has access to the job settings as well as ocr engine tasks"},"Link":{"type":"object","properties":{"href":{"type":"string"}}},"VndErrors":{"type":"object","properties":{"errors":{"type":"array","items":{"$ref":"#/definitions/VndError"}}},"description":"The error response"}}}
+{
+  "basePath": "/",
+  "paths": {
+    "/pdf/0.1.5/image2pdf/{jobid}/stream": {"get": {
+      "summary": "Get the current result stream",
+      "security": [{"oauth2schema": ["global"]}],
+      "produces": ["application/octet-stream"],
+      "description": "Get the PDF as binary stream/file.\r\nOur API generation does not allow changing the media type based on the Accepted header unfortunately.<br/>This means we use a seperate path postfix with the value '/stream'.\r\nThis API only returns the PDF when the response status code is zero! In other cases nothing is returned or the Job JSON when it is still being executed",
+      "operationId": "getStream",
+      "responses": {
+        "200": {
+          "schema": {
+            "format": "byte",
+            "type": "string"
+          },
+          "description": "PDF successfully created and returned"
+        },
+        "400": {
+          "schema": {"$ref": "#/definitions/VndErrors"},
+          "description": "PDF could not be created."
+        },
+        "202": {
+          "schema": {
+            "format": "byte",
+            "type": "string"
+          },
+          "description": "PDF not yet created. Job is still executing., Will return the JSON job instead of the PDF"
+        },
+        "404": {
+          "schema": {"$ref": "#/definitions/VndErrors"},
+          "description": "Invalid job id. No response body is supplied"
+        }
+      },
+      "parameters": [{
+        "in": "path",
+        "name": "jobid",
+        "description": "jobid",
+        "type": "string",
+        "required": true
+      }],
+      "tags": ["Image2PDF"],
+      "consumes": ["application/json"]
+    }},
+    "/pdf/0.1.5/image2pdf": {
+      "post": {
+        "summary": "Upload (first) image",
+        "security": [{"oauth2schema": ["global"]}],
+        "produces": ["application/json;charset=UTF-8"],
+        "description": "Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff in this step or submit additional images or PDFs in subsequent steps using the uploadAdditionalImage endpoint",
+        "operationId": "uploadImage",
+        "responses": {
+          "200": {
+            "schema": {"$ref": "#/definitions/PDFJobResponse"},
+            "description": "Image uploaded. A JSON Job response will be returned in the body."
+          },
+          "400": {
+            "schema": {"$ref": "#/definitions/VndErrors"},
+            "description": "Job could not be stored/processed"
+          },
+          "404": {
+            "schema": {"$ref": "#/definitions/VndErrors"},
+            "description": "Invalid job id."
+          }
+        },
+        "parameters": [{
+          "in": "formData",
+          "name": "stream",
+          "description": "The first binary image or PDF (file/inputstream) to convert to PDF",
+          "type": "file",
+          "required": true
+        }],
+        "tags": ["Image2PDF"],
+        "consumes": ["multipart/form-data"]
+      },
+      "get": {
+        "summary": "Get all jobs",
+        "security": [{"oauth2schema": ["global"]}],
+        "produces": ["application/json;charset=UTF-8"],
+        "description": "Get all PDF job definitions and their current state.",
+        "operationId": "getJobs",
+        "responses": {"200": {
+          "schema": {"$ref": "#/definitions/PDFJobResponse"},
+          "description": "All PDF jobs that have not been deleted"
+        }},
+        "parameters": [{
+          "in": "query",
+          "name": "status",
+          "description": "A list of status to filter on.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "IMAGE_UPLOADED",
+              "PROCESSING",
+              "DONE",
+              "ERROR",
+              "DELETED"
+            ]
+          },
+          "collectionFormat": "multi",
+          "required": false,
+          "enum": [
+            "IMAGE_UPLOADED",
+            "PROCESSING",
+            "DONE",
+            "ERROR",
+            "DELETED"
+          ]
+        }],
+        "tags": ["Image2PDF"],
+        "consumes": ["application/json"]
+      }
+    },
+    "/pdf/0.1.5/image2pdf/{jobid}": {
+      "post": {
+        "summary": "Upload an additional image",
+        "security": [{"oauth2schema": ["global"]}],
+        "produces": ["application/json;charset=UTF-8"],
+        "description": "Upload an additional image for conversion to PDF. Conversion will not be started yet.",
+        "operationId": "uploadAdditionalImage",
+        "responses": {
+          "200": {
+            "schema": {"$ref": "#/definitions/PDFJobResponse"},
+            "description": "Image uploaded. The JSON Job response will be returned in the body."
+          },
+          "400": {
+            "schema": {"$ref": "#/definitions/VndErrors"},
+            "description": "Job could not be stored/processed"
+          },
+          "404": {
+            "schema": {"$ref": "#/definitions/VndErrors"},
+            "description": "Invalid job id."
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "jobid",
+            "description": "jobid",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "stream",
+            "description": "The additional binary image or PDF (file/inputstream) to convert to PDF",
+            "type": "file",
+            "required": true
+          }
+        ],
+        "tags": ["Image2PDF"],
+        "consumes": ["multipart/form-data"]
+      },
+      "get": {
+        "summary": "Job definition and state",
+        "security": [{"oauth2schema": ["global"]}],
+        "produces": ["application/json;charset=UTF-8"],
+        "description": "Get the PDF job definition and current state. Please not that you can differentiate based on http response status",
+        "operationId": "getJob",
+        "responses": {
+          "200": {
+            "schema": {"$ref": "#/definitions/PDFJobResponse"},
+            "description": "PDF job returned and Job is done or in error"
+          },
+          "202": {
+            "schema": {"$ref": "#/definitions/PDFJobResponse"},
+            "description": "PDF job returned and Job is still processing"
+          },
+          "404": {
+            "schema": {"$ref": "#/definitions/VndErrors"},
+            "description": "Invalid job id"
+          }
+        },
+        "parameters": [{
+          "in": "path",
+          "name": "jobid",
+          "description": "jobid",
+          "type": "string",
+          "required": true
+        }],
+        "tags": ["Image2PDF"],
+        "consumes": ["application/json"]
+      },
+      "delete": {
+        "summary": "Delete a job manually",
+        "security": [{"oauth2schema": ["global"]}],
+        "produces": ["application/json;charset=UTF-8"],
+        "description": "Delete the PDF job and all related files",
+        "operationId": "deleteJob",
+        "responses": {
+          "200": {
+            "schema": {"$ref": "#/definitions/PDFJobResponse"},
+            "description": "PDF job returned and Job is done or in error"
+          },
+          "400": {
+            "schema": {"$ref": "#/definitions/VndErrors"},
+            "description": "Could not delete all parts"
+          },
+          "404": {
+            "schema": {"$ref": "#/definitions/VndErrors"},
+            "description": "Invalid job id"
+          }
+        },
+        "parameters": [{
+          "in": "path",
+          "name": "jobid",
+          "description": "jobid",
+          "type": "string",
+          "required": true
+        }],
+        "tags": ["Image2PDF"],
+        "consumes": ["application/json"]
+      },
+      "put": {
+        "summary": "Submit PDF job for processing",
+        "security": [{"oauth2schema": ["global"]}],
+        "produces": ["application/json;charset=UTF-8"],
+        "description": "Convert the previously uploaded image(s) to PDF, using the supplied settings associated with the job in the request body. You can only submit the job after a new Job is created with status IMAGE_UPLOADED or resubmit an existing Job with status ERROR. In all cases the job Id in the path must match the jobId in the request",
+        "operationId": "submitJob",
+        "responses": {
+          "200": {
+            "schema": {"$ref": "#/definitions/PDFJobResponse"},
+            "description": "Image processing submitted"
+          },
+          "400": {
+            "schema": {"$ref": "#/definitions/VndErrors"},
+            "description": "Resubmitted job not allowed because the job is currently processing or already processed and had status DONE"
+          },
+          "404": {
+            "schema": {"$ref": "#/definitions/VndErrors"},
+            "description": "Invalid job id"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "jobid",
+            "description": "jobid",
+            "type": "string",
+            "required": true
+          },
+          {
+            "schema": {"$ref": "#/definitions/PDFJob"},
+            "in": "body",
+            "name": "job",
+            "description": "jobEntity",
+            "required": true
+          }
+        ],
+        "tags": ["Image2PDF"],
+        "consumes": ["application/json;charset=UTF-8"]
+      }
+    }
+  },
+  "host": "gw.api.cloud.sphereon.com",
+  "schemes": ["https"],
+  "securityDefinitions": {"oauth2schema": {
+    "tokenUrl": "https://gw.api.cloud.sphereon.com/token",
+    "scopes": {"global": "accessEverything"},
+    "type": "oauth2",
+    "flow": "application"
+  }},
+  "definitions": {
+    "Image2PDFSettings": {
+      "description": "Image to PDF settings",
+      "type": "object",
+      "properties": {
+        "lifecycle": {"$ref": "#/definitions/Lifecycle"},
+        "qualityFactor": {
+          "format": "int32",
+          "description": "Set the quality factor for the resulting PDF. Range from 0 (lowest) to 10 (highest)",
+          "maximum": 10,
+          "type": "integer",
+          "minimum": 0
+        },
+        "resultFileName": {"type": "string"},
+        "_links": {
+          "additionalProperties": {"$ref": "#/definitions/Link"},
+          "type": "object"
+        },
+        "engine": {
+          "type": "string",
+          "enum": [
+            "BASIC",
+            "ADVANCED",
+            "PREMIUM"
+          ]
+        },
+        "compression": {"$ref": "#/definitions/Compression"},
+        "version": {
+          "type": "string",
+          "enum": [
+            "PDF_1_4",
+            "PDF_1_5",
+            "PDF_1_6",
+            "PDF_1_7",
+            "PDF_A_1b"
+          ]
+        },
+        "ocr": {
+          "description": "Whether to perform OCR. When set to false the text in the PDF will not be searchable",
+          "type": "boolean",
+          "example": false
+        }
+      }
+    },
+    "Compression": {
+      "description": "Compression settings",
+      "type": "object",
+      "properties": {
+        "level": {
+          "format": "int32",
+          "description": "Compression level. Valid range from 0 (minimal compression) to 10 (maximal compression)",
+          "maximum": 10,
+          "type": "integer",
+          "minimum": 0
+        },
+        "type": {
+          "description": "Compression type. ADVANCED is only allowed and should be used with the ADVANCED engine",
+          "type": "string",
+          "enum": [
+            "NONE",
+            "ADVANCED"
+          ]
+        }
+      }
+    },
+    "OcrEngineTask": {
+      "type": "object",
+      "properties": {
+        "jobId": {
+          "description": "The current job Id",
+          "readOnly": true,
+          "type": "string"
+        },
+        "queueId": {
+          "description": "The queue Id provided by a backend system",
+          "readOnly": true,
+          "type": "string"
+        },
+        "images": {
+          "description": "The names of the supplied images",
+          "readOnly": true,
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "engine": {
+          "description": "The Engine being used",
+          "readOnly": true,
+          "type": "string",
+          "enum": [
+            "ADVANCED",
+            "PREMIUM",
+            "BASIC"
+          ]
+        },
+        "documentId": {
+          "description": "The document Id provided by a backend system",
+          "readOnly": true,
+          "type": "string"
+        },
+        "url": {
+          "description": "The URL on the bucketstore for the PDF. Only available once the status is DONE",
+          "readOnly": true,
+          "type": "string"
+        },
+        "status": {
+          "description": "The status of the Ocr engine task itself",
+          "readOnly": true,
+          "type": "string",
+          "enum": [
+            "REQUESTED",
+            "QUEUED",
+            "PROCESSING",
+            "DONE",
+            "ERROR"
+          ]
+        }
+      }
+    },
+    "VndError": {
+      "type": "object",
+      "properties": {
+        "_links": {
+          "additionalProperties": {"$ref": "#/definitions/Link"},
+          "type": "object"
+        },
+        "logref": {"type": "string"},
+        "message": {"type": "string"}
+      }
+    },
+    "Lifecycle": {
+      "description": "Lifecycle settings. When no lifecycle settings are supplied, the job and files will be deleted directly after retrieval of the file",
+      "type": "object",
+      "properties": {
+        "actionTime": {
+          "format": "date-time",
+          "description": "The time at which the job and files will be deleted, regardless of whether it has been retrieved or not. Maximal time is 1 day from job creation",
+          "type": "string"
+        },
+        "action": {
+          "type": "string",
+          "enum": ["DELETE"]
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "RETRIEVAL",
+            "TIME"
+          ]
+        }
+      }
+    },
+    "PDFJob": {
+      "description": "The PDF job. Has access to the job settings.",
+      "type": "object",
+      "required": ["jobId"],
+      "properties": {
+        "jobId": {
+          "description": "The server generated job jobId. This jobId is checked against the jobId in the request path on overy invocation",
+          "type": "string"
+        },
+        "settings": {"$ref": "#/definitions/Image2PDFSettings"}
+      }
+    },
+    "PDFJobResponse": {
+      "description": "The PDF job. Has access to the job settings as well as ocr engine tasks",
+      "type": "object",
+      "required": [
+        "images",
+        "status"
+      ],
+      "properties": {
+        "completionTime": {
+          "format": "date-time",
+          "description": "The completion date/time of this job in ISO 8601 format",
+          "readOnly": true,
+          "type": "string"
+        },
+        "jobId": {"type": "string"},
+        "images": {
+          "description": "The original images. Currently only a single image is supported. The image can be a multipage tiff however",
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "creationTime": {
+          "format": "date-time",
+          "description": "The creation date/time of this job in ISO 8601 format",
+          "readOnly": true,
+          "type": "string"
+        },
+        "_links": {
+          "additionalProperties": {"$ref": "#/definitions/Link"},
+          "type": "object"
+        },
+        "updateTime": {
+          "format": "date-time",
+          "description": "The last update date/time of this job in ISO 8601 format",
+          "readOnly": true,
+          "type": "string"
+        },
+        "job": {"$ref": "#/definitions/PDFJob"},
+        "statusMessage": {
+          "description": "A status message, which can be informational, warning or error. AA message here does not indicate an error perse",
+          "readOnly": true,
+          "type": "string"
+        },
+        "tasks": {
+          "description": "The server supplied engine task(s)",
+          "readOnly": true,
+          "type": "array",
+          "items": {"$ref": "#/definitions/OcrEngineTask"}
+        },
+        "queueTime": {
+          "format": "date-time",
+          "description": "The conversion queue date/time of this job in ISO 8601 format",
+          "readOnly": true,
+          "type": "string"
+        },
+        "status": {
+          "description": "The status of the job",
+          "readOnly": true,
+          "type": "string",
+          "enum": [
+            "IMAGE_UPLOADED",
+            "PROCESSING",
+            "DONE",
+            "ERROR",
+            "DELETED"
+          ]
+        }
+      }
+    },
+    "Link": {
+      "type": "object",
+      "properties": {"href": {"type": "string"}}
+    },
+    "VndErrors": {
+      "description": "The error response",
+      "type": "object",
+      "properties": {"errors": {
+        "type": "array",
+        "items": {"$ref": "#/definitions/VndError"}
+      }}
+    }
+  },
+  "swagger": "2.0",
+  "info": {
+    "license": {
+      "name": "Apache License Version 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    },
+    "contact": {
+      "name": "Sphereon DevOps Team",
+      "url": "https://sphereon.com",
+      "email": "dev@sphereon.com"
+    },
+    "description": "<b>The PDF conversion API 'image2pdf' converts images to (searcheable) PDF files.<\/b>\r\n\r\nThe flow is generally as follows:\r\n1. First upload an image using the /image2pdf POST endpoint. You will get back a job response that contains a job with its associated settings.\r\n2. Upload any additional images using the /image2pdf/{jobId} POST endpoint when you want to merge additional images or PDFs. You will get back the update job response that contains a job with its associated settings.\r\n3. Start the job from a PUT request to the /image2pdf/{jobid} endpoint, with the Job and Settings JSON as request body. The conversion to PDF will now start\r\n4. Check the job status from the /image2pdf/{jobid} GET endpoint until the status has changed to DONE or ERROR. Messaging using a websocket will be available as an alternative in a future version\r\n5. Retrieve the PDF file using the /image2pdf/{jobid}/stream GET endpoint. This will return the PDF file only when the status is DONE. In other cases it will return the Job Response JSON (with http code 202 instead of 200)\r\n\r\n\r\n<b>Interactive testing: <\/b>A web based test console is available in the <a href=\"https://store.sphereon.com\">Sphereon API Store<\/a>",
+    "termsOfService": "https://sphereon.com",
+    "title": "Sphereon :: DOC :: PDF",
+    "version": "0.1.5"
+  },
+  "tags": [{
+    "name": "Image2PDF",
+    "description": "Image to PDF API"
+  }]
+}

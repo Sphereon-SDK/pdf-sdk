@@ -36,10 +36,16 @@ import java.util.List;
 /**
  * OcrEngineTask
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-11-03T12:07:24.493+01:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-11-03T18:26:18.794+01:00")
 public class OcrEngineTask   {
-  @SerializedName("documentId")
-  private String documentId = null;
+  @SerializedName("jobId")
+  private String jobId = null;
+
+  @SerializedName("queueId")
+  private String queueId = null;
+
+  @SerializedName("images")
+  private List<String> images = new ArrayList<String>();
 
   /**
    * The Engine being used
@@ -69,14 +75,11 @@ public class OcrEngineTask   {
   @SerializedName("engine")
   private EngineEnum engine = null;
 
-  @SerializedName("images")
-  private List<String> images = new ArrayList<String>();
+  @SerializedName("documentId")
+  private String documentId = null;
 
-  @SerializedName("jobId")
-  private String jobId = null;
-
-  @SerializedName("queueId")
-  private String queueId = null;
+  @SerializedName("url")
+  private String url = null;
 
   /**
    * The status of the Ocr engine task itself
@@ -112,25 +115,22 @@ public class OcrEngineTask   {
   @SerializedName("status")
   private StatusEnum status = null;
 
-  @SerializedName("url")
-  private String url = null;
-
    /**
-   * The document Id provided by a backend system
-   * @return documentId
+   * The current job Id
+   * @return jobId
   **/
-  @ApiModelProperty(example = "null", value = "The document Id provided by a backend system")
-  public String getDocumentId() {
-    return documentId;
+  @ApiModelProperty(example = "null", value = "The current job Id")
+  public String getJobId() {
+    return jobId;
   }
 
    /**
-   * The Engine being used
-   * @return engine
+   * The queue Id provided by a backend system
+   * @return queueId
   **/
-  @ApiModelProperty(example = "null", value = "The Engine being used")
-  public EngineEnum getEngine() {
-    return engine;
+  @ApiModelProperty(example = "null", value = "The queue Id provided by a backend system")
+  public String getQueueId() {
+    return queueId;
   }
 
   public OcrEngineTask images(List<String> images) {
@@ -157,30 +157,21 @@ public class OcrEngineTask   {
   }
 
    /**
-   * The current job Id
-   * @return jobId
+   * The Engine being used
+   * @return engine
   **/
-  @ApiModelProperty(example = "null", value = "The current job Id")
-  public String getJobId() {
-    return jobId;
+  @ApiModelProperty(example = "null", value = "The Engine being used")
+  public EngineEnum getEngine() {
+    return engine;
   }
 
    /**
-   * The queue Id provided by a backend system
-   * @return queueId
+   * The document Id provided by a backend system
+   * @return documentId
   **/
-  @ApiModelProperty(example = "null", value = "The queue Id provided by a backend system")
-  public String getQueueId() {
-    return queueId;
-  }
-
-   /**
-   * The status of the Ocr engine task itself
-   * @return status
-  **/
-  @ApiModelProperty(example = "null", value = "The status of the Ocr engine task itself")
-  public StatusEnum getStatus() {
-    return status;
+  @ApiModelProperty(example = "null", value = "The document Id provided by a backend system")
+  public String getDocumentId() {
+    return documentId;
   }
 
    /**
@@ -190,6 +181,15 @@ public class OcrEngineTask   {
   @ApiModelProperty(example = "null", value = "The URL on the bucketstore for the PDF. Only available once the status is DONE")
   public String getUrl() {
     return url;
+  }
+
+   /**
+   * The status of the Ocr engine task itself
+   * @return status
+  **/
+  @ApiModelProperty(example = "null", value = "The status of the Ocr engine task itself")
+  public StatusEnum getStatus() {
+    return status;
   }
 
 
@@ -202,18 +202,18 @@ public class OcrEngineTask   {
       return false;
     }
     OcrEngineTask ocrEngineTask = (OcrEngineTask) o;
-    return Objects.equals(this.documentId, ocrEngineTask.documentId) &&
-        Objects.equals(this.engine, ocrEngineTask.engine) &&
-        Objects.equals(this.images, ocrEngineTask.images) &&
-        Objects.equals(this.jobId, ocrEngineTask.jobId) &&
+    return Objects.equals(this.jobId, ocrEngineTask.jobId) &&
         Objects.equals(this.queueId, ocrEngineTask.queueId) &&
-        Objects.equals(this.status, ocrEngineTask.status) &&
-        Objects.equals(this.url, ocrEngineTask.url);
+        Objects.equals(this.images, ocrEngineTask.images) &&
+        Objects.equals(this.engine, ocrEngineTask.engine) &&
+        Objects.equals(this.documentId, ocrEngineTask.documentId) &&
+        Objects.equals(this.url, ocrEngineTask.url) &&
+        Objects.equals(this.status, ocrEngineTask.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(documentId, engine, images, jobId, queueId, status, url);
+    return Objects.hash(jobId, queueId, images, engine, documentId, url, status);
   }
 
   @Override
@@ -221,13 +221,13 @@ public class OcrEngineTask   {
     StringBuilder sb = new StringBuilder();
     sb.append("class OcrEngineTask {\n");
     
-    sb.append("    documentId: ").append(toIndentedString(documentId)).append("\n");
-    sb.append("    engine: ").append(toIndentedString(engine)).append("\n");
-    sb.append("    images: ").append(toIndentedString(images)).append("\n");
     sb.append("    jobId: ").append(toIndentedString(jobId)).append("\n");
     sb.append("    queueId: ").append(toIndentedString(queueId)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    images: ").append(toIndentedString(images)).append("\n");
+    sb.append("    engine: ").append(toIndentedString(engine)).append("\n");
+    sb.append("    documentId: ").append(toIndentedString(documentId)).append("\n");
     sb.append("    url: ").append(toIndentedString(url)).append("\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");
     return sb.toString();
   }

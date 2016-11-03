@@ -53,9 +53,9 @@ public class ImagePDFApiTest {
 
     private final ImagePDFApi api = new ImagePDFApi();
     private static PDFJob pdfJob;
-    private static final String IMAGE_NAME = "image.png";
+    private static final String IMAGE_NAME = /*"image.png";*/ "test.tif";
     private static final URL IMAGE_URL = ImagePDFApiTest.class.getResource("/" + IMAGE_NAME);
-    private static final String ACCESS_TOKEN = "ac5c0469-aec5-31ca-8cf7-7cb508c8d4ab";
+    private static final String ACCESS_TOKEN = "1b1fb0ea-4e34-36b5-bc87-945daa2b5240";
 
 
     /**
@@ -125,18 +125,20 @@ public class ImagePDFApiTest {
         PDFJobResponse response = null;
         int count = 0;
         do {
+            Thread.sleep(500);
             count++;
             response = api.getJob(pdfJob.getJobId());
-            Thread.sleep(200);
-        } while (count < 100 && response.getStatus() == PDFJobResponse.StatusEnum.PROCESSING);
+        }
+        while (count < 100 && response.getStatus() != PDFJobResponse.StatusEnum.DONE && response.getStatus() != PDFJobResponse.StatusEnum.ERROR);
         byte[] pdfOutput = api.getStream(pdfJob.getJobId());
         Assert.assertNotNull(pdfOutput);
         String result = new String(pdfOutput);
-        Assert.assertTrue(result.startsWith("%PDF-1"));
+        Assert.assertTrue("Invalid result received: " + result, result.startsWith("%PDF-1"));
         Assert.assertTrue(result.contains("EOF"));
 
-        Files.write(new File("/tmp/out.pdf").toPath(), pdfOutput);
         // We could write the output to file of course
+        // Files.write(new File("/tmp/out.pdf").toPath(), pdfOutput);
+
     }
 
 

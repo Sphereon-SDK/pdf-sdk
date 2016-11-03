@@ -288,7 +288,7 @@ public class ImagePDFApi {
         
 
         // create path and map variables
-        String localVarPath = "/pdf/0.1.5/image2pdf{?status}".replaceAll("\\{format\\}","json");
+        String localVarPath = "/pdf/0.1.5/image2pdf".replaceAll("\\{format\\}","json");
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         if (status != null)

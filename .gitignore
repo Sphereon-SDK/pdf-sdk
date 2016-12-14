@@ -1,5 +1,17 @@
-*.class
+# Visual Studio
+.vs/
+bin/
+obj/
+packages/
+*.ncb
+*.suo
+*ReSharper*
+Debug/
+*.user
+*.lnk
 
+# Java
+*.class
 
 # Package Files #
 *.jar

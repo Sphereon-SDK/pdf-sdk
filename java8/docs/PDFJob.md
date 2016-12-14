@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **jobId** | **String** | The server generated job jobId. This jobId is checked against the jobId in the request path on overy invocation | 
-**settings** | [**Image2PDFSettings**](Image2PDFSettings.md) |  |  [optional]
+**settings** | [**ConversionSettings**](ConversionSettings.md) |  |  [optional]
 
 
 

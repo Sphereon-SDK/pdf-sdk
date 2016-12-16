@@ -31,7 +31,9 @@ import com.sphereon.sdk.pdf.model.*;
 import java.io.File;
 
 import org.junit.Assert;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import java.io.IOException;
 import java.net.URL;
@@ -43,6 +45,7 @@ import java.util.Map;
 /**
  * API tests for ConversionPDFApi
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ConversionPDFApiTest {
 
     private final ConversionPDFApi api = new ConversionPDFApi();
@@ -50,7 +53,7 @@ public class ConversionPDFApiTest {
     private static PDFJob pdfJob;
     private static final String IMAGE_NAME = "image.png";// "test.tif";
     private static final URL IMAGE_URL = ConversionPDFApiTest.class.getResource("/" + IMAGE_NAME);
-    private static final String ACCESS_TOKEN = "1b1fb0ea-4e34-36b5-bc87-945daa2b5240";
+    private static final String ACCESS_TOKEN = "0dbd17f1-c108-350e-807e-42d13e543b32";
 
 
     /**

@@ -34,74 +34,101 @@ using Newtonsoft.Json.Converters;
 namespace Sphereon.SDK.Pdf.Model
 {
     /// <summary>
-    /// Lifecycle settings. When no lifecycle settings are supplied, the job and files will be deleted directly after retrieval of the file
+    /// An error
     /// </summary>
     [DataContract]
-    public partial class Lifecycle :  IEquatable<Lifecycle>
+    public partial class Error :  IEquatable<Error>
     {
         /// <summary>
-        /// Gets or Sets Action
+        /// Gets or Sets Level
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public enum ActionEnum
+        public enum LevelEnum
         {
             
             /// <summary>
-            /// Enum DELETE for "DELETE"
+            /// Enum INFO for "INFO"
             /// </summary>
-            [EnumMember(Value = "DELETE")]
-            DELETE
+            [EnumMember(Value = "INFO")]
+            INFO,
+            
+            /// <summary>
+            /// Enum WARNING for "WARNING"
+            /// </summary>
+            [EnumMember(Value = "WARNING")]
+            WARNING,
+            
+            /// <summary>
+            /// Enum FATAL for "FATAL"
+            /// </summary>
+            [EnumMember(Value = "FATAL")]
+            FATAL
         }
 
         /// <summary>
-        /// Gets or Sets Type
+        /// Gets or Sets Level
         /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum TypeEnum
+        [DataMember(Name="level", EmitDefaultValue=false)]
+        public LevelEnum? Level { get; set; }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Error" /> class.
+        /// </summary>
+        [JsonConstructorAttribute]
+        protected Error() { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Error" /> class.
+        /// </summary>
+        /// <param name="Code">Code (required).</param>
+        /// <param name="Level">Level (required).</param>
+        /// <param name="Cause">Cause.</param>
+        /// <param name="Message">Message (required).</param>
+        public Error(string Code = null, LevelEnum? Level = null, Error Cause = null, string Message = null)
         {
-            
-            /// <summary>
-            /// Enum RETRIEVAL for "RETRIEVAL"
-            /// </summary>
-            [EnumMember(Value = "RETRIEVAL")]
-            RETRIEVAL,
-            
-            /// <summary>
-            /// Enum TIME for "TIME"
-            /// </summary>
-            [EnumMember(Value = "TIME")]
-            TIME
-        }
-
-        /// <summary>
-        /// Gets or Sets Action
-        /// </summary>
-        [DataMember(Name="action", EmitDefaultValue=false)]
-        public ActionEnum? Action { get; set; }
-        /// <summary>
-        /// Gets or Sets Type
-        /// </summary>
-        [DataMember(Name="type", EmitDefaultValue=false)]
-        public TypeEnum? Type { get; set; }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Lifecycle" /> class.
-        /// </summary>
-        /// <param name="ActionTime">The time at which the job and files will be deleted, regardless of whether it has been retrieved or not. Maximal time is 1 day from job creation.</param>
-        /// <param name="Action">Action.</param>
-        /// <param name="Type">Type.</param>
-        public Lifecycle(DateTime? ActionTime = null, ActionEnum? Action = null, TypeEnum? Type = null)
-        {
-            this.ActionTime = ActionTime;
-            this.Action = Action;
-            this.Type = Type;
+            // to ensure "Code" is required (not null)
+            if (Code == null)
+            {
+                throw new InvalidDataException("Code is a required property for Error and cannot be null");
+            }
+            else
+            {
+                this.Code = Code;
+            }
+            // to ensure "Level" is required (not null)
+            if (Level == null)
+            {
+                throw new InvalidDataException("Level is a required property for Error and cannot be null");
+            }
+            else
+            {
+                this.Level = Level;
+            }
+            // to ensure "Message" is required (not null)
+            if (Message == null)
+            {
+                throw new InvalidDataException("Message is a required property for Error and cannot be null");
+            }
+            else
+            {
+                this.Message = Message;
+            }
+            this.Cause = Cause;
         }
         
         /// <summary>
-        /// The time at which the job and files will be deleted, regardless of whether it has been retrieved or not. Maximal time is 1 day from job creation
+        /// Gets or Sets Code
         /// </summary>
-        /// <value>The time at which the job and files will be deleted, regardless of whether it has been retrieved or not. Maximal time is 1 day from job creation</value>
-        [DataMember(Name="actionTime", EmitDefaultValue=false)]
-        public DateTime? ActionTime { get; set; }
+        [DataMember(Name="code", EmitDefaultValue=false)]
+        public string Code { get; set; }
+        /// <summary>
+        /// Gets or Sets Cause
+        /// </summary>
+        [DataMember(Name="cause", EmitDefaultValue=false)]
+        public Error Cause { get; set; }
+        /// <summary>
+        /// Gets or Sets Message
+        /// </summary>
+        [DataMember(Name="message", EmitDefaultValue=false)]
+        public string Message { get; set; }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -109,10 +136,11 @@ namespace Sphereon.SDK.Pdf.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Lifecycle {\n");
-            sb.Append("  ActionTime: ").Append(ActionTime).Append("\n");
-            sb.Append("  Action: ").Append(Action).Append("\n");
-            sb.Append("  Type: ").Append(Type).Append("\n");
+            sb.Append("class Error {\n");
+            sb.Append("  Code: ").Append(Code).Append("\n");
+            sb.Append("  Level: ").Append(Level).Append("\n");
+            sb.Append("  Cause: ").Append(Cause).Append("\n");
+            sb.Append("  Message: ").Append(Message).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -134,15 +162,15 @@ namespace Sphereon.SDK.Pdf.Model
         public override bool Equals(object obj)
         {
             // credit: http://stackoverflow.com/a/10454552/677735
-            return this.Equals(obj as Lifecycle);
+            return this.Equals(obj as Error);
         }
 
         /// <summary>
-        /// Returns true if Lifecycle instances are equal
+        /// Returns true if Error instances are equal
         /// </summary>
-        /// <param name="other">Instance of Lifecycle to be compared</param>
+        /// <param name="other">Instance of Error to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Lifecycle other)
+        public bool Equals(Error other)
         {
             // credit: http://stackoverflow.com/a/10454552/677735
             if (other == null)
@@ -150,19 +178,24 @@ namespace Sphereon.SDK.Pdf.Model
 
             return 
                 (
-                    this.ActionTime == other.ActionTime ||
-                    this.ActionTime != null &&
-                    this.ActionTime.Equals(other.ActionTime)
+                    this.Code == other.Code ||
+                    this.Code != null &&
+                    this.Code.Equals(other.Code)
                 ) && 
                 (
-                    this.Action == other.Action ||
-                    this.Action != null &&
-                    this.Action.Equals(other.Action)
+                    this.Level == other.Level ||
+                    this.Level != null &&
+                    this.Level.Equals(other.Level)
                 ) && 
                 (
-                    this.Type == other.Type ||
-                    this.Type != null &&
-                    this.Type.Equals(other.Type)
+                    this.Cause == other.Cause ||
+                    this.Cause != null &&
+                    this.Cause.Equals(other.Cause)
+                ) && 
+                (
+                    this.Message == other.Message ||
+                    this.Message != null &&
+                    this.Message.Equals(other.Message)
                 );
         }
 
@@ -177,12 +210,14 @@ namespace Sphereon.SDK.Pdf.Model
             {
                 int hash = 41;
                 // Suitable nullity checks etc, of course :)
-                if (this.ActionTime != null)
-                    hash = hash * 59 + this.ActionTime.GetHashCode();
-                if (this.Action != null)
-                    hash = hash * 59 + this.Action.GetHashCode();
-                if (this.Type != null)
-                    hash = hash * 59 + this.Type.GetHashCode();
+                if (this.Code != null)
+                    hash = hash * 59 + this.Code.GetHashCode();
+                if (this.Level != null)
+                    hash = hash * 59 + this.Level.GetHashCode();
+                if (this.Cause != null)
+                    hash = hash * 59 + this.Cause.GetHashCode();
+                if (this.Message != null)
+                    hash = hash * 59 + this.Message.GetHashCode();
                 return hash;
             }
         }

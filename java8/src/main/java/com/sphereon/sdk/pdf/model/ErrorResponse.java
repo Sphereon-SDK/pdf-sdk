@@ -23,52 +23,86 @@
  */
 
 
-package com.sphereon.sdk.pdf.handler;
+package com.sphereon.sdk.pdf.model;
 
-import java.io.IOException;
-
-import java.util.Map;
+import java.util.Objects;
+import com.google.gson.annotations.SerializedName;
+import com.sphereon.sdk.pdf.model.Error;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import java.util.ArrayList;
 import java.util.List;
 
+
 /**
- * Callback for asynchronous API call.
- *
- * @param <T> The return type
+ * The error response
  */
-public interface ApiCallback<T> {
-    /**
-     * This is called when the API call fails.
-     *
-     * @param e The exception causing the failure
-     * @param statusCode Status code of the response if available, otherwise it would be 0
-     * @param responseHeaders Headers of the response if available, otherwise it would be null
-     */
-    void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders);
+@ApiModel(description = "The error response")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-16T17:35:33.291+01:00")
+public class ErrorResponse   {
+  @SerializedName("errors")
+  private List<Error> errors = new ArrayList<Error>();
 
-    /**
-     * This is called when the API call succeeded.
-     *
-     * @param result The result deserialized from response
-     * @param statusCode Status code of the response
-     * @param responseHeaders Headers of the response
-     */
-    void onSuccess(T result, int statusCode, Map<String, List<String>> responseHeaders);
+  public ErrorResponse errors(List<Error> errors) {
+    this.errors = errors;
+    return this;
+  }
 
-    /**
-     * This is called when the API upload processing.
-     *
-     * @param bytesWritten bytes Written
-     * @param contentLength content length of request body
-     * @param done write end
-     */
-    void onUploadProgress(long bytesWritten, long contentLength, boolean done);
+  public ErrorResponse addErrorsItem(Error errorsItem) {
+    this.errors.add(errorsItem);
+    return this;
+  }
 
-    /**
-     * This is called when the API downlond processing.
-     *
-     * @param bytesRead bytes Read
-     * @param contentLength content lenngth of the response
-     * @param done Read end
-     */
-    void onDownloadProgress(long bytesRead, long contentLength, boolean done);
+   /**
+   * Get errors
+   * @return errors
+  **/
+  @ApiModelProperty(example = "null", value = "")
+  public List<Error> getErrors() {
+    return errors;
+  }
+
+  public void setErrors(List<Error> errors) {
+    this.errors = errors;
+  }
+
+
+  @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    ErrorResponse errorResponse = (ErrorResponse) o;
+    return Objects.equals(this.errors, errorResponse.errors);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(errors);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class ErrorResponse {\n");
+    
+    sb.append("    errors: ").append(toIndentedString(errors)).append("\n");
+    sb.append("}");
+    return sb.toString();
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(java.lang.Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
+  }
 }
+

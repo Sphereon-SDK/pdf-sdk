@@ -36,7 +36,7 @@ import io.swagger.annotations.ApiModelProperty;
  * An error
  */
 @ApiModel(description = "An error")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-16T17:35:33.291+01:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-16T17:59:13.523+01:00")
 public class Error   {
   @SerializedName("code")
   private String code = null;

@@ -19,18 +19,18 @@ namespace Image2PDFLib
         
         private const string BasePath = "https://gw.api.cloud.sphereon.com";
 
-        private readonly ImagePDFApi _api;
+        private readonly ConversionPDFApi _api;
 
-        private Image2PDFSettings settings;
+        private ConversionSettings settings;
 
 
         public Image2Pdf()
         {
-            _api = new ImagePDFApi(BasePath);
-            settings = new Image2PDFSettings
+            _api = new ConversionPDFApi();
+            settings = new ConversionSettings
             {
                 Ocr = true,
-                Engine = Image2PDFSettings.EngineEnum.BASIC,
+                Engine = ConversionSettings.EngineEnum.BASIC,
                 Lifecycle = new Lifecycle(null, null, Lifecycle.TypeEnum.TIME)
             };
         }
@@ -53,6 +53,8 @@ namespace Image2PDFLib
         {
             Compression.TypeEnum compressionType;
             Enum.TryParse(value, out compressionType);
+            if(settings.Compression == null)
+                settings.Compression = new Compression();
             settings.Compression.Type = compressionType;
 
         }
@@ -60,6 +62,8 @@ namespace Image2PDFLib
         [ComVisible(true)]
         public void SetCompressionLevel(int value)
         {
+            if (settings.Compression == null)
+                settings.Compression = new Compression();
             settings.Compression.Level = value;
         }
 
@@ -73,7 +77,7 @@ namespace Image2PDFLib
         [ComVisible(true)]
         public void SetEngine(string value)
         {
-            Image2PDFSettings.EngineEnum engine;
+            ConversionSettings.EngineEnum engine;
             Enum.TryParse(value, out engine);
             settings.Engine = engine;
         }
@@ -99,8 +103,8 @@ namespace Image2PDFLib
             PDFJobResponse response;
             using (var fileStream = File.OpenRead(inFile))
             {
-                response = _api.UploadImage(fileStream);
-                if (response.Status == null || response.Status.Value != PDFJobResponse.StatusEnum.IMAGEUPLOADED)
+                response = _api.UploadFile(fileStream);
+                if (response.Status == null || response.Status.Value != PDFJobResponse.StatusEnum.INPUTSUPLOADED)
                     throw new Exception(response.StatusMessage);
             }
             return response;

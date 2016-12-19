@@ -37,8 +37,9 @@
     <AssemblyOriginatorKeyFile>Sphereon-open-source.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Sphereon.SDK.Pdf">
-      <HintPath>..\..\Sphereon.SDK.Pdf\bin\Debug\Sphereon.SDK.Pdf.dll</HintPath>
+    <Reference Include="Sphereon.SDK.Pdf, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8d6b082c83d47dbe, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\csharp-net45\src\Sphereon.SDK.Pdf\bin\Debug\Sphereon.SDK.Pdf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

@@ -27,32 +27,36 @@ package com.sphereon.sdk.pdf.model;
 
 import java.util.Objects;
 import com.google.gson.annotations.SerializedName;
+import com.sphereon.sdk.pdf.model.Error;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 
 /**
- * Compression settings
+ * An error
  */
-@ApiModel(description = "Compression settings")
+@ApiModel(description = "An error")
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-14T16:55:09.163+01:00")
-public class Compression   {
-  @SerializedName("level")
-  private Integer level = null;
+public class Error   {
+  @SerializedName("code")
+  private String code = null;
 
   /**
-   * Compression type. ADVANCED is only allowed and should be used with the ADVANCED engine
+   * Gets or Sets level
    */
-  public enum TypeEnum {
-    @SerializedName("NONE")
-    NONE("NONE"),
+  public enum LevelEnum {
+    @SerializedName("INFO")
+    INFO("INFO"),
     
-    @SerializedName("ADVANCED")
-    ADVANCED("ADVANCED");
+    @SerializedName("WARNING")
+    WARNING("WARNING"),
+    
+    @SerializedName("FATAL")
+    FATAL("FATAL");
 
     private String value;
 
-    TypeEnum(String value) {
+    LevelEnum(String value) {
       this.value = value;
     }
 
@@ -62,45 +66,85 @@ public class Compression   {
     }
   }
 
-  @SerializedName("type")
-  private TypeEnum type = null;
+  @SerializedName("level")
+  private LevelEnum level = null;
 
-  public Compression level(Integer level) {
+  @SerializedName("cause")
+  private Error cause = null;
+
+  @SerializedName("message")
+  private String message = null;
+
+  public Error code(String code) {
+    this.code = code;
+    return this;
+  }
+
+   /**
+   * Get code
+   * @return code
+  **/
+  @ApiModelProperty(example = "null", required = true, value = "")
+  public String getCode() {
+    return code;
+  }
+
+  public void setCode(String code) {
+    this.code = code;
+  }
+
+  public Error level(LevelEnum level) {
     this.level = level;
     return this;
   }
 
    /**
-   * Compression level. Valid range from 0 (minimal compression) to 10 (maximal compression)
-   * minimum: 0.0
-   * maximum: 10.0
+   * Get level
    * @return level
   **/
-  @ApiModelProperty(example = "null", value = "Compression level. Valid range from 0 (minimal compression) to 10 (maximal compression)")
-  public Integer getLevel() {
+  @ApiModelProperty(example = "null", required = true, value = "")
+  public LevelEnum getLevel() {
     return level;
   }
 
-  public void setLevel(Integer level) {
+  public void setLevel(LevelEnum level) {
     this.level = level;
   }
 
-  public Compression type(TypeEnum type) {
-    this.type = type;
+  public Error cause(Error cause) {
+    this.cause = cause;
     return this;
   }
 
    /**
-   * Compression type. ADVANCED is only allowed and should be used with the ADVANCED engine
-   * @return type
+   * Get cause
+   * @return cause
   **/
-  @ApiModelProperty(example = "null", value = "Compression type. ADVANCED is only allowed and should be used with the ADVANCED engine")
-  public TypeEnum getType() {
-    return type;
+  @ApiModelProperty(example = "null", value = "")
+  public Error getCause() {
+    return cause;
   }
 
-  public void setType(TypeEnum type) {
-    this.type = type;
+  public void setCause(Error cause) {
+    this.cause = cause;
+  }
+
+  public Error message(String message) {
+    this.message = message;
+    return this;
+  }
+
+   /**
+   * Get message
+   * @return message
+  **/
+  @ApiModelProperty(example = "null", required = true, value = "")
+  public String getMessage() {
+    return message;
+  }
+
+  public void setMessage(String message) {
+    this.message = message;
   }
 
 
@@ -112,23 +156,27 @@ public class Compression   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Compression compression = (Compression) o;
-    return Objects.equals(this.level, compression.level) &&
-        Objects.equals(this.type, compression.type);
+    Error error = (Error) o;
+    return Objects.equals(this.code, error.code) &&
+        Objects.equals(this.level, error.level) &&
+        Objects.equals(this.cause, error.cause) &&
+        Objects.equals(this.message, error.message);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(level, type);
+    return Objects.hash(code, level, cause, message);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Compression {\n");
+    sb.append("class Error {\n");
     
+    sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    level: ").append(toIndentedString(level)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    cause: ").append(toIndentedString(cause)).append("\n");
+    sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("}");
     return sb.toString();
   }

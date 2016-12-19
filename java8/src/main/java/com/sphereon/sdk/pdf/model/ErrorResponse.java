@@ -27,80 +27,43 @@ package com.sphereon.sdk.pdf.model;
 
 import java.util.Objects;
 import com.google.gson.annotations.SerializedName;
+import com.sphereon.sdk.pdf.model.Error;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
- * Compression settings
+ * The error response
  */
-@ApiModel(description = "Compression settings")
+@ApiModel(description = "The error response")
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-14T16:55:09.163+01:00")
-public class Compression   {
-  @SerializedName("level")
-  private Integer level = null;
+public class ErrorResponse   {
+  @SerializedName("errors")
+  private List<Error> errors = new ArrayList<Error>();
 
-  /**
-   * Compression type. ADVANCED is only allowed and should be used with the ADVANCED engine
-   */
-  public enum TypeEnum {
-    @SerializedName("NONE")
-    NONE("NONE"),
-    
-    @SerializedName("ADVANCED")
-    ADVANCED("ADVANCED");
-
-    private String value;
-
-    TypeEnum(String value) {
-      this.value = value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
+  public ErrorResponse errors(List<Error> errors) {
+    this.errors = errors;
+    return this;
   }
 
-  @SerializedName("type")
-  private TypeEnum type = null;
-
-  public Compression level(Integer level) {
-    this.level = level;
+  public ErrorResponse addErrorsItem(Error errorsItem) {
+    this.errors.add(errorsItem);
     return this;
   }
 
    /**
-   * Compression level. Valid range from 0 (minimal compression) to 10 (maximal compression)
-   * minimum: 0.0
-   * maximum: 10.0
-   * @return level
+   * Get errors
+   * @return errors
   **/
-  @ApiModelProperty(example = "null", value = "Compression level. Valid range from 0 (minimal compression) to 10 (maximal compression)")
-  public Integer getLevel() {
-    return level;
+  @ApiModelProperty(example = "null", value = "")
+  public List<Error> getErrors() {
+    return errors;
   }
 
-  public void setLevel(Integer level) {
-    this.level = level;
-  }
-
-  public Compression type(TypeEnum type) {
-    this.type = type;
-    return this;
-  }
-
-   /**
-   * Compression type. ADVANCED is only allowed and should be used with the ADVANCED engine
-   * @return type
-  **/
-  @ApiModelProperty(example = "null", value = "Compression type. ADVANCED is only allowed and should be used with the ADVANCED engine")
-  public TypeEnum getType() {
-    return type;
-  }
-
-  public void setType(TypeEnum type) {
-    this.type = type;
+  public void setErrors(List<Error> errors) {
+    this.errors = errors;
   }
 
 
@@ -112,23 +75,21 @@ public class Compression   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Compression compression = (Compression) o;
-    return Objects.equals(this.level, compression.level) &&
-        Objects.equals(this.type, compression.type);
+    ErrorResponse errorResponse = (ErrorResponse) o;
+    return Objects.equals(this.errors, errorResponse.errors);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(level, type);
+    return Objects.hash(errors);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Compression {\n");
+    sb.append("class ErrorResponse {\n");
     
-    sb.append("    level: ").append(toIndentedString(level)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    errors: ").append(toIndentedString(errors)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -1,16 +1,16 @@
 ﻿using System.Management.Automation;
 
-namespace Image2PDFLib
+namespace Convert2PDFLib
 {
-    [Cmdlet(VerbsCommon.Get, "ImageAsPDF")]
+    [Cmdlet(VerbsCommon.Get, "ConvertAsPDF")]
     [OutputType(typeof(string))]
-    public class Image2PdfCmdlet : Cmdlet
+    public class Convert2PdfCmdlet : Cmdlet
     {
-        private Image2Pdf _image2Pdf;
+        private Convert2Pdf _convert2Pdf;
 
         [Parameter(Position = 1, Mandatory = true)]
         [Alias("inFile", "in")]
-        public string ImageFileName { get; set; }
+        public string InputFileName { get; set; }
 
 
         [Parameter(Position = 2, Mandatory = true)]
@@ -23,7 +23,7 @@ namespace Image2PDFLib
         {
             set
             {
-                _image2Pdf.SetAccessToken(value);
+                _convert2Pdf.SetAccessToken(value);
             }
         }
 
@@ -31,7 +31,7 @@ namespace Image2PDFLib
         public bool Ocr {
             set
             {
-                _image2Pdf.SetOcr(value);
+                _convert2Pdf.SetOcr(value);
             }
         }
 
@@ -39,7 +39,7 @@ namespace Image2PDFLib
         public string Engine { 
             set
             {
-              _image2Pdf.SetEngine(value);  
+              _convert2Pdf.SetEngine(value);  
             }
         }
 
@@ -48,7 +48,7 @@ namespace Image2PDFLib
         public string CompressionType { 
             set
             {
-              _image2Pdf.SetCompressionType(value);  
+              _convert2Pdf.SetCompressionType(value);  
             }
         }
 
@@ -57,7 +57,7 @@ namespace Image2PDFLib
         public int CompressionLevel { 
             set
             {
-              _image2Pdf.SetCompressionLevel(value);  
+              _convert2Pdf.SetCompressionLevel(value);  
             }
         }
 
@@ -67,19 +67,19 @@ namespace Image2PDFLib
         {
             set
             {
-                _image2Pdf.SetQualityFactor(value);
+                _convert2Pdf.SetQualityFactor(value);
             }
         }
 
-        public Image2PdfCmdlet()
+        public Convert2PdfCmdlet()
         {
-            _image2Pdf = new Image2Pdf();
+            _convert2Pdf = new Convert2Pdf();
         }
 
         protected override void ProcessRecord()
         {
             base.ProcessRecord();
-            _image2Pdf.Convert(ImageFileName, OutputFileName);
+            _convert2Pdf.Convert(InputFileName, OutputFileName);
         }
     }
 }

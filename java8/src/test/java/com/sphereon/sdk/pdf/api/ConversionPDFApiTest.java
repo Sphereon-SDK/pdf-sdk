@@ -1,6 +1,6 @@
 /**
  * Converstion 2 PDF
- * <b>The PDF conversion API 'conversion2pdf' converts files/images to (searcheable) PDF files.</b>    The flow is generally as follows:  1. First upload an image/file using the /conversion2pdf POST endpoint. You will get back a job response that contains a job with its associated settings.  2. Upload any additional images/files using the /conversion2pdf/{jobId} POST endpoint when you want to merge additional images or PDFs. You will get back the update job response that contains a job with its associated settings.  3. Start the job from a PUT request to the /conversion2pdf/{jobid} endpoint, with the Job and Settings JSON as request body. The conversion to PDF will now start  4. Check the job status from the /conversion2pdf/{jobid} GET endpoint until the status has changed to DONE or ERROR. Messaging using a websocket will be available as an alternative in a future version  5. Retrieve the PDF file using the /conversion2pdf/{jobid}/stream GET endpoint. This will return the PDF file only when the status is DONE. In other cases it will return the Job Response JSON (with http code 202 instead of 200)      <b>Interactive testing: </b>A web based test console is available in the <a href=\"https://store.sphereon.com\">Sphereon API Store</a>
+ * <b>The PDF conversion API 'conversion2pdf' converts image, office and PDF files to (searcheable) PDF files.</b>    The flow is generally as follows:  1. First upload an image/file using the /conversion2pdf POST endpoint. You will get back a job response that contains a job with its associated settings.  2. Upload any additional images/files using the /conversion2pdf/{jobId} POST endpoint when you want to merge additional image, office or PDF files. You will get back the update job response that contains a job with its associated settings. Currently you can only merge spreadsheets with spreadsheet, documents with documents and images/pdfs with images/pdfs  3. Start the job from a PUT request to the /conversion2pdf/{jobid} endpoint, with the Job and Settings JSON as request body. The conversion to PDF will now start. The OCR setting is only applicable to images, since other files will always be searchable.  4. Check the job status from the /conversion2pdf/{jobid} GET endpoint until the status has changed to DONE or ERROR. Messaging using a websocket will be available as an alternative in a future version  5. Retrieve the PDF file using the /conversion2pdf/{jobid}/stream GET endpoint. This will return the PDF file only when the status is DONE. In other cases it will return the Job Response JSON (with http code 202 instead of 200)      <b>Interactive testing: </b>A web based test console is available in the <a href=\"https://store.sphereon.com\">Sphereon API Store</a>
  *
  * OpenAPI spec version: 0.3.1
  * Contact: dev@sphereon.com
@@ -26,17 +26,12 @@
 package com.sphereon.sdk.pdf.api;
 
 import com.sphereon.sdk.pdf.handler.ApiException;
-import com.sphereon.sdk.pdf.model.*;
-
+import com.sphereon.sdk.pdf.model.PDFJobResponse;
+import com.sphereon.sdk.pdf.model.ErrorResponse;
+import com.sphereon.sdk.pdf.model.PDFJob;
 import java.io.File;
-
-import org.junit.Assert;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,112 +40,123 @@ import java.util.Map;
 /**
  * API tests for ConversionPDFApi
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ConversionPDFApiTest {
 
     private final ConversionPDFApi api = new ConversionPDFApi();
 
-    private static PDFJob pdfJob;
-    private static final String IMAGE_NAME = "image.png";// "test.tif";
-    private static final URL IMAGE_URL = ConversionPDFApiTest.class.getResource("/" + IMAGE_NAME);
-    private static final String ACCESS_TOKEN = "0dbd17f1-c108-350e-807e-42d13e543b32";
-
-
-    /**
-     * Upload (first) image
-     * <p>
-     * Upload an image for conversion to PDF. Conversion will not be started yet. In order to create a multipage PDF you can submit a multipage Tiff
-     *
-     * @throws ApiException if the Api call fails
-     */
-    @Test
-    public void _01UploadFile() throws ApiException {
-        api.getApiClient().setAccessToken(ACCESS_TOKEN);
-        File stream = new File(IMAGE_URL.getFile());
-        PDFJobResponse response = api.uploadFile(stream);
-        Assert.assertNotNull(response);
-        Assert.assertNotNull(response.getJobId());
-        Assert.assertNotNull(response.getJob());
-        Assert.assertEquals(PDFJobResponse.StatusEnum.INPUTS_UPLOADED, response.getStatus());
-        pdfJob = response.getJob();
-    }
-
-    /**
-     * Submit PDF job for processing
-     * <p>
-     * Convert the previously uploaded image(s) to PDF, using the supplied settings associated with the job in the request body. You can only submit the job after a new Job is created with status IMAGE_UPLOADED or resubmit an existing Job with status ERROR. In all cases the job Id in the path must match the jobId in the request
-     *
-     * @throws ApiException if the Api call fails
-     */
-    @Test
-    public void _02submitJob() throws ApiException {
-        // Change the default deletion after first retrieval to manual deletion for the manual deletion test
-        pdfJob.getSettings().getLifecycle().setType(Lifecycle.TypeEnum.TIME);
-        pdfJob.getSettings().engine(ConversionSettings.EngineEnum.ADVANCED);
-        pdfJob.getSettings().getCompression().setType(Compression.TypeEnum.ADVANCED);
-        PDFJobResponse response = api.submitJob(pdfJob.getJobId(), pdfJob);
-        Assert.assertNotNull(response);
-        Assert.assertNotNull(response.getJob());
-        Assert.assertEquals(PDFJobResponse.StatusEnum.PROCESSING, response.getStatus());
-    }
-
-
-    /**
-     * Job definition and state
-     * <p>
-     * Get the PDF job definition and current state. Please not that you can differentiate based on http response status
-     *
-     * @throws ApiException if the Api call fails
-     */
-    @Test
-    public void _03getJob() throws ApiException {
-        PDFJobResponse response = api.getJob(pdfJob.getJobId());
-        Assert.assertNotNull(response);
-        Assert.assertTrue(response.getStatus() == PDFJobResponse.StatusEnum.PROCESSING || response.getStatus() == PDFJobResponse.StatusEnum.DONE);
-    }
-
-
-    /**
-     * Get the current result stream
-     * <p>
-     * Get the PDF as binary stream/file.  Our API generation does not allow changing the media type based on the Accepted header unfortunately.&lt;br/&gt;This means we use a seperate path postfix with the value &#39;/stream&#39;.  This API only returns the PDF when the response status code is zero! In other cases nothing is returned or the Job JSON when it is still being executed
-     *
-     * @throws ApiException if the Api call fails
-     */
-    @Test
-    public void _04getPDF() throws ApiException, InterruptedException, IOException {
-        PDFJobResponse response = null;
-        int count = 0;
-        do {
-            Thread.sleep(500);
-            count++;
-            response = api.getJob(pdfJob.getJobId());
-        }
-        while (count < 100 && response.getStatus() != PDFJobResponse.StatusEnum.DONE && response.getStatus() != PDFJobResponse.StatusEnum.ERROR);
-        byte[] pdfOutput = api.getStream(pdfJob.getJobId());
-        Assert.assertNotNull(pdfOutput);
-        String result = new String(pdfOutput);
-        Assert.assertTrue("Invalid result received: " + result, result.startsWith("%PDF-1"));
-        Assert.assertTrue(result.contains("EOF"));
-
-        // We could write the output to file of course
-        // Files.write(new File("/tmp/out.pdf").toPath(), pdfOutput);
-
-    }
-
-
+    
     /**
      * Delete a job manually
-     * <p>
+     *
      * Delete the PDF job and all related files
      *
-     * @throws ApiException if the Api call fails
+     * @throws ApiException
+     *          if the Api call fails
      */
     @Test
-    public void _05deleteJob() throws ApiException {
-        PDFJobResponse response = api.deleteJob(pdfJob.getJobId());
-        Assert.assertNotNull(response);
-        Assert.assertNotNull(response.getJob());
-        Assert.assertEquals(PDFJobResponse.StatusEnum.DELETED, response.getStatus());
+    public void deleteJobTest() throws ApiException {
+        String jobid = null;
+        // PDFJobResponse response = api.deleteJob(jobid);
+
+        // TODO: test validations
     }
+    
+    /**
+     * Job definition and state
+     *
+     * Get the PDF job definition and current state. Please not that you can differentiate based on http response status
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void getJobTest() throws ApiException {
+        String jobid = null;
+        // PDFJobResponse response = api.getJob(jobid);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Get all jobs
+     *
+     * Get all PDF job definitions and their current state.
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void getJobsTest() throws ApiException {
+        List<String> status = null;
+        // PDFJobResponse response = api.getJobs(status);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Get the current result stream
+     *
+     * Get the PDF as binary stream/file.  Our API generation does not allow changing the media type based on the Accepted header unfortunately.&lt;br/&gt;This means we use a seperate path postfix with the value &#39;/stream&#39;.  This API only returns the PDF when the response status code is zero! In other cases nothing is returned or the Job JSON when it is still being executed
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void getStreamTest() throws ApiException {
+        String jobid = null;
+        // byte[] response = api.getStream(jobid);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Submit PDF job for processing
+     *
+     * Convert the previously uploaded file(s) to PDF, using the supplied settings associated with the job in the request body. You can only submit the job after a new Job is created with status INPUTS_UPLOADED or resubmit an existing Job with status ERROR. In all cases the job Id in the path must match the jobId in the request
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void submitJobTest() throws ApiException {
+        String jobid = null;
+        PDFJob job = null;
+        // PDFJobResponse response = api.submitJob(jobid, job);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Upload an additional file
+     *
+     * Upload an additional image, office or pdf for conversion to PDF. Conversion will not be started yet.
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void uploadAdditionalFileTest() throws ApiException {
+        String jobid = null;
+        File stream = null;
+        // PDFJobResponse response = api.uploadAdditionalFile(jobid, stream);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Upload first file
+     *
+     * Upload the first image, office or pdf file.
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void uploadFileTest() throws ApiException {
+        File stream = null;
+        // PDFJobResponse response = api.uploadFile(stream);
+
+        // TODO: test validations
+    }
+    
 }

@@ -1,4 +1,4 @@
-Set obj = CreateObject("Image2PDFLib.Image2Pdf")
+Set obj = CreateObject("Convert2PDFLib.Convert2Pdf")
 obj.SetAccessToken "xxx"
 obj.SetOcr true
 obj.SetEngine "PREMIUM"

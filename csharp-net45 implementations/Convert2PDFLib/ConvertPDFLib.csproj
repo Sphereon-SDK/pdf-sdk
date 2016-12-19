@@ -7,8 +7,8 @@
     <ProjectGuid>{B265E0BA-8C82-411F-A210-3DA37A236500}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Image2PDFLib</RootNamespace>
-    <AssemblyName>Image2PDFLib</AssemblyName>
+    <RootNamespace>Convert2PDFLib</RootNamespace>
+    <AssemblyName>Convert2PDFLib</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -56,8 +56,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Image2Pdf.cs" />
-    <Compile Include="Image2PdfCmdlet.cs" />
+    <Compile Include="Convert2Pdf.cs" />
+    <Compile Include="Convert2PdfCmdlet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

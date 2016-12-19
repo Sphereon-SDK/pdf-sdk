@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using CommandLine;
 using CommandLine.Text;
-using Image2PDFLib;
+using Convert2PDFLib;
 
-namespace Image2PDF_command
+namespace Convert2PDF_command
 {
     class Options
     {
@@ -55,14 +55,14 @@ namespace Image2PDF_command
             var options = new Options();
             if (Parser.Default.ParseArguments(args, options))
             {
-                var image2Pdf = new Image2Pdf();
-                image2Pdf.SetAccessToken(options.AccessToken);
-                image2Pdf.SetQualityFactor(options.QualityFactor);
-                image2Pdf.SetOcr(options.Ocr);
-                image2Pdf.SetEngine(options.Engine);
-                image2Pdf.SetCompressionType(options.CompressionType);
-                image2Pdf.SetCompressionLevel(options.CompressionLevel);
-                image2Pdf.Convert(options.InFile, options.OutFile);
+                var convert2Pdf = new Convert2Pdf();
+                convert2Pdf.SetAccessToken(options.AccessToken);
+                convert2Pdf.SetQualityFactor(options.QualityFactor);
+                convert2Pdf.SetOcr(options.Ocr);
+                convert2Pdf.SetEngine(options.Engine);
+                convert2Pdf.SetCompressionType(options.CompressionType);
+                convert2Pdf.SetCompressionLevel(options.CompressionLevel);
+                convert2Pdf.Convert(options.InFile, options.OutFile);
             }
         }
     }

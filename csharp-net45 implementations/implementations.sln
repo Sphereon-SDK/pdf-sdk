@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Image2PDFLib", "Image2PDFLib\Image2PDFLib.csproj", "{B265E0BA-8C82-411F-A210-3DA37A236500}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvertPDFLib", "Convert2PDFLib\ConvertPDFLib.csproj", "{B265E0BA-8C82-411F-A210-3DA37A236500}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Image2PDF command", "Image2PDF command\Image2PDF command.csproj", "{68B703AD-E146-4CE6-817E-0D784DF190AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Convert2PDF command", "Convert2PDF command\Convert2PDF command.csproj", "{68B703AD-E146-4CE6-817E-0D784DF190AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -7,14 +7,14 @@ using Sphereon.SDK.Pdf.Client;
 using Sphereon.SDK.Pdf.Model;
 
 /**
- * Register using c:\Windows\Microsoft.NET\Framework64\v4.0.30319\RegAsm.exe /codebase Image2PDFLib.dll  (Framework without 64 on x86 systems)
+ * Register using c:\Windows\Microsoft.NET\Framework64\v4.0.30319\RegAsm.exe /codebase Convert2PDFLib.dll  (Framework without 64 on x86 systems)
  */
-namespace Image2PDFLib
+namespace Convert2PDFLib
 { 
-    [Guid("8050FDB2-E73C-4C11-83C6-C16E479C790B")]
+    [Guid("20E44D9D-8F66-46E8-B048-D8E1AB516230")]
     [ComVisible(true)]
-    [ProgId("Image2PDFLib.Image2Pdf")]
-    public class Image2Pdf
+    [ProgId("Convert2PDFLib.Convert2Pdf")]
+    public class Convert2Pdf
     {
         
         private const string BasePath = "https://gw.api.cloud.sphereon.com";
@@ -24,7 +24,7 @@ namespace Image2PDFLib
         private ConversionSettings settings;
 
 
-        public Image2Pdf()
+        public Convert2Pdf()
         {
             _api = new ConversionPDFApi();
             settings = new ConversionSettings
@@ -139,7 +139,7 @@ namespace Image2PDFLib
             if (response.Status != null &&
                 (response.Status.Value == PDFJobResponse.StatusEnum.ERROR || response.Status.Value == PDFJobResponse.StatusEnum.DELETED))
             {
-                throw new Exception($"image2pdf conversion job {response.JobId} returned an invalid status code {response.Status} with message {response.StatusMessage}");
+                throw new Exception($"convert2pdf conversion job {response.JobId} returned an invalid status code {response.Status} with message {response.StatusMessage}");
             }
         }
 

@@ -37,7 +37,7 @@ import io.swagger.annotations.ApiModelProperty;
  * Conversion settings
  */
 @ApiModel(description = "Conversion settings")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-16T17:59:13.523+01:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-12-19T13:27:22.418+01:00")
 public class ConversionSettings   {
   @SerializedName("lifecycle")
   private Lifecycle lifecycle = null;

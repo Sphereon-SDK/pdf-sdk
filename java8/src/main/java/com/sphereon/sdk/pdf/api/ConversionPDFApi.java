@@ -1,6 +1,6 @@
 /**
  * Converstion 2 PDF
- * <b>The PDF conversion API 'conversion2pdf' converts files/images to (searcheable) PDF files.</b>    The flow is generally as follows:  1. First upload an image/file using the /conversion2pdf POST endpoint. You will get back a job response that contains a job with its associated settings.  2. Upload any additional images/files using the /conversion2pdf/{jobId} POST endpoint when you want to merge additional images or PDFs. You will get back the update job response that contains a job with its associated settings.  3. Start the job from a PUT request to the /conversion2pdf/{jobid} endpoint, with the Job and Settings JSON as request body. The conversion to PDF will now start  4. Check the job status from the /conversion2pdf/{jobid} GET endpoint until the status has changed to DONE or ERROR. Messaging using a websocket will be available as an alternative in a future version  5. Retrieve the PDF file using the /conversion2pdf/{jobid}/stream GET endpoint. This will return the PDF file only when the status is DONE. In other cases it will return the Job Response JSON (with http code 202 instead of 200)      <b>Interactive testing: </b>A web based test console is available in the <a href=\"https://store.sphereon.com\">Sphereon API Store</a>
+ * <b>The PDF conversion API 'conversion2pdf' converts image, office and PDF files to (searcheable) PDF files.</b>    The flow is generally as follows:  1. First upload an image/file using the /conversion2pdf POST endpoint. You will get back a job response that contains a job with its associated settings.  2. Upload any additional images/files using the /conversion2pdf/{jobId} POST endpoint when you want to merge additional image, office or PDF files. You will get back the update job response that contains a job with its associated settings. Currently you can only merge spreadsheets with spreadsheet, documents with documents and images/pdfs with images/pdfs  3. Start the job from a PUT request to the /conversion2pdf/{jobid} endpoint, with the Job and Settings JSON as request body. The conversion to PDF will now start. The OCR setting is only applicable to images, since other files will always be searchable.  4. Check the job status from the /conversion2pdf/{jobid} GET endpoint until the status has changed to DONE or ERROR. Messaging using a websocket will be available as an alternative in a future version  5. Retrieve the PDF file using the /conversion2pdf/{jobid}/stream GET endpoint. This will return the PDF file only when the status is DONE. In other cases it will return the Job Response JSON (with http code 202 instead of 200)      <b>Interactive testing: </b>A web based test console is available in the <a href=\"https://store.sphereon.com\">Sphereon API Store</a>
  *
  * OpenAPI spec version: 0.3.1
  * Contact: dev@sphereon.com
@@ -547,7 +547,7 @@ public class ConversionPDFApi {
 
     /**
      * Submit PDF job for processing
-     * Convert the previously uploaded image(s) to PDF, using the supplied settings associated with the job in the request body. You can only submit the job after a new Job is created with status INPUTS_UPLOADED or resubmit an existing Job with status ERROR. In all cases the job Id in the path must match the jobId in the request
+     * Convert the previously uploaded file(s) to PDF, using the supplied settings associated with the job in the request body. You can only submit the job after a new Job is created with status INPUTS_UPLOADED or resubmit an existing Job with status ERROR. In all cases the job Id in the path must match the jobId in the request
      * @param jobid jobid (required)
      * @param job jobEntity (required)
      * @return PDFJobResponse
@@ -560,7 +560,7 @@ public class ConversionPDFApi {
 
     /**
      * Submit PDF job for processing
-     * Convert the previously uploaded image(s) to PDF, using the supplied settings associated with the job in the request body. You can only submit the job after a new Job is created with status INPUTS_UPLOADED or resubmit an existing Job with status ERROR. In all cases the job Id in the path must match the jobId in the request
+     * Convert the previously uploaded file(s) to PDF, using the supplied settings associated with the job in the request body. You can only submit the job after a new Job is created with status INPUTS_UPLOADED or resubmit an existing Job with status ERROR. In all cases the job Id in the path must match the jobId in the request
      * @param jobid jobid (required)
      * @param job jobEntity (required)
      * @return ApiResponse&lt;PDFJobResponse&gt;
@@ -574,7 +574,7 @@ public class ConversionPDFApi {
 
     /**
      * Submit PDF job for processing (asynchronously)
-     * Convert the previously uploaded image(s) to PDF, using the supplied settings associated with the job in the request body. You can only submit the job after a new Job is created with status INPUTS_UPLOADED or resubmit an existing Job with status ERROR. In all cases the job Id in the path must match the jobId in the request
+     * Convert the previously uploaded file(s) to PDF, using the supplied settings associated with the job in the request body. You can only submit the job after a new Job is created with status INPUTS_UPLOADED or resubmit an existing Job with status ERROR. In all cases the job Id in the path must match the jobId in the request
      * @param jobid jobid (required)
      * @param job jobEntity (required)
      * @param callback The callback to be executed when the API call finishes
@@ -663,8 +663,8 @@ public class ConversionPDFApi {
     }
 
     /**
-     * Upload an additional image/file
-     * Upload an additional image/file for conversion to PDF. Conversion will not be started yet.
+     * Upload an additional file
+     * Upload an additional image, office or pdf for conversion to PDF. Conversion will not be started yet.
      * @param jobid jobid (required)
      * @param stream The additional binary image or PDF (file/inputstream) to convert to PDF (required)
      * @return PDFJobResponse
@@ -676,8 +676,8 @@ public class ConversionPDFApi {
     }
 
     /**
-     * Upload an additional image/file
-     * Upload an additional image/file for conversion to PDF. Conversion will not be started yet.
+     * Upload an additional file
+     * Upload an additional image, office or pdf for conversion to PDF. Conversion will not be started yet.
      * @param jobid jobid (required)
      * @param stream The additional binary image or PDF (file/inputstream) to convert to PDF (required)
      * @return ApiResponse&lt;PDFJobResponse&gt;
@@ -690,8 +690,8 @@ public class ConversionPDFApi {
     }
 
     /**
-     * Upload an additional image/file (asynchronously)
-     * Upload an additional image/file for conversion to PDF. Conversion will not be started yet.
+     * Upload an additional file (asynchronously)
+     * Upload an additional image, office or pdf for conversion to PDF. Conversion will not be started yet.
      * @param jobid jobid (required)
      * @param stream The additional binary image or PDF (file/inputstream) to convert to PDF (required)
      * @param callback The callback to be executed when the API call finishes
@@ -774,9 +774,9 @@ public class ConversionPDFApi {
     }
 
     /**
-     * Upload file
-     * Upload the first file/image.
-     * @param stream The first binary image or PDF (file/inputstream) to convert to PDF (required)
+     * Upload first file
+     * Upload the first image, office or pdf file.
+     * @param stream The first image, office or PDF file to convert to PDF (required)
      * @return PDFJobResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
@@ -786,9 +786,9 @@ public class ConversionPDFApi {
     }
 
     /**
-     * Upload file
-     * Upload the first file/image.
-     * @param stream The first binary image or PDF (file/inputstream) to convert to PDF (required)
+     * Upload first file
+     * Upload the first image, office or pdf file.
+     * @param stream The first image, office or PDF file to convert to PDF (required)
      * @return ApiResponse&lt;PDFJobResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
@@ -799,9 +799,9 @@ public class ConversionPDFApi {
     }
 
     /**
-     * Upload file (asynchronously)
-     * Upload the first file/image.
-     * @param stream The first binary image or PDF (file/inputstream) to convert to PDF (required)
+     * Upload first file (asynchronously)
+     * Upload the first image, office or pdf file.
+     * @param stream The first image, office or PDF file to convert to PDF (required)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object

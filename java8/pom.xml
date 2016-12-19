@@ -5,7 +5,7 @@
   <artifactId>pdf-sdk-java8</artifactId>
   <packaging>jar</packaging>
   <name>pdf-sdk-java8</name>
-  <version>0.1.5-SNAPSHOT</version>
+  <version>0.3.1-SNAPSHOT</version>
   <scm>
     <connection>scm:git:git@github.com:swagger-api/swagger-mustache.git</connection>
     <developerConnection>scm:git:git@github.com:swagger-api/swagger-codegen.git</developerConnection>

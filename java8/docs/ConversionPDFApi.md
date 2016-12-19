@@ -9,8 +9,8 @@ Method | HTTP request | Description
 [**getJobs**](ConversionPDFApi.md#getJobs) | **GET** /pdf/0.3.1/conversion2pdf | Get all jobs
 [**getStream**](ConversionPDFApi.md#getStream) | **GET** /pdf/0.3.1/conversion2pdf/{jobid}/stream | Get the current result stream
 [**submitJob**](ConversionPDFApi.md#submitJob) | **PUT** /pdf/0.3.1/conversion2pdf/{jobid} | Submit PDF job for processing
-[**uploadAdditionalFile**](ConversionPDFApi.md#uploadAdditionalFile) | **POST** /pdf/0.3.1/conversion2pdf/{jobid} | Upload an additional image/file
-[**uploadFile**](ConversionPDFApi.md#uploadFile) | **POST** /pdf/0.3.1/conversion2pdf | Upload file
+[**uploadAdditionalFile**](ConversionPDFApi.md#uploadAdditionalFile) | **POST** /pdf/0.3.1/conversion2pdf/{jobid} | Upload an additional file
+[**uploadFile**](ConversionPDFApi.md#uploadFile) | **POST** /pdf/0.3.1/conversion2pdf | Upload first file
 
 
 <a name="deleteJob"></a>
@@ -231,7 +231,7 @@ Name | Type | Description  | Notes
 
 Submit PDF job for processing
 
-Convert the previously uploaded image(s) to PDF, using the supplied settings associated with the job in the request body. You can only submit the job after a new Job is created with status INPUTS_UPLOADED or resubmit an existing Job with status ERROR. In all cases the job Id in the path must match the jobId in the request
+Convert the previously uploaded file(s) to PDF, using the supplied settings associated with the job in the request body. You can only submit the job after a new Job is created with status INPUTS_UPLOADED or resubmit an existing Job with status ERROR. In all cases the job Id in the path must match the jobId in the request
 
 ### Example
 ```java
@@ -284,9 +284,9 @@ Name | Type | Description  | Notes
 # **uploadAdditionalFile**
 > PDFJobResponse uploadAdditionalFile(jobid, stream)
 
-Upload an additional image/file
+Upload an additional file
 
-Upload an additional image/file for conversion to PDF. Conversion will not be started yet.
+Upload an additional image, office or pdf for conversion to PDF. Conversion will not be started yet.
 
 ### Example
 ```java
@@ -339,9 +339,9 @@ Name | Type | Description  | Notes
 # **uploadFile**
 > PDFJobResponse uploadFile(stream)
 
-Upload file
+Upload first file
 
-Upload the first file/image.
+Upload the first image, office or pdf file.
 
 ### Example
 ```java
@@ -359,7 +359,7 @@ OAuth oauth2schema = (OAuth) defaultClient.getAuthentication("oauth2schema");
 oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
 
 ConversionPDFApi apiInstance = new ConversionPDFApi();
-File stream = new File("/path/to/file.txt"); // File | The first binary image or PDF (file/inputstream) to convert to PDF
+File stream = new File("/path/to/file.txt"); // File | The first image, office or PDF file to convert to PDF
 try {
     PDFJobResponse result = apiInstance.uploadFile(stream);
     System.out.println(result);
@@ -373,7 +373,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **stream** | **File**| The first binary image or PDF (file/inputstream) to convert to PDF |
+ **stream** | **File**| The first image, office or PDF file to convert to PDF |
 
 ### Return type
 

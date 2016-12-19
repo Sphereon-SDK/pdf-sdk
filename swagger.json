@@ -3,15 +3,15 @@
   "paths": {
     "/pdf/0.3.1/conversion2pdf/{jobid}": {
       "post": {
-        "summary": "Upload an additional image/file",
+        "summary": "Upload an additional file",
         "security": [{"oauth2schema": ["global"]}],
         "produces": ["application/json;charset=UTF-8"],
-        "description": "Upload an additional image/file for conversion to PDF. Conversion will not be started yet.",
+        "description": "Upload an additional image, office or pdf for conversion to PDF. Conversion will not be started yet.",
         "operationId": "uploadAdditionalFile",
         "responses": {
           "200": {
             "schema": {"$ref": "#/definitions/PDFJobResponse"},
-            "description": "Image uploaded. The JSON Job response will be returned in the body."
+            "description": "file uploaded. The JSON Job response will be returned in the body."
           },
           "400": {
             "schema": {"$ref": "#/definitions/ErrorResponse"},
@@ -105,12 +105,12 @@
         "summary": "Submit PDF job for processing",
         "security": [{"oauth2schema": ["global"]}],
         "produces": ["application/json;charset=UTF-8"],
-        "description": "Convert the previously uploaded image(s) to PDF, using the supplied settings associated with the job in the request body. You can only submit the job after a new Job is created with status INPUTS_UPLOADED or resubmit an existing Job with status ERROR. In all cases the job Id in the path must match the jobId in the request",
+        "description": "Convert the previously uploaded file(s) to PDF, using the supplied settings associated with the job in the request body. You can only submit the job after a new Job is created with status INPUTS_UPLOADED or resubmit an existing Job with status ERROR. In all cases the job Id in the path must match the jobId in the request",
         "operationId": "submitJob",
         "responses": {
           "200": {
             "schema": {"$ref": "#/definitions/PDFJobResponse"},
-            "description": "Image processing submitted"
+            "description": "coversion job submitted"
           },
           "400": {
             "schema": {"$ref": "#/definitions/ErrorResponse"},
@@ -164,7 +164,7 @@
             "format": "byte",
             "type": "string"
           },
-          "description": "PDF not yet created. Job is still executing., Will return the JSON job instead of the PDF"
+          "description": "PDF not yet created. Job is still executing. Will return the JSON job instead of the PDF"
         },
         "404": {
           "schema": {"$ref": "#/definitions/ErrorResponse"},
@@ -183,19 +183,19 @@
     }},
     "/pdf/0.3.1/conversion2pdf": {
       "post": {
-        "summary": "Upload file",
+        "summary": "Upload first file",
         "security": [{"oauth2schema": ["global"]}],
         "produces": ["application/json;charset=UTF-8"],
-        "description": "Upload the first file/image.",
+        "description": "Upload the first image, office or pdf file.",
         "operationId": "uploadFile",
         "responses": {"200": {
           "schema": {"$ref": "#/definitions/PDFJobResponse"},
-          "description": "First file uploaded succesfully. Cnversion job created but not started yet"
+          "description": "First file uploaded successfully. Conversion job created but not started yet"
         }},
         "parameters": [{
           "in": "formData",
           "name": "stream",
-          "description": "The first binary image or PDF (file/inputstream) to convert to PDF",
+          "description": "The first image, office or PDF file to convert to PDF",
           "type": "file",
           "required": true
         }],
@@ -502,7 +502,7 @@
       "url": "https://sphereon.com",
       "email": "dev@sphereon.com"
     },
-    "description": "<b>The PDF conversion API 'conversion2pdf' converts files/images to (searcheable) PDF files.<\/b>\r\n\r\nThe flow is generally as follows:\r\n1. First upload an image/file using the /conversion2pdf POST endpoint. You will get back a job response that contains a job with its associated settings.\r\n2. Upload any additional images/files using the /conversion2pdf/{jobId} POST endpoint when you want to merge additional images or PDFs. You will get back the update job response that contains a job with its associated settings.\r\n3. Start the job from a PUT request to the /conversion2pdf/{jobid} endpoint, with the Job and Settings JSON as request body. The conversion to PDF will now start\r\n4. Check the job status from the /conversion2pdf/{jobid} GET endpoint until the status has changed to DONE or ERROR. Messaging using a websocket will be available as an alternative in a future version\r\n5. Retrieve the PDF file using the /conversion2pdf/{jobid}/stream GET endpoint. This will return the PDF file only when the status is DONE. In other cases it will return the Job Response JSON (with http code 202 instead of 200)\r\n\r\n\r\n<b>Interactive testing: <\/b>A web based test console is available in the <a href=\"https://store.sphereon.com\">Sphereon API Store<\/a>",
+    "description": "<b>The PDF conversion API 'conversion2pdf' converts image, office and PDF files to (searcheable) PDF files.<\/b>\r\n\r\nThe flow is generally as follows:\r\n1. First upload an image/file using the /conversion2pdf POST endpoint. You will get back a job response that contains a job with its associated settings.\r\n2. Upload any additional images/files using the /conversion2pdf/{jobId} POST endpoint when you want to merge additional image, office or PDF files. You will get back the update job response that contains a job with its associated settings. Currently you can only merge spreadsheets with spreadsheet, documents with documents and images/pdfs with images/pdfs\r\n3. Start the job from a PUT request to the /conversion2pdf/{jobid} endpoint, with the Job and Settings JSON as request body. The conversion to PDF will now start. The OCR setting is only applicable to images, since other files will always be searchable.\r\n4. Check the job status from the /conversion2pdf/{jobid} GET endpoint until the status has changed to DONE or ERROR. Messaging using a websocket will be available as an alternative in a future version\r\n5. Retrieve the PDF file using the /conversion2pdf/{jobid}/stream GET endpoint. This will return the PDF file only when the status is DONE. In other cases it will return the Job Response JSON (with http code 202 instead of 200)\r\n\r\n\r\n<b>Interactive testing: <\/b>A web based test console is available in the <a href=\"https://store.sphereon.com\">Sphereon API Store<\/a>",
     "termsOfService": "https://sphereon.com",
     "title": "Converstion 2 PDF",
     "version": "0.3.1"

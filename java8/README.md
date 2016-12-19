@@ -28,7 +28,7 @@ Add this dependency to your project's POM:
 <dependency>
     <groupId>com.sphereon.sdk</groupId>
     <artifactId>pdf-sdk-java8</artifactId>
-    <version>0.1.5-SNAPSHOT</version>
+    <version>0.3.1-SNAPSHOT</version>
     <scope>compile</scope>
 </dependency>
 ```
@@ -38,7 +38,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "com.sphereon.sdk:pdf-sdk-java8:0.1.5-SNAPSHOT"
+compile "com.sphereon.sdk:pdf-sdk-java8:0.3.1-SNAPSHOT"
 ```
 
 ### Others
@@ -49,7 +49,7 @@ At first generate the JAR by executing:
 
 Then manually install the following JARs:
 
-* target/pdf-sdk-java8-0.1.5-SNAPSHOT.jar
+* target/pdf-sdk-java8-0.3.1-SNAPSHOT.jar
 * target/lib/*.jar
 
 ## Getting Started
@@ -61,22 +61,27 @@ Please follow the [installation](#installation) instruction and execute the foll
 import com.sphereon.sdk.pdf.handler.*;
 import com.sphereon.sdk.pdf.handler.auth.*;
 import com.sphereon.sdk.pdf.handler.model.*;
-import com.sphereon.sdk.pdf.api.ImagePDFApi;
+import com.sphereon.sdk.pdf.api.ConversionPDFApi;
 
 import java.io.File;
 import java.util.*;
 
-public class ImagePDFApiExample {
+public class ConversionPDFApiExample {
 
     public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
         
-        ImagePDFApi apiInstance = new ImagePDFApi();
+        // Configure OAuth2 access token for authorization: oauth2schema
+        OAuth oauth2schema = (OAuth) defaultClient.getAuthentication("oauth2schema");
+        oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
+
+        ConversionPDFApi apiInstance = new ConversionPDFApi();
         String jobid = "jobid_example"; // String | jobid
         try {
-            PDFJobResponse result = apiInstance.deleteJobUsingDELETE(jobid);
+            PDFJobResponse result = apiInstance.deleteJob(jobid);
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling ImagePDFApi#deleteJobUsingDELETE");
+            System.err.println("Exception when calling ConversionPDFApi#deleteJob");
             e.printStackTrace();
         }
     }
@@ -86,39 +91,41 @@ public class ImagePDFApiExample {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://gw.api.cloud.sphereon.com/pdf/0.1.4*
+All URIs are relative to *https://gw.api.cloud.sphereon.com/*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*ImagePDFApi* | [**deleteJobUsingDELETE**](docs/ImagePDFApi.md#deleteJobUsingDELETE) | **DELETE** /image2pdf/{jobid} | Delete a job manually
-*ImagePDFApi* | [**getJobUsingGET**](docs/ImagePDFApi.md#getJobUsingGET) | **GET** /image2pdf/{jobid} | Job definition and state
-*ImagePDFApi* | [**getPDFUsingGET**](docs/ImagePDFApi.md#getPDFUsingGET) | **GET** /image2pdf/{jobid}/stream | Get the current result stream
-*ImagePDFApi* | [**submitJobUsingPUT**](docs/ImagePDFApi.md#submitJobUsingPUT) | **PUT** /image2pdf/{jobid} | Submit PDF job for processing
-*ImagePDFApi* | [**uploadImageUsingPOST**](docs/ImagePDFApi.md#uploadImageUsingPOST) | **POST** /image2pdf | Upload (first) image
+*ConversionPDFApi* | [**deleteJob**](docs/ConversionPDFApi.md#deleteJob) | **DELETE** /pdf/0.3.1/conversion2pdf/{jobid} | Delete a job manually
+*ConversionPDFApi* | [**getJob**](docs/ConversionPDFApi.md#getJob) | **GET** /pdf/0.3.1/conversion2pdf/{jobid} | Job definition and state
+*ConversionPDFApi* | [**getJobs**](docs/ConversionPDFApi.md#getJobs) | **GET** /pdf/0.3.1/conversion2pdf | Get all jobs
+*ConversionPDFApi* | [**getStream**](docs/ConversionPDFApi.md#getStream) | **GET** /pdf/0.3.1/conversion2pdf/{jobid}/stream | Get the current result stream
+*ConversionPDFApi* | [**submitJob**](docs/ConversionPDFApi.md#submitJob) | **PUT** /pdf/0.3.1/conversion2pdf/{jobid} | Submit PDF job for processing
+*ConversionPDFApi* | [**uploadAdditionalFile**](docs/ConversionPDFApi.md#uploadAdditionalFile) | **POST** /pdf/0.3.1/conversion2pdf/{jobid} | Upload an additional file
+*ConversionPDFApi* | [**uploadFile**](docs/ConversionPDFApi.md#uploadFile) | **POST** /pdf/0.3.1/conversion2pdf | Upload first file
 
 
 ## Documentation for Models
 
  - [Compression](docs/Compression.md)
- - [Image2PDFSettings](docs/Image2PDFSettings.md)
+ - [ConversionSettings](docs/ConversionSettings.md)
+ - [ConversionTask](docs/ConversionTask.md)
+ - [Error](docs/Error.md)
+ - [ErrorResponse](docs/ErrorResponse.md)
  - [Lifecycle](docs/Lifecycle.md)
- - [Link](docs/Link.md)
- - [OcrEngineTask](docs/OcrEngineTask.md)
  - [PDFJob](docs/PDFJob.md)
  - [PDFJobResponse](docs/PDFJobResponse.md)
- - [VndError](docs/VndError.md)
- - [VndErrors](docs/VndErrors.md)
 
 
 ## Documentation for Authorization
 
 Authentication schemes defined for the API:
-### default
+### oauth2schema
 
 - **Type**: OAuth
-- **Flow**: implicit
-- **Authorizatoin URL**: https://gw.api.cloud.sphereon.com/authorize
-- **Scopes**: N/A
+- **Flow**: application
+- **Authorizatoin URL**: 
+- **Scopes**: 
+  - global: accessEverything
 
 
 ## Recommendation

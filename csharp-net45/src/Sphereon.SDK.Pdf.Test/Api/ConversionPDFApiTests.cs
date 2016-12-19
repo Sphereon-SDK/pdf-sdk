@@ -151,14 +151,14 @@ namespace Sphereon.SDK.Pdf.Test
         }
         
         /// <summary>
-        /// Test UploadFile
+        /// Test UploadFileUsingPOST
         /// </summary>
         [Test]
-        public void UploadFileTest()
+        public void UploadFileUsingPOSTTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
             //System.IO.Stream stream = null;
-            //var response = instance.UploadFile(stream);
+            //var response = instance.UploadFileUsingPOST(stream);
             //Assert.IsInstanceOf<PDFJobResponse> (response, "response is PDFJobResponse");
         }
         

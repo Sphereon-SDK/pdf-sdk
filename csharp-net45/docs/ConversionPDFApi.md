@@ -9,8 +9,8 @@ Method | HTTP request | Description
 [**GetJobs**](ConversionPDFApi.md#getjobs) | **GET** /pdf/0.3.1/conversion2pdf | Get all jobs
 [**GetStream**](ConversionPDFApi.md#getstream) | **GET** /pdf/0.3.1/conversion2pdf/{jobid}/stream | Get the current result stream
 [**SubmitJob**](ConversionPDFApi.md#submitjob) | **PUT** /pdf/0.3.1/conversion2pdf/{jobid} | Submit PDF job for processing
-[**UploadAdditionalFile**](ConversionPDFApi.md#uploadadditionalfile) | **POST** /pdf/0.3.1/conversion2pdf/{jobid} | Upload an additional image/file
-[**UploadFile**](ConversionPDFApi.md#uploadfile) | **POST** /pdf/0.3.1/conversion2pdf | Upload file
+[**UploadAdditionalFile**](ConversionPDFApi.md#uploadadditionalfile) | **POST** /pdf/0.3.1/conversion2pdf/{jobid} | Upload an additional file
+[**UploadFile**](ConversionPDFApi.md#uploadfile) | **POST** /pdf/0.3.1/conversion2pdf | Upload first file
 
 
 <a name="deletejob"></a>
@@ -279,7 +279,7 @@ Name | Type | Description  | Notes
 
 Submit PDF job for processing
 
-Convert the previously uploaded image(s) to PDF, using the supplied settings associated with the job in the request body. You can only submit the job after a new Job is created with status INPUTS_UPLOADED or resubmit an existing Job with status ERROR. In all cases the job Id in the path must match the jobId in the request
+Convert the previously uploaded file(s) to PDF, using the supplied settings associated with the job in the request body. You can only submit the job after a new Job is created with status INPUTS_UPLOADED or resubmit an existing Job with status ERROR. In all cases the job Id in the path must match the jobId in the request
 
 ### Example
 ```csharp
@@ -344,9 +344,9 @@ Name | Type | Description  | Notes
 # **UploadAdditionalFile**
 > PDFJobResponse UploadAdditionalFile (string jobid, System.IO.Stream stream)
 
-Upload an additional image/file
+Upload an additional file
 
-Upload an additional image/file for conversion to PDF. Conversion will not be started yet.
+Upload an additional image, office or pdf for conversion to PDF. Conversion will not be started yet.
 
 ### Example
 ```csharp
@@ -372,7 +372,7 @@ namespace Example
 
             try
             {
-                // Upload an additional image/file
+                // Upload an additional file
                 PDFJobResponse result = apiInstance.UploadAdditionalFile(jobid, stream);
                 Debug.WriteLine(result);
             }
@@ -411,9 +411,9 @@ Name | Type | Description  | Notes
 # **UploadFile**
 > PDFJobResponse UploadFile (System.IO.Stream stream)
 
-Upload file
+Upload first file
 
-Upload the first file/image.
+Upload the first image, office or pdf file.
 
 ### Example
 ```csharp
@@ -434,11 +434,11 @@ namespace Example
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new ConversionPDFApi();
-            var stream = new System.IO.Stream(); // System.IO.Stream | The first binary image or PDF (file/inputstream) to convert to PDF
+            var stream = new System.IO.Stream(); // System.IO.Stream | The first image, office or PDF file to convert to PDF
 
             try
             {
-                // Upload file
+                // Upload first file
                 PDFJobResponse result = apiInstance.UploadFile(stream);
                 Debug.WriteLine(result);
             }
@@ -455,7 +455,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **stream** | **System.IO.Stream**| The first binary image or PDF (file/inputstream) to convert to PDF | 
+ **stream** | **System.IO.Stream**| The first image, office or PDF file to convert to PDF | 
 
 ### Return type
 

@@ -4,18 +4,18 @@ All URIs are relative to *https://gw.api.cloud.sphereon.com/*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**deleteJob**](ConversionPDFApi.md#deleteJob) | **DELETE** /pdf/0.3.1/conversion2pdf/{jobid} | Delete a job manually
-[**getJob**](ConversionPDFApi.md#getJob) | **GET** /pdf/0.3.1/conversion2pdf/{jobid} | Job definition and state
-[**getJobs**](ConversionPDFApi.md#getJobs) | **GET** /pdf/0.3.1/conversion2pdf | Get all jobs
-[**getStream**](ConversionPDFApi.md#getStream) | **GET** /pdf/0.3.1/conversion2pdf/{jobid}/stream | Get the current result stream
-[**submitJob**](ConversionPDFApi.md#submitJob) | **PUT** /pdf/0.3.1/conversion2pdf/{jobid} | Submit PDF job for processing
-[**uploadAdditionalFile**](ConversionPDFApi.md#uploadAdditionalFile) | **POST** /pdf/0.3.1/conversion2pdf/{jobid} | Upload an additional file
-[**uploadFile**](ConversionPDFApi.md#uploadFile) | **POST** /pdf/0.3.1/conversion2pdf | Upload first file
+[**deleteJob**](ConversionPDFApi.md#deleteJob) | **DELETE** /pdf/0.3.2/conversion2pdf/{jobid} | Delete a job manually
+[**getJob**](ConversionPDFApi.md#getJob) | **GET** /pdf/0.3.2/conversion2pdf/{jobid} | Job definition and state
+[**getJobs**](ConversionPDFApi.md#getJobs) | **GET** /pdf/0.3.2/conversion2pdf | Get all jobs
+[**getStream**](ConversionPDFApi.md#getStream) | **GET** /pdf/0.3.2/conversion2pdf/{jobid}/stream | Get the current result stream
+[**submitJob**](ConversionPDFApi.md#submitJob) | **PUT** /pdf/0.3.2/conversion2pdf/{jobid} | Submit PDF job for processing
+[**uploadAdditionalFile**](ConversionPDFApi.md#uploadAdditionalFile) | **POST** /pdf/0.3.2/conversion2pdf/{jobid} | Upload an additional file
+[**uploadFile**](ConversionPDFApi.md#uploadFile) | **POST** /pdf/0.3.2/conversion2pdf | Upload first file
 
 
 <a name="deleteJob"></a>
 # **deleteJob**
-> PDFJobResponse deleteJob(jobid)
+> ConversionJobResponse deleteJob(jobid)
 
 Delete a job manually
 
@@ -39,7 +39,7 @@ oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
 ConversionPDFApi apiInstance = new ConversionPDFApi();
 String jobid = "jobid_example"; // String | jobid
 try {
-    PDFJobResponse result = apiInstance.deleteJob(jobid);
+    ConversionJobResponse result = apiInstance.deleteJob(jobid);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling ConversionPDFApi#deleteJob");
@@ -55,7 +55,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PDFJobResponse**](PDFJobResponse.md)
+[**ConversionJobResponse**](ConversionJobResponse.md)
 
 ### Authorization
 
@@ -68,7 +68,7 @@ Name | Type | Description  | Notes
 
 <a name="getJob"></a>
 # **getJob**
-> PDFJobResponse getJob(jobid)
+> ConversionJobResponse getJob(jobid)
 
 Job definition and state
 
@@ -92,7 +92,7 @@ oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
 ConversionPDFApi apiInstance = new ConversionPDFApi();
 String jobid = "jobid_example"; // String | jobid
 try {
-    PDFJobResponse result = apiInstance.getJob(jobid);
+    ConversionJobResponse result = apiInstance.getJob(jobid);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling ConversionPDFApi#getJob");
@@ -108,7 +108,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PDFJobResponse**](PDFJobResponse.md)
+[**ConversionJobResponse**](ConversionJobResponse.md)
 
 ### Authorization
 
@@ -121,7 +121,7 @@ Name | Type | Description  | Notes
 
 <a name="getJobs"></a>
 # **getJobs**
-> PDFJobResponse getJobs(status)
+> ConversionJobResponse getJobs(status)
 
 Get all jobs
 
@@ -145,7 +145,7 @@ oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
 ConversionPDFApi apiInstance = new ConversionPDFApi();
 List<String> status = Arrays.asList("status_example"); // List<String> | A list of status to filter on.
 try {
-    PDFJobResponse result = apiInstance.getJobs(status);
+    ConversionJobResponse result = apiInstance.getJobs(status);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling ConversionPDFApi#getJobs");
@@ -161,7 +161,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PDFJobResponse**](PDFJobResponse.md)
+[**ConversionJobResponse**](ConversionJobResponse.md)
 
 ### Authorization
 
@@ -227,7 +227,7 @@ Name | Type | Description  | Notes
 
 <a name="submitJob"></a>
 # **submitJob**
-> PDFJobResponse submitJob(jobid, job)
+> ConversionJobResponse submitJob(jobid, job)
 
 Submit PDF job for processing
 
@@ -250,9 +250,9 @@ oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
 
 ConversionPDFApi apiInstance = new ConversionPDFApi();
 String jobid = "jobid_example"; // String | jobid
-PDFJob job = new PDFJob(); // PDFJob | jobEntity
+ConversionJob job = new ConversionJob(); // ConversionJob | jobEntity
 try {
-    PDFJobResponse result = apiInstance.submitJob(jobid, job);
+    ConversionJobResponse result = apiInstance.submitJob(jobid, job);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling ConversionPDFApi#submitJob");
@@ -265,11 +265,11 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **jobid** | **String**| jobid |
- **job** | [**PDFJob**](PDFJob.md)| jobEntity |
+ **job** | [**ConversionJob**](ConversionJob.md)| jobEntity |
 
 ### Return type
 
-[**PDFJobResponse**](PDFJobResponse.md)
+[**ConversionJobResponse**](ConversionJobResponse.md)
 
 ### Authorization
 
@@ -282,7 +282,7 @@ Name | Type | Description  | Notes
 
 <a name="uploadAdditionalFile"></a>
 # **uploadAdditionalFile**
-> PDFJobResponse uploadAdditionalFile(jobid, stream)
+> ConversionJobResponse uploadAdditionalFile(jobid, stream)
 
 Upload an additional file
 
@@ -307,7 +307,7 @@ ConversionPDFApi apiInstance = new ConversionPDFApi();
 String jobid = "jobid_example"; // String | jobid
 File stream = new File("/path/to/file.txt"); // File | The additional binary image or PDF (file/inputstream) to convert to PDF
 try {
-    PDFJobResponse result = apiInstance.uploadAdditionalFile(jobid, stream);
+    ConversionJobResponse result = apiInstance.uploadAdditionalFile(jobid, stream);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling ConversionPDFApi#uploadAdditionalFile");
@@ -324,7 +324,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PDFJobResponse**](PDFJobResponse.md)
+[**ConversionJobResponse**](ConversionJobResponse.md)
 
 ### Authorization
 
@@ -337,7 +337,7 @@ Name | Type | Description  | Notes
 
 <a name="uploadFile"></a>
 # **uploadFile**
-> PDFJobResponse uploadFile(stream)
+> ConversionJobResponse uploadFile(stream)
 
 Upload first file
 
@@ -361,7 +361,7 @@ oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
 ConversionPDFApi apiInstance = new ConversionPDFApi();
 File stream = new File("/path/to/file.txt"); // File | The first image, office or PDF file to convert to PDF
 try {
-    PDFJobResponse result = apiInstance.uploadFile(stream);
+    ConversionJobResponse result = apiInstance.uploadFile(stream);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling ConversionPDFApi#uploadFile");
@@ -377,7 +377,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PDFJobResponse**](PDFJobResponse.md)
+[**ConversionJobResponse**](ConversionJobResponse.md)
 
 ### Authorization
 

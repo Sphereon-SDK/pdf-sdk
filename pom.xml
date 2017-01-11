@@ -4,9 +4,8 @@
     <groupId>com.sphereon.sdk</groupId>
     <artifactId>pdf-sdk-generator</artifactId>
     <packaging>jar</packaging>
-    <version>0.3.1-SNAPSHOT</version>
+    <version>0.3.2-SNAPSHOT</version>
     <name>PDF API SDK Generator</name>
-
 
 
     <properties>
@@ -18,7 +17,7 @@
         <jodatime-version>2.9.3</jodatime-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <junit-version>4.12</junit-version>
-        <api-version>0.3.1</api-version>
+        <api-version>0.3.2</api-version>
         <sdk-package>com.sphereon.sdk.pdf</sdk-package>
         <sdk-package-csharp>Sphereon.SDK.Pdf</sdk-package-csharp>
     </properties>
@@ -127,7 +126,7 @@
                                     <artifactId>pdf-sdk-csharp-net45</artifactId>
                                     <artifactVersion>${project.version}</artifactVersion>
                                     <addCompileSourceRoot>true</addCompileSourceRoot>
-                                    
+
                                     <apiPackage>Api</apiPackage>
                                     <modelPackage>Model</modelPackage>
                                     <invokerPackage>Handler</invokerPackage>

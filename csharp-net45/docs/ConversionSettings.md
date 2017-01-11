@@ -9,7 +9,9 @@ Name | Type | Description | Notes
 **Engine** | **string** |  | [optional] 
 **Compression** | [**Compression**](Compression.md) |  | [optional] 
 **Version** | **string** |  | [optional] 
-**Ocr** | **bool?** | Whether to perform OCR. When set to false the text in the PDF will not be searchable. Not applicable to Office input files! | [optional] 
+**ConversionStructure** | **string** |  | [optional] 
+**FileFormat** | **string** |  | [optional] 
+**OcrMode** | **string** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -4,18 +4,18 @@ All URIs are relative to *https://gw.api.cloud.sphereon.com/*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**DeleteJob**](ConversionPDFApi.md#deletejob) | **DELETE** /pdf/0.3.1/conversion2pdf/{jobid} | Delete a job manually
-[**GetJob**](ConversionPDFApi.md#getjob) | **GET** /pdf/0.3.1/conversion2pdf/{jobid} | Job definition and state
-[**GetJobs**](ConversionPDFApi.md#getjobs) | **GET** /pdf/0.3.1/conversion2pdf | Get all jobs
-[**GetStream**](ConversionPDFApi.md#getstream) | **GET** /pdf/0.3.1/conversion2pdf/{jobid}/stream | Get the current result stream
-[**SubmitJob**](ConversionPDFApi.md#submitjob) | **PUT** /pdf/0.3.1/conversion2pdf/{jobid} | Submit PDF job for processing
-[**UploadAdditionalFile**](ConversionPDFApi.md#uploadadditionalfile) | **POST** /pdf/0.3.1/conversion2pdf/{jobid} | Upload an additional file
-[**UploadFile**](ConversionPDFApi.md#uploadfile) | **POST** /pdf/0.3.1/conversion2pdf | Upload first file
+[**DeleteJob**](ConversionPDFApi.md#deletejob) | **DELETE** /pdf/0.3.2/conversion2pdf/{jobid} | Delete a job manually
+[**GetJob**](ConversionPDFApi.md#getjob) | **GET** /pdf/0.3.2/conversion2pdf/{jobid} | Job definition and state
+[**GetJobs**](ConversionPDFApi.md#getjobs) | **GET** /pdf/0.3.2/conversion2pdf | Get all jobs
+[**GetStream**](ConversionPDFApi.md#getstream) | **GET** /pdf/0.3.2/conversion2pdf/{jobid}/stream | Get the current result stream
+[**SubmitJob**](ConversionPDFApi.md#submitjob) | **PUT** /pdf/0.3.2/conversion2pdf/{jobid} | Submit PDF job for processing
+[**UploadAdditionalFile**](ConversionPDFApi.md#uploadadditionalfile) | **POST** /pdf/0.3.2/conversion2pdf/{jobid} | Upload an additional file
+[**UploadFile**](ConversionPDFApi.md#uploadfile) | **POST** /pdf/0.3.2/conversion2pdf | Upload first file
 
 
 <a name="deletejob"></a>
 # **DeleteJob**
-> PDFJobResponse DeleteJob (string jobid)
+> ConversionJobResponse DeleteJob (string jobid)
 
 Delete a job manually
 
@@ -45,7 +45,7 @@ namespace Example
             try
             {
                 // Delete a job manually
-                PDFJobResponse result = apiInstance.DeleteJob(jobid);
+                ConversionJobResponse result = apiInstance.DeleteJob(jobid);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -65,7 +65,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PDFJobResponse**](PDFJobResponse.md)
+[**ConversionJobResponse**](ConversionJobResponse.md)
 
 ### Authorization
 
@@ -80,7 +80,7 @@ Name | Type | Description  | Notes
 
 <a name="getjob"></a>
 # **GetJob**
-> PDFJobResponse GetJob (string jobid)
+> ConversionJobResponse GetJob (string jobid)
 
 Job definition and state
 
@@ -110,7 +110,7 @@ namespace Example
             try
             {
                 // Job definition and state
-                PDFJobResponse result = apiInstance.GetJob(jobid);
+                ConversionJobResponse result = apiInstance.GetJob(jobid);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -130,7 +130,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PDFJobResponse**](PDFJobResponse.md)
+[**ConversionJobResponse**](ConversionJobResponse.md)
 
 ### Authorization
 
@@ -145,7 +145,7 @@ Name | Type | Description  | Notes
 
 <a name="getjobs"></a>
 # **GetJobs**
-> PDFJobResponse GetJobs (List<string> status = null)
+> ConversionJobResponse GetJobs (List<string> status = null)
 
 Get all jobs
 
@@ -175,7 +175,7 @@ namespace Example
             try
             {
                 // Get all jobs
-                PDFJobResponse result = apiInstance.GetJobs(status);
+                ConversionJobResponse result = apiInstance.GetJobs(status);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -195,7 +195,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PDFJobResponse**](PDFJobResponse.md)
+[**ConversionJobResponse**](ConversionJobResponse.md)
 
 ### Authorization
 
@@ -275,7 +275,7 @@ Name | Type | Description  | Notes
 
 <a name="submitjob"></a>
 # **SubmitJob**
-> PDFJobResponse SubmitJob (string jobid, PDFJob job)
+> ConversionJobResponse SubmitJob (string jobid, ConversionJob job)
 
 Submit PDF job for processing
 
@@ -301,12 +301,12 @@ namespace Example
 
             var apiInstance = new ConversionPDFApi();
             var jobid = jobid_example;  // string | jobid
-            var job = new PDFJob(); // PDFJob | jobEntity
+            var job = new ConversionJob(); // ConversionJob | jobEntity
 
             try
             {
                 // Submit PDF job for processing
-                PDFJobResponse result = apiInstance.SubmitJob(jobid, job);
+                ConversionJobResponse result = apiInstance.SubmitJob(jobid, job);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -323,11 +323,11 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **jobid** | **string**| jobid | 
- **job** | [**PDFJob**](PDFJob.md)| jobEntity | 
+ **job** | [**ConversionJob**](ConversionJob.md)| jobEntity | 
 
 ### Return type
 
-[**PDFJobResponse**](PDFJobResponse.md)
+[**ConversionJobResponse**](ConversionJobResponse.md)
 
 ### Authorization
 
@@ -342,7 +342,7 @@ Name | Type | Description  | Notes
 
 <a name="uploadadditionalfile"></a>
 # **UploadAdditionalFile**
-> PDFJobResponse UploadAdditionalFile (string jobid, System.IO.Stream stream)
+> ConversionJobResponse UploadAdditionalFile (string jobid, System.IO.Stream stream)
 
 Upload an additional file
 
@@ -373,7 +373,7 @@ namespace Example
             try
             {
                 // Upload an additional file
-                PDFJobResponse result = apiInstance.UploadAdditionalFile(jobid, stream);
+                ConversionJobResponse result = apiInstance.UploadAdditionalFile(jobid, stream);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -394,7 +394,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PDFJobResponse**](PDFJobResponse.md)
+[**ConversionJobResponse**](ConversionJobResponse.md)
 
 ### Authorization
 
@@ -409,7 +409,7 @@ Name | Type | Description  | Notes
 
 <a name="uploadfile"></a>
 # **UploadFile**
-> PDFJobResponse UploadFile (System.IO.Stream stream)
+> ConversionJobResponse UploadFile (System.IO.Stream stream)
 
 Upload first file
 
@@ -439,7 +439,7 @@ namespace Example
             try
             {
                 // Upload first file
-                PDFJobResponse result = apiInstance.UploadFile(stream);
+                ConversionJobResponse result = apiInstance.UploadFile(stream);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -459,7 +459,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PDFJobResponse**](PDFJobResponse.md)
+[**ConversionJobResponse**](ConversionJobResponse.md)
 
 ### Authorization
 

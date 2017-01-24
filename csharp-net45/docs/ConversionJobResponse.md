@@ -1,4 +1,4 @@
-# Sphereon.SDK.Pdf.Model.PDFJobResponse
+# Sphereon.SDK.Pdf.Model.ConversionJobResponse
 ## Properties
 
 Name | Type | Description | Notes
@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **Inputs** | **List&lt;string&gt;** | The original input files. Currently supported inputs are: inputs, pdfs and office files | 
 **ConversionTasks** | [**List&lt;ConversionTask&gt;**](ConversionTask.md) |  | [optional] 
 **UpdateTime** | **DateTime?** | The last update date/time of this job in ISO 8601 format | [optional] 
-**Job** | [**PDFJob**](PDFJob.md) |  | [optional] 
+**Job** | [**ConversionJob**](ConversionJob.md) |  | [optional] 
 **StatusMessage** | **string** | A status message, which can be informational, warning or error. AA message here does not indicate an error perse | [optional] 
 **QueueTime** | **DateTime?** | The conversion queue date/time of this job in ISO 8601 format | [optional] 
 **Status** | **string** | The status of the job | 

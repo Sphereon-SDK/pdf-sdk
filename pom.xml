@@ -22,6 +22,18 @@
         <sdk-package-csharp>Sphereon.SDK.Pdf</sdk-package-csharp>
     </properties>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Inhouse snapshots</name>
+            <url>http://nexus.qa.sphereon.com/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>releases</id>
+            <name>Inhouse releases</name>
+            <url>http://nexus.qa.sphereon.com/nexus/content/repositories/releases</url>
+        </repository>
+    </distributionManagement>
 
     <profiles>
         <profile>

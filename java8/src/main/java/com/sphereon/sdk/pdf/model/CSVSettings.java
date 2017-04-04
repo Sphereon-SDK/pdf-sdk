@@ -27,57 +27,99 @@ package com.sphereon.sdk.pdf.model;
 
 import java.util.Objects;
 import com.google.gson.annotations.SerializedName;
-import com.sphereon.sdk.pdf.model.ConversionSettings;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 
 /**
- * The PDF conversion job. Has access to the job settings.
+ * CSVSettings
  */
-@ApiModel(description = "The PDF conversion job. Has access to the job settings.")
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-04-04T17:41:16.198+02:00")
-public class ConversionJob   {
-  @SerializedName("jobId")
-  private String jobId = null;
+public class CSVSettings   {
+  /**
+   * Set the separator for the columns. Choose between a comma (,), semicolon(;) and tab( )
+   */
+  public enum SeparatorCharacterEnum {
+    @SerializedName(";")
+    _(";");
 
-  @SerializedName("settings")
-  private ConversionSettings settings = null;
+    private String value;
 
-  public ConversionJob jobId(String jobId) {
-    this.jobId = jobId;
+    SeparatorCharacterEnum(String value) {
+      this.value = value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+  }
+
+  @SerializedName("separatorCharacter")
+  private SeparatorCharacterEnum separatorCharacter = null;
+
+  @SerializedName("standardRowHeight")
+  private Double standardRowHeight = null;
+
+  @SerializedName("standardColumnWidth")
+  private Double standardColumnWidth = null;
+
+  public CSVSettings separatorCharacter(SeparatorCharacterEnum separatorCharacter) {
+    this.separatorCharacter = separatorCharacter;
     return this;
   }
 
    /**
-   * The server generated job jobId. This jobId is checked against the jobId in the request path on overy invocation
-   * @return jobId
+   * Set the separator for the columns. Choose between a comma (,), semicolon(;) and tab( )
+   * @return separatorCharacter
   **/
-  @ApiModelProperty(example = "null", required = true, value = "The server generated job jobId. This jobId is checked against the jobId in the request path on overy invocation")
-  public String getJobId() {
-    return jobId;
+  @ApiModelProperty(example = "null", value = "Set the separator for the columns. Choose between a comma (,), semicolon(;) and tab( )")
+  public SeparatorCharacterEnum getSeparatorCharacter() {
+    return separatorCharacter;
   }
 
-  public void setJobId(String jobId) {
-    this.jobId = jobId;
+  public void setSeparatorCharacter(SeparatorCharacterEnum separatorCharacter) {
+    this.separatorCharacter = separatorCharacter;
   }
 
-  public ConversionJob settings(ConversionSettings settings) {
-    this.settings = settings;
+  public CSVSettings standardRowHeight(Double standardRowHeight) {
+    this.standardRowHeight = standardRowHeight;
     return this;
   }
 
    /**
-   * Get settings
-   * @return settings
+   * Set the standard row Height. Range from 1 (lowest) to 409 (highest)
+   * minimum: 1.0
+   * maximum: 409.0
+   * @return standardRowHeight
   **/
-  @ApiModelProperty(example = "null", value = "")
-  public ConversionSettings getSettings() {
-    return settings;
+  @ApiModelProperty(example = "null", value = "Set the standard row Height. Range from 1 (lowest) to 409 (highest)")
+  public Double getStandardRowHeight() {
+    return standardRowHeight;
   }
 
-  public void setSettings(ConversionSettings settings) {
-    this.settings = settings;
+  public void setStandardRowHeight(Double standardRowHeight) {
+    this.standardRowHeight = standardRowHeight;
+  }
+
+  public CSVSettings standardColumnWidth(Double standardColumnWidth) {
+    this.standardColumnWidth = standardColumnWidth;
+    return this;
+  }
+
+   /**
+   * Set the quality factor for the resulting PDF. Range from 1 (lowest) to 255 (highest)
+   * minimum: 1.0
+   * maximum: 255.0
+   * @return standardColumnWidth
+  **/
+  @ApiModelProperty(example = "null", value = "Set the quality factor for the resulting PDF. Range from 1 (lowest) to 255 (highest)")
+  public Double getStandardColumnWidth() {
+    return standardColumnWidth;
+  }
+
+  public void setStandardColumnWidth(Double standardColumnWidth) {
+    this.standardColumnWidth = standardColumnWidth;
   }
 
 
@@ -89,23 +131,25 @@ public class ConversionJob   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ConversionJob conversionJob = (ConversionJob) o;
-    return Objects.equals(this.jobId, conversionJob.jobId) &&
-        Objects.equals(this.settings, conversionJob.settings);
+    CSVSettings cSVSettings = (CSVSettings) o;
+    return Objects.equals(this.separatorCharacter, cSVSettings.separatorCharacter) &&
+        Objects.equals(this.standardRowHeight, cSVSettings.standardRowHeight) &&
+        Objects.equals(this.standardColumnWidth, cSVSettings.standardColumnWidth);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(jobId, settings);
+    return Objects.hash(separatorCharacter, standardRowHeight, standardColumnWidth);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ConversionJob {\n");
+    sb.append("class CSVSettings {\n");
     
-    sb.append("    jobId: ").append(toIndentedString(jobId)).append("\n");
-    sb.append("    settings: ").append(toIndentedString(settings)).append("\n");
+    sb.append("    separatorCharacter: ").append(toIndentedString(separatorCharacter)).append("\n");
+    sb.append("    standardRowHeight: ").append(toIndentedString(standardRowHeight)).append("\n");
+    sb.append("    standardColumnWidth: ").append(toIndentedString(standardColumnWidth)).append("\n");
     sb.append("}");
     return sb.toString();
   }

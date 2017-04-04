@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **Compression** | [**Compression**](Compression.md) |  | [optional] 
 **ContainerConversion** | **string** |  | [optional] 
 **Version** | **string** |  | [optional] 
+**CsvSettings** | [**CSVSettings**](CSVSettings.md) |  | [optional] 
 **OutputFileFormat** | **string** |  | [optional] 
 **OcrMode** | **string** |  | [optional] 
 

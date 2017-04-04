@@ -4,13 +4,13 @@ All URIs are relative to *https://gw.api.cloud.sphereon.com/*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**deleteJob**](ConversionPDFApi.md#deleteJob) | **DELETE** /pdf/1.0.0/conversion2pdf/{jobid} | Delete a job manually
-[**getJob**](ConversionPDFApi.md#getJob) | **GET** /pdf/1.0.0/conversion2pdf/{jobid} | Job definition and state
-[**getJobs**](ConversionPDFApi.md#getJobs) | **GET** /pdf/1.0.0/conversion2pdf | Get all jobs
-[**getStream**](ConversionPDFApi.md#getStream) | **GET** /pdf/1.0.0/conversion2pdf/{jobid}/stream | Get the current result stream
-[**submitJob**](ConversionPDFApi.md#submitJob) | **PUT** /pdf/1.0.0/conversion2pdf/{jobid} | Submit PDF job for processing
-[**uploadAdditionalFile**](ConversionPDFApi.md#uploadAdditionalFile) | **POST** /pdf/1.0.0/conversion2pdf/{jobid} | Upload an additional file
-[**uploadFile**](ConversionPDFApi.md#uploadFile) | **POST** /pdf/1.0.0/conversion2pdf | Upload first file
+[**deleteJob**](ConversionPDFApi.md#deleteJob) | **DELETE** /pdf/1.0.1/conversion2pdf/{jobid} | Delete a job manually
+[**getJob**](ConversionPDFApi.md#getJob) | **GET** /pdf/1.0.1/conversion2pdf/{jobid} | Job definition and state
+[**getJobs**](ConversionPDFApi.md#getJobs) | **GET** /pdf/1.0.1/conversion2pdf | Get all jobs
+[**getStream**](ConversionPDFApi.md#getStream) | **GET** /pdf/1.0.1/conversion2pdf/{jobid}/stream | Get the current result stream
+[**submitJob**](ConversionPDFApi.md#submitJob) | **PUT** /pdf/1.0.1/conversion2pdf/{jobid} | Submit PDF job for processing
+[**uploadAdditionalFile**](ConversionPDFApi.md#uploadAdditionalFile) | **POST** /pdf/1.0.1/conversion2pdf/{jobid} | Upload an additional file
+[**uploadFile**](ConversionPDFApi.md#uploadFile) | **POST** /pdf/1.0.1/conversion2pdf | Upload first file
 
 
 <a name="deleteJob"></a>

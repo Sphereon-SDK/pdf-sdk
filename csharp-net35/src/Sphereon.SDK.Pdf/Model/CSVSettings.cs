@@ -34,55 +34,57 @@ using Newtonsoft.Json.Converters;
 namespace Sphereon.SDK.Pdf.Model
 {
     /// <summary>
-    /// Compression settings
+    /// CSVSettings
     /// </summary>
     [DataContract]
-    public partial class Compression :  IEquatable<Compression>
+    public partial class CSVSettings :  IEquatable<CSVSettings>
     {
         /// <summary>
-        /// Compression type. ADVANCED is only allowed and should be used with the ADVANCED engine
+        /// Set the separator for the columns. Choose between a comma (,), semicolon(;) and tab( )
         /// </summary>
-        /// <value>Compression type. ADVANCED is only allowed and should be used with the ADVANCED engine</value>
+        /// <value>Set the separator for the columns. Choose between a comma (,), semicolon(;) and tab( )</value>
         [JsonConverter(typeof(StringEnumConverter))]
-        public enum TypeEnum
+        public enum SeparatorCharacterEnum
         {
             
             /// <summary>
-            /// Enum NONE for "NONE"
+            /// Enum  for ";"
             /// </summary>
-            [EnumMember(Value = "NONE")]
-            NONE,
+            [EnumMember(Value = ";")]
             
-            /// <summary>
-            /// Enum ADVANCED for "ADVANCED"
-            /// </summary>
-            [EnumMember(Value = "ADVANCED")]
-            ADVANCED
         }
 
         /// <summary>
-        /// Compression type. ADVANCED is only allowed and should be used with the ADVANCED engine
+        /// Set the separator for the columns. Choose between a comma (,), semicolon(;) and tab( )
         /// </summary>
-        /// <value>Compression type. ADVANCED is only allowed and should be used with the ADVANCED engine</value>
-        [DataMember(Name="type", EmitDefaultValue=false)]
-        public TypeEnum? Type { get; set; }
+        /// <value>Set the separator for the columns. Choose between a comma (,), semicolon(;) and tab( )</value>
+        [DataMember(Name="separatorCharacter", EmitDefaultValue=false)]
+        public SeparatorCharacterEnum? SeparatorCharacter { get; set; }
         /// <summary>
-        /// Initializes a new instance of the <see cref="Compression" /> class.
+        /// Initializes a new instance of the <see cref="CSVSettings" /> class.
         /// </summary>
-        /// <param name="Level">Compression level. Valid range from 0 (minimal compression) to 10 (maximal compression).</param>
-        /// <param name="Type">Compression type. ADVANCED is only allowed and should be used with the ADVANCED engine.</param>
-        public Compression(int? Level = null, TypeEnum? Type = null)
+        /// <param name="SeparatorCharacter">Set the separator for the columns. Choose between a comma (,), semicolon(;) and tab( ).</param>
+        /// <param name="StandardRowHeight">Set the standard row Height. Range from 1 (lowest) to 409 (highest).</param>
+        /// <param name="StandardColumnWidth">Set the quality factor for the resulting PDF. Range from 1 (lowest) to 255 (highest).</param>
+        public CSVSettings(SeparatorCharacterEnum? SeparatorCharacter = null, double? StandardRowHeight = null, double? StandardColumnWidth = null)
         {
-            this.Level = Level;
-            this.Type = Type;
+            this.SeparatorCharacter = SeparatorCharacter;
+            this.StandardRowHeight = StandardRowHeight;
+            this.StandardColumnWidth = StandardColumnWidth;
         }
         
         /// <summary>
-        /// Compression level. Valid range from 0 (minimal compression) to 10 (maximal compression)
+        /// Set the standard row Height. Range from 1 (lowest) to 409 (highest)
         /// </summary>
-        /// <value>Compression level. Valid range from 0 (minimal compression) to 10 (maximal compression)</value>
-        [DataMember(Name="level", EmitDefaultValue=false)]
-        public int? Level { get; set; }
+        /// <value>Set the standard row Height. Range from 1 (lowest) to 409 (highest)</value>
+        [DataMember(Name="standardRowHeight", EmitDefaultValue=false)]
+        public double? StandardRowHeight { get; set; }
+        /// <summary>
+        /// Set the quality factor for the resulting PDF. Range from 1 (lowest) to 255 (highest)
+        /// </summary>
+        /// <value>Set the quality factor for the resulting PDF. Range from 1 (lowest) to 255 (highest)</value>
+        [DataMember(Name="standardColumnWidth", EmitDefaultValue=false)]
+        public double? StandardColumnWidth { get; set; }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -90,9 +92,10 @@ namespace Sphereon.SDK.Pdf.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Compression {\n");
-            sb.Append("  Level: ").Append(Level).Append("\n");
-            sb.Append("  Type: ").Append(Type).Append("\n");
+            sb.Append("class CSVSettings {\n");
+            sb.Append("  SeparatorCharacter: ").Append(SeparatorCharacter).Append("\n");
+            sb.Append("  StandardRowHeight: ").Append(StandardRowHeight).Append("\n");
+            sb.Append("  StandardColumnWidth: ").Append(StandardColumnWidth).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -114,15 +117,15 @@ namespace Sphereon.SDK.Pdf.Model
         public override bool Equals(object obj)
         {
             // credit: http://stackoverflow.com/a/10454552/677735
-            return this.Equals(obj as Compression);
+            return this.Equals(obj as CSVSettings);
         }
 
         /// <summary>
-        /// Returns true if Compression instances are equal
+        /// Returns true if CSVSettings instances are equal
         /// </summary>
-        /// <param name="other">Instance of Compression to be compared</param>
+        /// <param name="other">Instance of CSVSettings to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Compression other)
+        public bool Equals(CSVSettings other)
         {
             // credit: http://stackoverflow.com/a/10454552/677735
             if (other == null)
@@ -130,14 +133,19 @@ namespace Sphereon.SDK.Pdf.Model
 
             return 
                 (
-                    this.Level == other.Level ||
-                    this.Level != null &&
-                    this.Level.Equals(other.Level)
+                    this.SeparatorCharacter == other.SeparatorCharacter ||
+                    this.SeparatorCharacter != null &&
+                    this.SeparatorCharacter.Equals(other.SeparatorCharacter)
                 ) && 
                 (
-                    this.Type == other.Type ||
-                    this.Type != null &&
-                    this.Type.Equals(other.Type)
+                    this.StandardRowHeight == other.StandardRowHeight ||
+                    this.StandardRowHeight != null &&
+                    this.StandardRowHeight.Equals(other.StandardRowHeight)
+                ) && 
+                (
+                    this.StandardColumnWidth == other.StandardColumnWidth ||
+                    this.StandardColumnWidth != null &&
+                    this.StandardColumnWidth.Equals(other.StandardColumnWidth)
                 );
         }
 
@@ -152,10 +160,12 @@ namespace Sphereon.SDK.Pdf.Model
             {
                 int hash = 41;
                 // Suitable nullity checks etc, of course :)
-                if (this.Level != null)
-                    hash = hash * 59 + this.Level.GetHashCode();
-                if (this.Type != null)
-                    hash = hash * 59 + this.Type.GetHashCode();
+                if (this.SeparatorCharacter != null)
+                    hash = hash * 59 + this.SeparatorCharacter.GetHashCode();
+                if (this.StandardRowHeight != null)
+                    hash = hash * 59 + this.StandardRowHeight.GetHashCode();
+                if (this.StandardColumnWidth != null)
+                    hash = hash * 59 + this.StandardColumnWidth.GetHashCode();
                 return hash;
             }
         }

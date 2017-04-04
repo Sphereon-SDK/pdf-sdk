@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * ConversionTask
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-01-24T13:42:36.462+01:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-04-04T15:30:52.400+02:00")
 public class ConversionTask   {
   @SerializedName("jobId")
   private String jobId = null;

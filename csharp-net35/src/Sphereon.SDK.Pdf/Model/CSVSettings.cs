@@ -51,7 +51,7 @@ namespace Sphereon.SDK.Pdf.Model
             /// Enum  for ";"
             /// </summary>
             [EnumMember(Value = ";")]
-            
+            SEMICOLON
         }
 
         /// <summary>

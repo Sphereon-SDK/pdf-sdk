@@ -34,7 +34,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * CSVSettings
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-07-11T20:10:28.546+02:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-07-11T20:16:46.372+02:00")
 public class CSVSettings   {
   /**
    * Set the separator for the columns. Choose between a comma (,), semicolon(;) and tab( )

@@ -20,6 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
         <maven-scm-provider-gitexe.version>1.9.5</maven-scm-provider-gitexe.version>
+        <gitflow-maven-plugin.version>1.6.0</gitflow-maven-plugin.version>
     </properties>
 
     <scm>
@@ -145,7 +146,7 @@
             <plugin>
                 <groupId>com.amashchenko.maven.plugin</groupId>
                 <artifactId>gitflow-maven-plugin</artifactId>
-                <version>1.5.0</version>
+                <version>${gitflow-maven-plugin.version}</version>
                 <configuration>
                     <!-- optional configuration -->
                 </configuration>

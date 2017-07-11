@@ -35,7 +35,7 @@ import io.swagger.annotations.ApiModelProperty;
  * Compression settings
  */
 @ApiModel(description = "Compression settings")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-07-11T20:10:28.546+02:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-07-11T20:16:46.372+02:00")
 public class Compression   {
   @SerializedName("level")
   private Integer level = null;

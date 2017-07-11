@@ -35,7 +35,7 @@ import io.swagger.annotations.ApiModelProperty;
  * Location record of data stream
  */
 @ApiModel(description = "Location record of data stream")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-07-11T20:10:28.546+02:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-07-11T20:16:46.372+02:00")
 public class StreamLocation   {
   @SerializedName("folderPath")
   private String folderPath = null;

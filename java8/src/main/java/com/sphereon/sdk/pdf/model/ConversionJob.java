@@ -36,7 +36,7 @@ import io.swagger.annotations.ApiModelProperty;
  * The PDF conversion job. Has access to the job settings.
  */
 @ApiModel(description = "The PDF conversion job. Has access to the job settings.")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-07-11T20:10:28.546+02:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-07-11T20:16:46.372+02:00")
 public class ConversionJob   {
   @SerializedName("jobId")
   private String jobId = null;

@@ -30,7 +30,7 @@ import com.sphereon.sdk.pdf.handler.Pair;
 import java.util.Map;
 import java.util.List;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-07-11T20:16:46.372+02:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-07-11T20:22:41.640+02:00")
 public class ApiKeyAuth implements Authentication {
   private final String location;
   private final String paramName;

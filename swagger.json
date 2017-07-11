@@ -1,47 +1,7 @@
 {
   "basePath": "/",
   "paths": {
-    "/pdf/1.0.0/conversion2pdf/{jobid}/stream": {"get": {
-      "summary": "Get the current result stream",
-      "security": [{"oauth2schema": ["global"]}],
-      "produces": ["application/octet-stream"],
-      "description": "Get the PDF as binary stream/file.\r\nOur API generation does not allow changing the media type based on the Accepted header unfortunately.<br/>This means we use a seperate path postfix with the value '/stream'.\r\nThis API only returns the PDF when the response status code is zero! In other cases nothing is returned or the Job JSON when it is still being executed",
-      "operationId": "getStream",
-      "responses": {
-        "200": {
-          "schema": {
-            "format": "byte",
-            "type": "string"
-          },
-          "description": "PDF successfully created and returned"
-        },
-        "400": {
-          "schema": {"$ref": "#/definitions/ErrorResponse"},
-          "description": "PDF could not be created."
-        },
-        "202": {
-          "schema": {
-            "format": "byte",
-            "type": "string"
-          },
-          "description": "PDF not yet created. Job is still executing. Will return the JSON job instead of the PDF"
-        },
-        "404": {
-          "schema": {"$ref": "#/definitions/ErrorResponse"},
-          "description": "Invalid job id. No response body is supplied"
-        }
-      },
-      "parameters": [{
-        "in": "path",
-        "name": "jobid",
-        "description": "jobid",
-        "type": "string",
-        "required": true
-      }],
-      "tags": ["Conversion2PDF"],
-      "consumes": ["application/json"]
-    }},
-    "/pdf/1.0.0/conversion2pdf/{jobid}": {
+    "/pdf/1.0/conversion2pdf/{jobid}": {
       "post": {
         "summary": "Upload an additional file",
         "security": [{"oauth2schema": ["global"]}],
@@ -181,7 +141,47 @@
         "consumes": ["application/json;charset=UTF-8"]
       }
     },
-    "/pdf/1.0.0/conversion2pdf": {
+    "/pdf/1.0/conversion2pdf/{jobid}/stream": {"get": {
+      "summary": "Get the current result stream",
+      "security": [{"oauth2schema": ["global"]}],
+      "produces": ["application/octet-stream"],
+      "description": "Get the PDF as binary stream/file.\r\nOur API generation does not allow changing the media type based on the Accepted header unfortunately.<br/>This means we use a seperate path postfix with the value '/stream'.\r\nThis API only returns the PDF when the response status code is zero! In other cases nothing is returned or the Job JSON when it is still being executed",
+      "operationId": "getStream",
+      "responses": {
+        "200": {
+          "schema": {
+            "format": "byte",
+            "type": "string"
+          },
+          "description": "PDF successfully created and returned"
+        },
+        "400": {
+          "schema": {"$ref": "#/definitions/ErrorResponse"},
+          "description": "PDF could not be created."
+        },
+        "202": {
+          "schema": {
+            "format": "byte",
+            "type": "string"
+          },
+          "description": "PDF not yet created. Job is still executing. Will return the JSON job instead of the PDF"
+        },
+        "404": {
+          "schema": {"$ref": "#/definitions/ErrorResponse"},
+          "description": "Invalid job id. No response body is supplied"
+        }
+      },
+      "parameters": [{
+        "in": "path",
+        "name": "jobid",
+        "description": "jobid",
+        "type": "string",
+        "required": true
+      }],
+      "tags": ["Conversion2PDF"],
+      "consumes": ["application/json"]
+    }},
+    "/pdf/1.0/conversion2pdf": {
       "post": {
         "summary": "Upload first file",
         "security": [{"oauth2schema": ["global"]}],
@@ -328,11 +328,6 @@
           "readOnly": true,
           "type": "string"
         },
-        "url": {
-          "description": "The URL on the bucketstore for the PDF. Only available once the status is DONE",
-          "readOnly": true,
-          "type": "string"
-        },
         "status": {
           "description": "The status of the Conversion task itself",
           "readOnly": true,
@@ -381,21 +376,54 @@
         "message": {"type": "string"}
       }
     },
+    "StreamLocation": {
+      "description": "Location record of data stream",
+      "type": "object",
+      "properties": {
+        "folderPath": {"type": "string"},
+        "originalFileName": {"type": "string"},
+        "fileName": {"type": "string"},
+        "containerId": {"type": "string"}
+      }
+    },
+    "CSVSettings": {
+      "type": "object",
+      "properties": {
+        "separatorCharacter": {
+          "description": "Set the separator for the columns. Choose between a comma (,), semicolon(;) and tab(\t)",
+          "type": "string",
+          "enum": [
+            "COMMA",
+            "SEMICOLON",
+            "TAB"
+          ]
+        },
+        "standardRowHeight": {
+          "format": "double",
+          "description": "Set the standard row Height. Range from 1 (lowest) to 409 (highest)",
+          "maximum": 409,
+          "type": "number",
+          "minimum": 1
+        },
+        "standardColumnWidth": {
+          "format": "double",
+          "description": "Set the quality factor for the resulting PDF. Range from 1 (lowest) to 255 (highest)",
+          "maximum": 255,
+          "type": "number",
+          "minimum": 1
+        }
+      }
+    },
     "ConversionJobResponse": {
       "description": "The PDF job. Has access to the job settings as well as ocr engine tasks",
       "type": "object",
       "required": [
+        "inputLocations",
         "inputs",
+        "resultLocations",
         "status"
       ],
       "properties": {
-        "completionTime": {
-          "format": "date-time",
-          "description": "The completion date/time of this job in ISO 8601 format",
-          "readOnly": true,
-          "type": "string"
-        },
-        "jobId": {"type": "string"},
         "creationTime": {
           "format": "date-time",
           "description": "The creation date/time of this job in ISO 8601 format",
@@ -417,7 +445,6 @@
           "readOnly": true,
           "type": "string"
         },
-        "job": {"$ref": "#/definitions/ConversionJob"},
         "statusMessage": {
           "description": "A status message, which can be informational, warning or error. AA message here does not indicate an error perse",
           "readOnly": true,
@@ -428,6 +455,29 @@
           "description": "The conversion queue date/time of this job in ISO 8601 format",
           "readOnly": true,
           "type": "string"
+        },
+        "completionTime": {
+          "format": "date-time",
+          "description": "The completion date/time of this job in ISO 8601 format",
+          "readOnly": true,
+          "type": "string"
+        },
+        "jobId": {"type": "string"},
+        "inputLocations": {
+          "description": "The storage locations of the input files.",
+          "type": "array",
+          "items": {"$ref": "#/definitions/StreamLocation"}
+        },
+        "resultLocations": {
+          "description": "The storage locations of the result files.",
+          "type": "array",
+          "items": {"$ref": "#/definitions/StreamLocation"}
+        },
+        "job": {"$ref": "#/definitions/ConversionJob"},
+        "resultLocationUrls": {
+          "description": "The storage location URL's of the result files.",
+          "type": "array",
+          "items": {"type": "string"}
         },
         "status": {
           "description": "The status of the job",
@@ -483,6 +533,7 @@
             "PDF_A_1b"
           ]
         },
+        "csvSettings": {"$ref": "#/definitions/CSVSettings"},
         "outputFileFormat": {
           "type": "string",
           "enum": [
@@ -525,7 +576,7 @@
     "description": "<b>The PDF conversion API 'conversion2pdf' converts image, office and PDF files to (searcheable) PDF files.<\/b>\r\n\r\nThe flow is generally as follows:\r\n1. First upload an image/file using the /conversion2pdf POST endpoint. You will get back a job response that contains a job with its associated settings.\r\n2. Upload any additional images/files using the /conversion2pdf/{jobId} POST endpoint when you want to merge additional image, office or PDF files. You will get back the update job response that contains a job with its associated settings. Currently you can only merge spreadsheets with spreadsheet, documents with documents and images/pdfs with images/pdfs\r\n3. Start the job from a PUT request to the /conversion2pdf/{jobid} endpoint, with the Job and Settings JSON as request body. The conversion to PDF will now start. The OCR setting is only applicable to images, since other files will always be searchable.\r\n4. Check the job status from the /conversion2pdf/{jobid} GET endpoint until the status has changed to DONE or ERROR. Messaging using a websocket will be available as an alternative in a future version\r\n5. Retrieve the PDF file using the /conversion2pdf/{jobid}/stream GET endpoint. This will return the PDF file only when the status is DONE. In other cases it will return the Job Response JSON (with http code 202 instead of 200)\r\n\r\n\r\n<b>Interactive testing: <\/b>A web based test console is available in the <a href=\"https://store.sphereon.com\">Sphereon API Store<\/a>",
     "termsOfService": "https://sphereon.com",
     "title": "PDF ",
-    "version": "1.0.0"
+    "version": "1.0"
   },
   "tags": [{
     "name": "Conversion2PDF",

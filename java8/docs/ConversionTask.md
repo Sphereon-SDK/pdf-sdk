@@ -9,7 +9,6 @@ Name | Type | Description | Notes
 **engine** | [**EngineEnum**](#EngineEnum) | The Engine being used |  [optional]
 **inputs** | **List&lt;String&gt;** | The names of the supplied files/inputs |  [optional]
 **documentId** | **String** | The document Id provided by a backend system |  [optional]
-**url** | **String** | The URL on the bucketstore for the PDF. Only available once the status is DONE |  [optional]
 **status** | [**StatusEnum**](#StatusEnum) | The status of the Conversion task itself |  [optional]
 
 

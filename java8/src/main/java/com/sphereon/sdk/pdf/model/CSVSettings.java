@@ -29,53 +29,29 @@ import java.util.Objects;
 import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.time.OffsetDateTime;
 
 
 /**
- * Lifecycle settings. When no lifecycle settings are supplied, the job and files will be deleted directly after retrieval of the file
+ * CSVSettings
  */
-@ApiModel(description = "Lifecycle settings. When no lifecycle settings are supplied, the job and files will be deleted directly after retrieval of the file")
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-07-11T20:01:51.608+02:00")
-public class Lifecycle   {
-  @SerializedName("actionTime")
-  private OffsetDateTime actionTime = null;
-
+public class CSVSettings   {
   /**
-   * Gets or Sets action
+   * Set the separator for the columns. Choose between a comma (,), semicolon(;) and tab( )
    */
-  public enum ActionEnum {
-    @SerializedName("DELETE")
-    DELETE("DELETE");
-
-    private String value;
-
-    ActionEnum(String value) {
-      this.value = value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-  }
-
-  @SerializedName("action")
-  private ActionEnum action = null;
-
-  /**
-   * Gets or Sets type
-   */
-  public enum TypeEnum {
-    @SerializedName("RETRIEVAL")
-    RETRIEVAL("RETRIEVAL"),
+  public enum SeparatorCharacterEnum {
+    @SerializedName("COMMA")
+    COMMA("COMMA"),
     
-    @SerializedName("TIME")
-    TIME("TIME");
+    @SerializedName("SEMICOLON")
+    SEMICOLON("SEMICOLON"),
+    
+    @SerializedName("TAB")
+    TAB("TAB");
 
     private String value;
 
-    TypeEnum(String value) {
+    SeparatorCharacterEnum(String value) {
       this.value = value;
     }
 
@@ -85,61 +61,71 @@ public class Lifecycle   {
     }
   }
 
-  @SerializedName("type")
-  private TypeEnum type = null;
+  @SerializedName("separatorCharacter")
+  private SeparatorCharacterEnum separatorCharacter = null;
 
-  public Lifecycle actionTime(OffsetDateTime actionTime) {
-    this.actionTime = actionTime;
+  @SerializedName("standardRowHeight")
+  private Double standardRowHeight = null;
+
+  @SerializedName("standardColumnWidth")
+  private Double standardColumnWidth = null;
+
+  public CSVSettings separatorCharacter(SeparatorCharacterEnum separatorCharacter) {
+    this.separatorCharacter = separatorCharacter;
     return this;
   }
 
    /**
-   * The time at which the job and files will be deleted, regardless of whether it has been retrieved or not. Maximal time is 1 day from job creation
-   * @return actionTime
+   * Set the separator for the columns. Choose between a comma (,), semicolon(;) and tab( )
+   * @return separatorCharacter
   **/
-  @ApiModelProperty(example = "null", value = "The time at which the job and files will be deleted, regardless of whether it has been retrieved or not. Maximal time is 1 day from job creation")
-  public OffsetDateTime getActionTime() {
-    return actionTime;
+  @ApiModelProperty(example = "null", value = "Set the separator for the columns. Choose between a comma (,), semicolon(;) and tab( )")
+  public SeparatorCharacterEnum getSeparatorCharacter() {
+    return separatorCharacter;
   }
 
-  public void setActionTime(OffsetDateTime actionTime) {
-    this.actionTime = actionTime;
+  public void setSeparatorCharacter(SeparatorCharacterEnum separatorCharacter) {
+    this.separatorCharacter = separatorCharacter;
   }
 
-  public Lifecycle action(ActionEnum action) {
-    this.action = action;
+  public CSVSettings standardRowHeight(Double standardRowHeight) {
+    this.standardRowHeight = standardRowHeight;
     return this;
   }
 
    /**
-   * Get action
-   * @return action
+   * Set the standard row Height. Range from 1 (lowest) to 409 (highest)
+   * minimum: 1.0
+   * maximum: 409.0
+   * @return standardRowHeight
   **/
-  @ApiModelProperty(example = "null", value = "")
-  public ActionEnum getAction() {
-    return action;
+  @ApiModelProperty(example = "null", value = "Set the standard row Height. Range from 1 (lowest) to 409 (highest)")
+  public Double getStandardRowHeight() {
+    return standardRowHeight;
   }
 
-  public void setAction(ActionEnum action) {
-    this.action = action;
+  public void setStandardRowHeight(Double standardRowHeight) {
+    this.standardRowHeight = standardRowHeight;
   }
 
-  public Lifecycle type(TypeEnum type) {
-    this.type = type;
+  public CSVSettings standardColumnWidth(Double standardColumnWidth) {
+    this.standardColumnWidth = standardColumnWidth;
     return this;
   }
 
    /**
-   * Get type
-   * @return type
+   * Set the quality factor for the resulting PDF. Range from 1 (lowest) to 255 (highest)
+   * minimum: 1.0
+   * maximum: 255.0
+   * @return standardColumnWidth
   **/
-  @ApiModelProperty(example = "null", value = "")
-  public TypeEnum getType() {
-    return type;
+  @ApiModelProperty(example = "null", value = "Set the quality factor for the resulting PDF. Range from 1 (lowest) to 255 (highest)")
+  public Double getStandardColumnWidth() {
+    return standardColumnWidth;
   }
 
-  public void setType(TypeEnum type) {
-    this.type = type;
+  public void setStandardColumnWidth(Double standardColumnWidth) {
+    this.standardColumnWidth = standardColumnWidth;
   }
 
 
@@ -151,25 +137,25 @@ public class Lifecycle   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Lifecycle lifecycle = (Lifecycle) o;
-    return Objects.equals(this.actionTime, lifecycle.actionTime) &&
-        Objects.equals(this.action, lifecycle.action) &&
-        Objects.equals(this.type, lifecycle.type);
+    CSVSettings cSVSettings = (CSVSettings) o;
+    return Objects.equals(this.separatorCharacter, cSVSettings.separatorCharacter) &&
+        Objects.equals(this.standardRowHeight, cSVSettings.standardRowHeight) &&
+        Objects.equals(this.standardColumnWidth, cSVSettings.standardColumnWidth);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(actionTime, action, type);
+    return Objects.hash(separatorCharacter, standardRowHeight, standardColumnWidth);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Lifecycle {\n");
+    sb.append("class CSVSettings {\n");
     
-    sb.append("    actionTime: ").append(toIndentedString(actionTime)).append("\n");
-    sb.append("    action: ").append(toIndentedString(action)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    separatorCharacter: ").append(toIndentedString(separatorCharacter)).append("\n");
+    sb.append("    standardRowHeight: ").append(toIndentedString(standardRowHeight)).append("\n");
+    sb.append("    standardColumnWidth: ").append(toIndentedString(standardColumnWidth)).append("\n");
     sb.append("}");
     return sb.toString();
   }

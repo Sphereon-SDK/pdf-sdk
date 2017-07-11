@@ -4,7 +4,7 @@
     <groupId>com.sphereon.sdk</groupId>
     <artifactId>pdf-sdk-generator</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.2-SNAPSHOT</version>
     <name>PDF API SDK Generator</name>
 
 
@@ -20,26 +20,63 @@
         <api-version>0.3.2</api-version>
         <sdk-package>com.sphereon.sdk.pdf</sdk-package>
         <sdk-package-csharp>Sphereon.SDK.Pdf</sdk-package-csharp>
+
+        <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
+        <maven-scm-provider-gitexe.version>1.9.5</maven-scm-provider-gitexe.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
+        <maven-scm-provider-gitexe.version>1.9.5</maven-scm-provider-gitexe.version>
+
     </properties>
 
     <distributionManagement>
-        <snapshotRepository>
-            <id>snapshots</id>
-            <name>Inhouse snapshots</name>
-            <url>http://nexus.qa.sphereon.com/nexus/content/repositories/snapshots</url>
-        </snapshotRepository>
         <repository>
-            <id>releases</id>
-            <name>Inhouse releases</name>
-            <url>http://nexus.qa.sphereon.com/nexus/content/repositories/releases</url>
+            <id>sphereon-sdk-releases</id>
+            <url>http://nexus.qa.sphereon.com/nexus/content/repositories/sphereon-sdk-releases</url>
         </repository>
+        <snapshotRepository>
+            <id>sphereon-sdk-snapshots</id>
+            <url>http://nexus.qa.sphereon.com/nexus/content/repositories/sphereon-sdk-snapshots</url>
+        </snapshotRepository>
     </distributionManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>${maven-release-plugin.version}</version>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <!-- Keep changes in the local repo, push will be done afterwards -->
+                    <pushChanges>false</pushChanges>
+                    <localCheckout>true</localCheckout>
+                    <!-- Use a better name for the tag -->
+                    <tagNameFormat>v@{project.version}</tagNameFormat>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.scm</groupId>
+                        <artifactId>maven-scm-provider-gitexe</artifactId>
+                        <version>${maven-scm-provider-gitexe.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>com.amashchenko.maven.plugin</groupId>
+                <artifactId>gitflow-maven-plugin</artifactId>
+                <version>1.5.0</version>
+                <configuration>
+                    <!-- optional configuration -->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <profiles>
         <profile>
             <id>java8</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
             </activation>
             <build>
                 <plugins>
@@ -91,7 +128,7 @@
         <profile>
             <id>csharp-net45</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
             </activation>
             <build>
                 <plugins>

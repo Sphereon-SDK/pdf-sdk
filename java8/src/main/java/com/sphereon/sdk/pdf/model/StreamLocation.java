@@ -29,117 +29,96 @@ import java.util.Objects;
 import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.time.OffsetDateTime;
 
 
 /**
- * Lifecycle settings. When no lifecycle settings are supplied, the job and files will be deleted directly after retrieval of the file
+ * Location record of data stream
  */
-@ApiModel(description = "Lifecycle settings. When no lifecycle settings are supplied, the job and files will be deleted directly after retrieval of the file")
+@ApiModel(description = "Location record of data stream")
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-07-11T20:01:51.608+02:00")
-public class Lifecycle   {
-  @SerializedName("actionTime")
-  private OffsetDateTime actionTime = null;
+public class StreamLocation   {
+  @SerializedName("folderPath")
+  private String folderPath = null;
 
-  /**
-   * Gets or Sets action
-   */
-  public enum ActionEnum {
-    @SerializedName("DELETE")
-    DELETE("DELETE");
+  @SerializedName("originalFileName")
+  private String originalFileName = null;
 
-    private String value;
+  @SerializedName("fileName")
+  private String fileName = null;
 
-    ActionEnum(String value) {
-      this.value = value;
-    }
+  @SerializedName("containerId")
+  private String containerId = null;
 
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-  }
-
-  @SerializedName("action")
-  private ActionEnum action = null;
-
-  /**
-   * Gets or Sets type
-   */
-  public enum TypeEnum {
-    @SerializedName("RETRIEVAL")
-    RETRIEVAL("RETRIEVAL"),
-    
-    @SerializedName("TIME")
-    TIME("TIME");
-
-    private String value;
-
-    TypeEnum(String value) {
-      this.value = value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-  }
-
-  @SerializedName("type")
-  private TypeEnum type = null;
-
-  public Lifecycle actionTime(OffsetDateTime actionTime) {
-    this.actionTime = actionTime;
+  public StreamLocation folderPath(String folderPath) {
+    this.folderPath = folderPath;
     return this;
   }
 
    /**
-   * The time at which the job and files will be deleted, regardless of whether it has been retrieved or not. Maximal time is 1 day from job creation
-   * @return actionTime
-  **/
-  @ApiModelProperty(example = "null", value = "The time at which the job and files will be deleted, regardless of whether it has been retrieved or not. Maximal time is 1 day from job creation")
-  public OffsetDateTime getActionTime() {
-    return actionTime;
-  }
-
-  public void setActionTime(OffsetDateTime actionTime) {
-    this.actionTime = actionTime;
-  }
-
-  public Lifecycle action(ActionEnum action) {
-    this.action = action;
-    return this;
-  }
-
-   /**
-   * Get action
-   * @return action
+   * Get folderPath
+   * @return folderPath
   **/
   @ApiModelProperty(example = "null", value = "")
-  public ActionEnum getAction() {
-    return action;
+  public String getFolderPath() {
+    return folderPath;
   }
 
-  public void setAction(ActionEnum action) {
-    this.action = action;
+  public void setFolderPath(String folderPath) {
+    this.folderPath = folderPath;
   }
 
-  public Lifecycle type(TypeEnum type) {
-    this.type = type;
+  public StreamLocation originalFileName(String originalFileName) {
+    this.originalFileName = originalFileName;
     return this;
   }
 
    /**
-   * Get type
-   * @return type
+   * Get originalFileName
+   * @return originalFileName
   **/
   @ApiModelProperty(example = "null", value = "")
-  public TypeEnum getType() {
-    return type;
+  public String getOriginalFileName() {
+    return originalFileName;
   }
 
-  public void setType(TypeEnum type) {
-    this.type = type;
+  public void setOriginalFileName(String originalFileName) {
+    this.originalFileName = originalFileName;
+  }
+
+  public StreamLocation fileName(String fileName) {
+    this.fileName = fileName;
+    return this;
+  }
+
+   /**
+   * Get fileName
+   * @return fileName
+  **/
+  @ApiModelProperty(example = "null", value = "")
+  public String getFileName() {
+    return fileName;
+  }
+
+  public void setFileName(String fileName) {
+    this.fileName = fileName;
+  }
+
+  public StreamLocation containerId(String containerId) {
+    this.containerId = containerId;
+    return this;
+  }
+
+   /**
+   * Get containerId
+   * @return containerId
+  **/
+  @ApiModelProperty(example = "null", value = "")
+  public String getContainerId() {
+    return containerId;
+  }
+
+  public void setContainerId(String containerId) {
+    this.containerId = containerId;
   }
 
 
@@ -151,25 +130,27 @@ public class Lifecycle   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Lifecycle lifecycle = (Lifecycle) o;
-    return Objects.equals(this.actionTime, lifecycle.actionTime) &&
-        Objects.equals(this.action, lifecycle.action) &&
-        Objects.equals(this.type, lifecycle.type);
+    StreamLocation streamLocation = (StreamLocation) o;
+    return Objects.equals(this.folderPath, streamLocation.folderPath) &&
+        Objects.equals(this.originalFileName, streamLocation.originalFileName) &&
+        Objects.equals(this.fileName, streamLocation.fileName) &&
+        Objects.equals(this.containerId, streamLocation.containerId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(actionTime, action, type);
+    return Objects.hash(folderPath, originalFileName, fileName, containerId);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Lifecycle {\n");
+    sb.append("class StreamLocation {\n");
     
-    sb.append("    actionTime: ").append(toIndentedString(actionTime)).append("\n");
-    sb.append("    action: ").append(toIndentedString(action)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    folderPath: ").append(toIndentedString(folderPath)).append("\n");
+    sb.append("    originalFileName: ").append(toIndentedString(originalFileName)).append("\n");
+    sb.append("    fileName: ").append(toIndentedString(fileName)).append("\n");
+    sb.append("    containerId: ").append(toIndentedString(containerId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

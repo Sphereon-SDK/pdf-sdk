@@ -34,55 +34,46 @@ using Newtonsoft.Json.Converters;
 namespace Sphereon.SDK.Pdf.Model
 {
     /// <summary>
-    /// Compression settings
+    /// Location record of data stream
     /// </summary>
     [DataContract]
-    public partial class Compression :  IEquatable<Compression>
+    public partial class StreamLocation :  IEquatable<StreamLocation>
     {
         /// <summary>
-        /// Compression type. ADVANCED is only allowed and should be used with the ADVANCED engine
+        /// Initializes a new instance of the <see cref="StreamLocation" /> class.
         /// </summary>
-        /// <value>Compression type. ADVANCED is only allowed and should be used with the ADVANCED engine</value>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum TypeEnum
+        /// <param name="FolderPath">FolderPath.</param>
+        /// <param name="OriginalFileName">OriginalFileName.</param>
+        /// <param name="FileName">FileName.</param>
+        /// <param name="ContainerId">ContainerId.</param>
+        public StreamLocation(string FolderPath = null, string OriginalFileName = null, string FileName = null, string ContainerId = null)
         {
-            
-            /// <summary>
-            /// Enum NONE for "NONE"
-            /// </summary>
-            [EnumMember(Value = "NONE")]
-            NONE,
-            
-            /// <summary>
-            /// Enum ADVANCED for "ADVANCED"
-            /// </summary>
-            [EnumMember(Value = "ADVANCED")]
-            ADVANCED
-        }
-
-        /// <summary>
-        /// Compression type. ADVANCED is only allowed and should be used with the ADVANCED engine
-        /// </summary>
-        /// <value>Compression type. ADVANCED is only allowed and should be used with the ADVANCED engine</value>
-        [DataMember(Name="type", EmitDefaultValue=false)]
-        public TypeEnum? Type { get; set; }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Compression" /> class.
-        /// </summary>
-        /// <param name="Level">Compression level. Valid range from 0 (minimal compression) to 10 (maximal compression).</param>
-        /// <param name="Type">Compression type. ADVANCED is only allowed and should be used with the ADVANCED engine.</param>
-        public Compression(int? Level = null, TypeEnum? Type = null)
-        {
-            this.Level = Level;
-            this.Type = Type;
+            this.FolderPath = FolderPath;
+            this.OriginalFileName = OriginalFileName;
+            this.FileName = FileName;
+            this.ContainerId = ContainerId;
         }
         
         /// <summary>
-        /// Compression level. Valid range from 0 (minimal compression) to 10 (maximal compression)
+        /// Gets or Sets FolderPath
         /// </summary>
-        /// <value>Compression level. Valid range from 0 (minimal compression) to 10 (maximal compression)</value>
-        [DataMember(Name="level", EmitDefaultValue=false)]
-        public int? Level { get; set; }
+        [DataMember(Name="folderPath", EmitDefaultValue=false)]
+        public string FolderPath { get; set; }
+        /// <summary>
+        /// Gets or Sets OriginalFileName
+        /// </summary>
+        [DataMember(Name="originalFileName", EmitDefaultValue=false)]
+        public string OriginalFileName { get; set; }
+        /// <summary>
+        /// Gets or Sets FileName
+        /// </summary>
+        [DataMember(Name="fileName", EmitDefaultValue=false)]
+        public string FileName { get; set; }
+        /// <summary>
+        /// Gets or Sets ContainerId
+        /// </summary>
+        [DataMember(Name="containerId", EmitDefaultValue=false)]
+        public string ContainerId { get; set; }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -90,9 +81,11 @@ namespace Sphereon.SDK.Pdf.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Compression {\n");
-            sb.Append("  Level: ").Append(Level).Append("\n");
-            sb.Append("  Type: ").Append(Type).Append("\n");
+            sb.Append("class StreamLocation {\n");
+            sb.Append("  FolderPath: ").Append(FolderPath).Append("\n");
+            sb.Append("  OriginalFileName: ").Append(OriginalFileName).Append("\n");
+            sb.Append("  FileName: ").Append(FileName).Append("\n");
+            sb.Append("  ContainerId: ").Append(ContainerId).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -114,15 +107,15 @@ namespace Sphereon.SDK.Pdf.Model
         public override bool Equals(object obj)
         {
             // credit: http://stackoverflow.com/a/10454552/677735
-            return this.Equals(obj as Compression);
+            return this.Equals(obj as StreamLocation);
         }
 
         /// <summary>
-        /// Returns true if Compression instances are equal
+        /// Returns true if StreamLocation instances are equal
         /// </summary>
-        /// <param name="other">Instance of Compression to be compared</param>
+        /// <param name="other">Instance of StreamLocation to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Compression other)
+        public bool Equals(StreamLocation other)
         {
             // credit: http://stackoverflow.com/a/10454552/677735
             if (other == null)
@@ -130,14 +123,24 @@ namespace Sphereon.SDK.Pdf.Model
 
             return 
                 (
-                    this.Level == other.Level ||
-                    this.Level != null &&
-                    this.Level.Equals(other.Level)
+                    this.FolderPath == other.FolderPath ||
+                    this.FolderPath != null &&
+                    this.FolderPath.Equals(other.FolderPath)
                 ) && 
                 (
-                    this.Type == other.Type ||
-                    this.Type != null &&
-                    this.Type.Equals(other.Type)
+                    this.OriginalFileName == other.OriginalFileName ||
+                    this.OriginalFileName != null &&
+                    this.OriginalFileName.Equals(other.OriginalFileName)
+                ) && 
+                (
+                    this.FileName == other.FileName ||
+                    this.FileName != null &&
+                    this.FileName.Equals(other.FileName)
+                ) && 
+                (
+                    this.ContainerId == other.ContainerId ||
+                    this.ContainerId != null &&
+                    this.ContainerId.Equals(other.ContainerId)
                 );
         }
 
@@ -152,10 +155,14 @@ namespace Sphereon.SDK.Pdf.Model
             {
                 int hash = 41;
                 // Suitable nullity checks etc, of course :)
-                if (this.Level != null)
-                    hash = hash * 59 + this.Level.GetHashCode();
-                if (this.Type != null)
-                    hash = hash * 59 + this.Type.GetHashCode();
+                if (this.FolderPath != null)
+                    hash = hash * 59 + this.FolderPath.GetHashCode();
+                if (this.OriginalFileName != null)
+                    hash = hash * 59 + this.OriginalFileName.GetHashCode();
+                if (this.FileName != null)
+                    hash = hash * 59 + this.FileName.GetHashCode();
+                if (this.ContainerId != null)
+                    hash = hash * 59 + this.ContainerId.GetHashCode();
                 return hash;
             }
         }

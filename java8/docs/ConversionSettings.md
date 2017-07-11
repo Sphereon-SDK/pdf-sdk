@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **compression** | [**Compression**](Compression.md) |  |  [optional]
 **containerConversion** | [**ContainerConversionEnum**](#ContainerConversionEnum) |  |  [optional]
 **version** | [**VersionEnum**](#VersionEnum) |  |  [optional]
+**csvSettings** | [**CSVSettings**](CSVSettings.md) |  |  [optional]
 **outputFileFormat** | [**OutputFileFormatEnum**](#OutputFileFormatEnum) |  |  [optional]
 **ocrMode** | [**OcrModeEnum**](#OcrModeEnum) |  |  [optional]
 

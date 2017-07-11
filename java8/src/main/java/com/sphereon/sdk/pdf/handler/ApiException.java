@@ -28,7 +28,7 @@ package com.sphereon.sdk.pdf.handler;
 import java.util.Map;
 import java.util.List;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-07-11T20:16:46.372+02:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-07-11T20:22:41.640+02:00")
 public class ApiException extends Exception {
     private int code = 0;
     private Map<String, List<String>> responseHeaders = null;

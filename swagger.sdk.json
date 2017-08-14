@@ -36,6 +36,13 @@
             "description": "The additional binary image or PDF (file/inputstream) to convert to PDF",
             "type": "file",
             "required": true
+          },
+          {
+            "in": "query",
+            "name": "fileName",
+            "description": "Optional input file name.",
+            "type": "string",
+            "required": false
           }
         ],
         "tags": ["Conversion2PDF"],
@@ -192,13 +199,22 @@
           "schema": {"$ref": "#/definitions/ConversionJobResponse"},
           "description": "First file uploaded successfully. Conversion job created but not started yet"
         }},
-        "parameters": [{
-          "in": "formData",
-          "name": "stream",
-          "description": "The first image, office or PDF file to convert to PDF",
-          "type": "file",
-          "required": true
-        }],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "stream",
+            "description": "The first image, office or PDF file to convert to PDF",
+            "type": "file",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "fileName",
+            "description": "Optional input file name.",
+            "type": "string",
+            "required": false
+          }
+        ],
         "tags": ["Conversion2PDF"],
         "consumes": ["multipart/form-data"]
       },

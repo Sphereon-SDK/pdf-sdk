@@ -282,7 +282,7 @@ Name | Type | Description  | Notes
 
 <a name="uploadAdditionalFile"></a>
 # **uploadAdditionalFile**
-> ConversionJobResponse uploadAdditionalFile(jobid, stream)
+> ConversionJobResponse uploadAdditionalFile(jobid, stream, fileName)
 
 Upload an additional file
 
@@ -306,8 +306,9 @@ oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
 ConversionPDFApi apiInstance = new ConversionPDFApi();
 String jobid = "jobid_example"; // String | jobid
 File stream = new File("/path/to/file.txt"); // File | The additional binary image or PDF (file/inputstream) to convert to PDF
+String fileName = "fileName_example"; // String | Optional input file name.
 try {
-    ConversionJobResponse result = apiInstance.uploadAdditionalFile(jobid, stream);
+    ConversionJobResponse result = apiInstance.uploadAdditionalFile(jobid, stream, fileName);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling ConversionPDFApi#uploadAdditionalFile");
@@ -321,6 +322,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **jobid** | **String**| jobid |
  **stream** | **File**| The additional binary image or PDF (file/inputstream) to convert to PDF |
+ **fileName** | **String**| Optional input file name. | [optional]
 
 ### Return type
 
@@ -337,7 +339,7 @@ Name | Type | Description  | Notes
 
 <a name="uploadFile"></a>
 # **uploadFile**
-> ConversionJobResponse uploadFile(stream)
+> ConversionJobResponse uploadFile(stream, fileName)
 
 Upload first file
 
@@ -360,8 +362,9 @@ oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
 
 ConversionPDFApi apiInstance = new ConversionPDFApi();
 File stream = new File("/path/to/file.txt"); // File | The first image, office or PDF file to convert to PDF
+String fileName = "fileName_example"; // String | Optional input file name.
 try {
-    ConversionJobResponse result = apiInstance.uploadFile(stream);
+    ConversionJobResponse result = apiInstance.uploadFile(stream, fileName);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling ConversionPDFApi#uploadFile");
@@ -374,6 +377,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **stream** | **File**| The first image, office or PDF file to convert to PDF |
+ **fileName** | **String**| Optional input file name. | [optional]
 
 ### Return type
 

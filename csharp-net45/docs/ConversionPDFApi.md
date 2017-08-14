@@ -342,7 +342,7 @@ Name | Type | Description  | Notes
 
 <a name="uploadadditionalfile"></a>
 # **UploadAdditionalFile**
-> ConversionJobResponse UploadAdditionalFile (string jobid, System.IO.Stream stream)
+> ConversionJobResponse UploadAdditionalFile (string jobid, System.IO.Stream stream, string fileName = null)
 
 Upload an additional file
 
@@ -369,11 +369,12 @@ namespace Example
             var apiInstance = new ConversionPDFApi();
             var jobid = jobid_example;  // string | jobid
             var stream = new System.IO.Stream(); // System.IO.Stream | The additional binary image or PDF (file/inputstream) to convert to PDF
+            var fileName = fileName_example;  // string | Optional input file name. (optional) 
 
             try
             {
                 // Upload an additional file
-                ConversionJobResponse result = apiInstance.UploadAdditionalFile(jobid, stream);
+                ConversionJobResponse result = apiInstance.UploadAdditionalFile(jobid, stream, fileName);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -391,6 +392,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **jobid** | **string**| jobid | 
  **stream** | **System.IO.Stream**| The additional binary image or PDF (file/inputstream) to convert to PDF | 
+ **fileName** | **string**| Optional input file name. | [optional] 
 
 ### Return type
 
@@ -409,7 +411,7 @@ Name | Type | Description  | Notes
 
 <a name="uploadfile"></a>
 # **UploadFile**
-> ConversionJobResponse UploadFile (System.IO.Stream stream)
+> ConversionJobResponse UploadFile (System.IO.Stream stream, string fileName = null)
 
 Upload first file
 
@@ -435,11 +437,12 @@ namespace Example
 
             var apiInstance = new ConversionPDFApi();
             var stream = new System.IO.Stream(); // System.IO.Stream | The first image, office or PDF file to convert to PDF
+            var fileName = fileName_example;  // string | Optional input file name. (optional) 
 
             try
             {
                 // Upload first file
-                ConversionJobResponse result = apiInstance.UploadFile(stream);
+                ConversionJobResponse result = apiInstance.UploadFile(stream, fileName);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -456,6 +459,7 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **stream** | **System.IO.Stream**| The first image, office or PDF file to convert to PDF | 
+ **fileName** | **string**| Optional input file name. | [optional] 
 
 ### Return type
 

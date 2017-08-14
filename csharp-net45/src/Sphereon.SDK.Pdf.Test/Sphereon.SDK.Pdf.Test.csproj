@@ -86,7 +86,7 @@ limitations under the License.
   <Import Project="$(MsBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
       <ProjectReference Include="..\Sphereon.SDK.Pdf\Sphereon.SDK.Pdf.csproj">
-          <Project>{271A4EBE-CF36-465D-B995-CA835F3B9422}</Project>
+          <Project>{CC303DFA-A449-4EA1-BAC5-7FD7C659C74D}</Project>
           <Name>Sphereon.SDK.Pdf</Name>
       </ProjectReference>
   </ItemGroup>

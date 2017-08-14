@@ -26,6 +26,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Threading;
 using RestSharp;
 using NUnit.Framework;
 
@@ -71,11 +73,38 @@ namespace Sphereon.SDK.Pdf.Test
         [Test]
         public void InstanceTest()
         {
-            // TODO uncomment below to test 'IsInstanceOfType' ConversionPDFApi
-            //Assert.IsInstanceOfType(typeof(ConversionPDFApi), instance, "instance is a ConversionPDFApi");
+            instance.Configuration.AccessToken = "d03991a8-76f0-31d1-a444-e8a47e8fa5a4";
+            MemoryStream memoryStream = new MemoryStream();
+            var buffer = Encoding.Unicode.GetBytes("This is a test.");
+            memoryStream.Write(buffer, 0, buffer.Length);
+            var uploadResult = instance.UploadFile(memoryStream, "TestFile.txt");
+            //uploadResult.Job.Settings.OutputFileName = "";
+            var submitResult = instance.SubmitJob(uploadResult.JobId, uploadResult.Job);
+
+
+            // poll job state change
+            int sleepTime = 3000;
+            int maxCount = 60; // wait at most 1 min for api to complete
+            int count = 0;
+            while (count < maxCount)
+            {
+                Thread.Sleep(sleepTime);
+                count++;
+                try {
+                    var jobResponse = instance.GetJob(submitResult.JobId);
+                    if(jobResponse.Status == ConversionJobResponse.StatusEnum.DONE)
+                        break;
+                } catch (Exception e) {
+                    // status of job changed results in different http code
+                    break;
+                }
+            }
+
+            var stream = instance.GetStream(submitResult.JobId);
+            Assert.IsTrue(stream != null && stream.Length > 0);
         }
 
-        
+
         /// <summary>
         /// Test DeleteJob
         /// </summary>

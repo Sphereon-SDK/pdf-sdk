@@ -608,7 +608,7 @@ public class ConversionPDFApi {
         return call;
     }
     /* Build call for uploadAdditionalFile */
-    private com.squareup.okhttp.Call uploadAdditionalFileCall(String jobid, File stream, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call uploadAdditionalFileCall(String jobid, File stream, String fileName, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'jobid' is set
@@ -627,6 +627,8 @@ public class ConversionPDFApi {
         .replaceAll("\\{" + "jobid" + "\\}", apiClient.escapeString(jobid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        if (fileName != null)
+        localVarQueryParams.addAll(apiClient.parameterToPairs("", "fileName", fileName));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -667,11 +669,12 @@ public class ConversionPDFApi {
      * Upload an additional image, office or pdf for conversion to PDF. Conversion will not be started yet.
      * @param jobid jobid (required)
      * @param stream The additional binary image or PDF (file/inputstream) to convert to PDF (required)
+     * @param fileName Optional input file name. (optional)
      * @return ConversionJobResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ConversionJobResponse uploadAdditionalFile(String jobid, File stream) throws ApiException {
-        ApiResponse<ConversionJobResponse> resp = uploadAdditionalFileWithHttpInfo(jobid, stream);
+    public ConversionJobResponse uploadAdditionalFile(String jobid, File stream, String fileName) throws ApiException {
+        ApiResponse<ConversionJobResponse> resp = uploadAdditionalFileWithHttpInfo(jobid, stream, fileName);
         return resp.getData();
     }
 
@@ -680,11 +683,12 @@ public class ConversionPDFApi {
      * Upload an additional image, office or pdf for conversion to PDF. Conversion will not be started yet.
      * @param jobid jobid (required)
      * @param stream The additional binary image or PDF (file/inputstream) to convert to PDF (required)
+     * @param fileName Optional input file name. (optional)
      * @return ApiResponse&lt;ConversionJobResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<ConversionJobResponse> uploadAdditionalFileWithHttpInfo(String jobid, File stream) throws ApiException {
-        com.squareup.okhttp.Call call = uploadAdditionalFileCall(jobid, stream, null, null);
+    public ApiResponse<ConversionJobResponse> uploadAdditionalFileWithHttpInfo(String jobid, File stream, String fileName) throws ApiException {
+        com.squareup.okhttp.Call call = uploadAdditionalFileCall(jobid, stream, fileName, null, null);
         Type localVarReturnType = new TypeToken<ConversionJobResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -694,11 +698,12 @@ public class ConversionPDFApi {
      * Upload an additional image, office or pdf for conversion to PDF. Conversion will not be started yet.
      * @param jobid jobid (required)
      * @param stream The additional binary image or PDF (file/inputstream) to convert to PDF (required)
+     * @param fileName Optional input file name. (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call uploadAdditionalFileAsync(String jobid, File stream, final ApiCallback<ConversionJobResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call uploadAdditionalFileAsync(String jobid, File stream, String fileName, final ApiCallback<ConversionJobResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -719,13 +724,13 @@ public class ConversionPDFApi {
             };
         }
 
-        com.squareup.okhttp.Call call = uploadAdditionalFileCall(jobid, stream, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = uploadAdditionalFileCall(jobid, stream, fileName, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<ConversionJobResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /* Build call for uploadFile */
-    private com.squareup.okhttp.Call uploadFileCall(File stream, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call uploadFileCall(File stream, String fileName, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'stream' is set
@@ -738,6 +743,8 @@ public class ConversionPDFApi {
         String localVarPath = "/pdf/1.0/conversion2pdf".replaceAll("\\{format\\}","json");
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        if (fileName != null)
+        localVarQueryParams.addAll(apiClient.parameterToPairs("", "fileName", fileName));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -777,11 +784,12 @@ public class ConversionPDFApi {
      * Upload first file
      * Upload the first image, office or pdf file.
      * @param stream The first image, office or PDF file to convert to PDF (required)
+     * @param fileName Optional input file name. (optional)
      * @return ConversionJobResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ConversionJobResponse uploadFile(File stream) throws ApiException {
-        ApiResponse<ConversionJobResponse> resp = uploadFileWithHttpInfo(stream);
+    public ConversionJobResponse uploadFile(File stream, String fileName) throws ApiException {
+        ApiResponse<ConversionJobResponse> resp = uploadFileWithHttpInfo(stream, fileName);
         return resp.getData();
     }
 
@@ -789,11 +797,12 @@ public class ConversionPDFApi {
      * Upload first file
      * Upload the first image, office or pdf file.
      * @param stream The first image, office or PDF file to convert to PDF (required)
+     * @param fileName Optional input file name. (optional)
      * @return ApiResponse&lt;ConversionJobResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<ConversionJobResponse> uploadFileWithHttpInfo(File stream) throws ApiException {
-        com.squareup.okhttp.Call call = uploadFileCall(stream, null, null);
+    public ApiResponse<ConversionJobResponse> uploadFileWithHttpInfo(File stream, String fileName) throws ApiException {
+        com.squareup.okhttp.Call call = uploadFileCall(stream, fileName, null, null);
         Type localVarReturnType = new TypeToken<ConversionJobResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -802,11 +811,12 @@ public class ConversionPDFApi {
      * Upload first file (asynchronously)
      * Upload the first image, office or pdf file.
      * @param stream The first image, office or PDF file to convert to PDF (required)
+     * @param fileName Optional input file name. (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call uploadFileAsync(File stream, final ApiCallback<ConversionJobResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call uploadFileAsync(File stream, String fileName, final ApiCallback<ConversionJobResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -827,7 +837,7 @@ public class ConversionPDFApi {
             };
         }
 
-        com.squareup.okhttp.Call call = uploadFileCall(stream, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = uploadFileCall(stream, fileName, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<ConversionJobResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

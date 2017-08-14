@@ -152,8 +152,9 @@ namespace Sphereon.SDK.Pdf.Api
         /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobid">jobid</param>
         /// <param name="stream">The additional binary image or PDF (file/inputstream) to convert to PDF</param>
+        /// <param name="fileName">Optional input file name. (optional)</param>
         /// <returns>ConversionJobResponse</returns>
-        ConversionJobResponse UploadAdditionalFile (string jobid, System.IO.Stream stream);
+        ConversionJobResponse UploadAdditionalFile (string jobid, System.IO.Stream stream, string fileName = null);
 
         /// <summary>
         /// Upload an additional file
@@ -164,8 +165,9 @@ namespace Sphereon.SDK.Pdf.Api
         /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobid">jobid</param>
         /// <param name="stream">The additional binary image or PDF (file/inputstream) to convert to PDF</param>
+        /// <param name="fileName">Optional input file name. (optional)</param>
         /// <returns>ApiResponse of ConversionJobResponse</returns>
-        ApiResponse<ConversionJobResponse> UploadAdditionalFileWithHttpInfo (string jobid, System.IO.Stream stream);
+        ApiResponse<ConversionJobResponse> UploadAdditionalFileWithHttpInfo (string jobid, System.IO.Stream stream, string fileName = null);
         /// <summary>
         /// Upload first file
         /// </summary>
@@ -174,8 +176,9 @@ namespace Sphereon.SDK.Pdf.Api
         /// </remarks>
         /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="stream">The first image, office or PDF file to convert to PDF</param>
+        /// <param name="fileName">Optional input file name. (optional)</param>
         /// <returns>ConversionJobResponse</returns>
-        ConversionJobResponse UploadFile (System.IO.Stream stream);
+        ConversionJobResponse UploadFile (System.IO.Stream stream, string fileName = null);
 
         /// <summary>
         /// Upload first file
@@ -185,8 +188,9 @@ namespace Sphereon.SDK.Pdf.Api
         /// </remarks>
         /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="stream">The first image, office or PDF file to convert to PDF</param>
+        /// <param name="fileName">Optional input file name. (optional)</param>
         /// <returns>ApiResponse of ConversionJobResponse</returns>
-        ApiResponse<ConversionJobResponse> UploadFileWithHttpInfo (System.IO.Stream stream);
+        ApiResponse<ConversionJobResponse> UploadFileWithHttpInfo (System.IO.Stream stream, string fileName = null);
         #endregion Synchronous Operations
     }
 
@@ -700,10 +704,11 @@ namespace Sphereon.SDK.Pdf.Api
         /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobid">jobid</param>
         /// <param name="stream">The additional binary image or PDF (file/inputstream) to convert to PDF</param>
+        /// <param name="fileName">Optional input file name. (optional)</param>
         /// <returns>ConversionJobResponse</returns>
-        public ConversionJobResponse UploadAdditionalFile (string jobid, System.IO.Stream stream)
+        public ConversionJobResponse UploadAdditionalFile (string jobid, System.IO.Stream stream, string fileName = null)
         {
-             ApiResponse<ConversionJobResponse> localVarResponse = UploadAdditionalFileWithHttpInfo(jobid, stream);
+             ApiResponse<ConversionJobResponse> localVarResponse = UploadAdditionalFileWithHttpInfo(jobid, stream, fileName);
              return localVarResponse.Data;
         }
 
@@ -713,8 +718,9 @@ namespace Sphereon.SDK.Pdf.Api
         /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobid">jobid</param>
         /// <param name="stream">The additional binary image or PDF (file/inputstream) to convert to PDF</param>
+        /// <param name="fileName">Optional input file name. (optional)</param>
         /// <returns>ApiResponse of ConversionJobResponse</returns>
-        public ApiResponse< ConversionJobResponse > UploadAdditionalFileWithHttpInfo (string jobid, System.IO.Stream stream)
+        public ApiResponse< ConversionJobResponse > UploadAdditionalFileWithHttpInfo (string jobid, System.IO.Stream stream, string fileName = null)
         {
             // verify the required parameter 'jobid' is set
             if (jobid == null)
@@ -749,6 +755,7 @@ namespace Sphereon.SDK.Pdf.Api
             // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
             localVarPathParams.Add("format", "json");
             if (jobid != null) localVarPathParams.Add("jobid", Configuration.ApiClient.ParameterToString(jobid)); // path parameter
+            if (fileName != null) localVarQueryParams.Add("fileName", Configuration.ApiClient.ParameterToString(fileName)); // query parameter
             if (stream != null) localVarFileParams.Add("stream", Configuration.ApiClient.ParameterToFile("stream", stream));
 
             // authentication (oauth2schema) required
@@ -782,10 +789,11 @@ namespace Sphereon.SDK.Pdf.Api
         /// </summary>
         /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="stream">The first image, office or PDF file to convert to PDF</param>
+        /// <param name="fileName">Optional input file name. (optional)</param>
         /// <returns>ConversionJobResponse</returns>
-        public ConversionJobResponse UploadFile (System.IO.Stream stream)
+        public ConversionJobResponse UploadFile (System.IO.Stream stream, string fileName = null)
         {
-             ApiResponse<ConversionJobResponse> localVarResponse = UploadFileWithHttpInfo(stream);
+             ApiResponse<ConversionJobResponse> localVarResponse = UploadFileWithHttpInfo(stream, fileName);
              return localVarResponse.Data;
         }
 
@@ -794,8 +802,9 @@ namespace Sphereon.SDK.Pdf.Api
         /// </summary>
         /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="stream">The first image, office or PDF file to convert to PDF</param>
+        /// <param name="fileName">Optional input file name. (optional)</param>
         /// <returns>ApiResponse of ConversionJobResponse</returns>
-        public ApiResponse< ConversionJobResponse > UploadFileWithHttpInfo (System.IO.Stream stream)
+        public ApiResponse< ConversionJobResponse > UploadFileWithHttpInfo (System.IO.Stream stream, string fileName = null)
         {
             // verify the required parameter 'stream' is set
             if (stream == null)
@@ -826,6 +835,7 @@ namespace Sphereon.SDK.Pdf.Api
             // set "format" to json by default
             // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
             localVarPathParams.Add("format", "json");
+            if (fileName != null) localVarQueryParams.Add("fileName", Configuration.ApiClient.ParameterToString(fileName)); // query parameter
             if (stream != null) localVarFileParams.Add("stream", Configuration.ApiClient.ParameterToFile("stream", stream));
 
             // authentication (oauth2schema) required

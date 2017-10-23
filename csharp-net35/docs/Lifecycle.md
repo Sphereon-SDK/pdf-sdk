@@ -3,7 +3,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ActionTime** | **DateTime?** | The time at which the job and files will be deleted, regardless of whether it has been retrieved or not. Maximal time is 1 day from job creation | [optional] 
+**ApplicableJobStatusses** | **List&lt;string&gt;** | Job status needs to be in this list in order for the action to be performeld! | [optional] 
 **Action** | **string** |  | [optional] 
 **Type** | **string** |  | [optional] 
 

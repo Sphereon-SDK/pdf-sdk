@@ -1,46 +1,111 @@
 {
-  "basePath": "/",
+  "basePath": "/pdf/1.1",
   "paths": {
-    "/pdf/1.0/conversion2pdf/{jobid}": {
+    "/conversion2pdf/jobs/{jobid}/streams/location": {"post": {
+      "summary": "Add Input Stream Location(s)",
+      "security": [{"oauth2schema": ["global"]}],
+      "produces": ["application/json;charset=UTF-8"],
+      "description": "Add image, office or pdf input stream location(s) from the storage API for conversion to PDF. Please note that you can upload multiple files. Conversion will not be started yet.",
+      "operationId": "addInputStreamLocations",
+      "responses": {
+        "200": {
+          "schema": {"$ref": "#/definitions/ConversionJobResponse"},
+          "description": "Stream location(s) added. The JSON Job response will be returned in the body."
+        },
+        "400": {
+          "schema": {"$ref": "#/definitions/ErrorResponse"},
+          "description": "Job could not be stored/processed"
+        },
+        "404": {
+          "schema": {"$ref": "#/definitions/ErrorResponse"},
+          "description": "Invalid job id."
+        }
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "jobid",
+          "description": "jobid",
+          "type": "string",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "array",
+            "items": {"$ref": "#/definitions/StreamLocation"}
+          },
+          "in": "body",
+          "name": "inputStreamLocations",
+          "description": "The (additional) binary image or PDF (file/inputstream) to convert to PDF",
+          "required": true
+        }
+      ],
+      "tags": ["Conversion2PDF"],
+      "consumes": ["application/json;charset=UTF-8"]
+    }},
+    "/conversion2pdf/jobs": {
       "post": {
-        "summary": "Upload an additional file",
+        "summary": "Create a PDF conversion job",
         "security": [{"oauth2schema": ["global"]}],
         "produces": ["application/json;charset=UTF-8"],
-        "description": "Upload an additional image, office or pdf for conversion to PDF. Conversion will not be started yet.",
-        "operationId": "uploadAdditionalFile",
-        "responses": {
-          "200": {
-            "schema": {"$ref": "#/definitions/ConversionJobResponse"},
-            "description": "file uploaded. The JSON Job response will be returned in the body."
-          },
-          "400": {
-            "schema": {"$ref": "#/definitions/ErrorResponse"},
-            "description": "Job could not be stored/processed"
-          },
-          "404": {
-            "schema": {"$ref": "#/definitions/ErrorResponse"},
-            "description": "Invalid job id."
-          }
-        },
-        "parameters": [
-          {
-            "in": "path",
-            "name": "jobid",
-            "description": "jobid",
-            "type": "string",
-            "required": true
-          },
-          {
-            "in": "formData",
-            "name": "stream",
-            "description": "The additional binary image or PDF (file/inputstream) to convert to PDF",
-            "type": "file",
-            "required": true
-          }
-        ],
+        "description": "Create a PDF conversion job using optional settings supplied, otherwise defaults will be used",
+        "operationId": "createJob",
+        "responses": {"200": {
+          "schema": {"$ref": "#/definitions/ConversionJobResponse"},
+          "description": "PDF conversion job created successfully. Conversion job created but not started yet"
+        }},
+        "parameters": [{
+          "schema": {"$ref": "#/definitions/ConversionSettings"},
+          "in": "body",
+          "name": "settings",
+          "description": "Optional settings to use for this job",
+          "required": false
+        }],
         "tags": ["Conversion2PDF"],
-        "consumes": ["multipart/form-data"]
+        "consumes": ["application/json;charset=UTF-8"]
       },
+      "get": {
+        "summary": "Get all jobs",
+        "security": [{"oauth2schema": ["global"]}],
+        "produces": ["application/json;charset=UTF-8"],
+        "description": "Get all PDF job definitions and their current state.",
+        "operationId": "getJobs",
+        "responses": {"200": {
+          "schema": {"$ref": "#/definitions/ConversionJobResponse"},
+          "description": "All PDF jobs that have not been deleted"
+        }},
+        "parameters": [{
+          "in": "query",
+          "name": "status",
+          "description": "A list of status to filter on.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "INIT",
+              "INPUTS_UPLOADED",
+              "PROCESSING",
+              "DONE",
+              "ERROR",
+              "DELETED"
+            ]
+          },
+          "collectionFormat": "multi",
+          "required": false,
+          "enum": [
+            "INIT",
+            "INPUTS_UPLOADED",
+            "PROCESSING",
+            "DONE",
+            "ERROR",
+            "DELETED"
+          ]
+        }],
+        "tags": ["Conversion2PDF"],
+        "consumes": ["application/json"]
+      }
+    },
+    "/conversion2pdf/jobs/{jobid}": {
       "get": {
         "summary": "Job definition and state",
         "security": [{"oauth2schema": ["global"]}],
@@ -110,7 +175,7 @@
         "responses": {
           "200": {
             "schema": {"$ref": "#/definitions/ConversionJobResponse"},
-            "description": "coversion job submitted"
+            "description": "Conversion job submitted"
           },
           "400": {
             "schema": {"$ref": "#/definitions/ErrorResponse"},
@@ -141,7 +206,7 @@
         "consumes": ["application/json;charset=UTF-8"]
       }
     },
-    "/pdf/1.0/conversion2pdf/{jobid}/stream": {"get": {
+    "/conversion2pdf/jobs/{jobid}/streams/result": {"get": {
       "summary": "Get the current result stream",
       "security": [{"oauth2schema": ["global"]}],
       "produces": ["application/octet-stream"],
@@ -181,66 +246,45 @@
       "tags": ["Conversion2PDF"],
       "consumes": ["application/json"]
     }},
-    "/pdf/1.0/conversion2pdf": {
-      "post": {
-        "summary": "Upload first file",
-        "security": [{"oauth2schema": ["global"]}],
-        "produces": ["application/json;charset=UTF-8"],
-        "description": "Upload the first image, office or pdf file.",
-        "operationId": "uploadFile",
-        "responses": {"200": {
+    "/conversion2pdf/jobs/{jobid}/streams/multipart": {"post": {
+      "summary": "Upload a file",
+      "security": [{"oauth2schema": ["global"]}],
+      "produces": ["application/json;charset=UTF-8"],
+      "description": "Upload an image, office or pdf for conversion to PDF. Please note that you can upload multiple files. Conversion will not be started yet.",
+      "operationId": "addInputFile",
+      "responses": {
+        "200": {
           "schema": {"$ref": "#/definitions/ConversionJobResponse"},
-          "description": "First file uploaded successfully. Conversion job created but not started yet"
-        }},
-        "parameters": [{
+          "description": "file uploaded. The JSON Job response will be returned in the body."
+        },
+        "400": {
+          "schema": {"$ref": "#/definitions/ErrorResponse"},
+          "description": "Job could not be stored/processed"
+        },
+        "404": {
+          "schema": {"$ref": "#/definitions/ErrorResponse"},
+          "description": "Invalid job id."
+        }
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "jobid",
+          "description": "jobid",
+          "type": "string",
+          "required": true
+        },
+        {
           "in": "formData",
           "name": "stream",
-          "description": "The first image, office or PDF file to convert to PDF",
+          "description": "The (additional) binary image or PDF (file/inputstream) to convert to PDF",
           "type": "file",
           "required": true
-        }],
-        "tags": ["Conversion2PDF"],
-        "consumes": ["multipart/form-data"]
-      },
-      "get": {
-        "summary": "Get all jobs",
-        "security": [{"oauth2schema": ["global"]}],
-        "produces": ["application/json;charset=UTF-8"],
-        "description": "Get all PDF job definitions and their current state.",
-        "operationId": "getJobs",
-        "responses": {"200": {
-          "schema": {"$ref": "#/definitions/ConversionJobResponse"},
-          "description": "All PDF jobs that have not been deleted"
-        }},
-        "parameters": [{
-          "in": "query",
-          "name": "status",
-          "description": "A list of status to filter on.",
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "INPUTS_UPLOADED",
-              "PROCESSING",
-              "DONE",
-              "ERROR",
-              "DELETED"
-            ]
-          },
-          "collectionFormat": "multi",
-          "required": false,
-          "enum": [
-            "INPUTS_UPLOADED",
-            "PROCESSING",
-            "DONE",
-            "ERROR",
-            "DELETED"
-          ]
-        }],
-        "tags": ["Conversion2PDF"],
-        "consumes": ["application/json"]
-      }
-    }
+        }
+      ],
+      "tags": ["Conversion2PDF"],
+      "consumes": ["multipart/form-data"]
+    }}
   },
   "host": "gw.api.cloud.sphereon.com",
   "schemes": ["https"],
@@ -251,6 +295,15 @@
     "flow": "application"
   }},
   "definitions": {
+    "ResultResponse": {
+      "description": "Result response",
+      "type": "object",
+      "properties": {"streamLocations": {
+        "description": "Result Stream Locations",
+        "type": "array",
+        "items": {"$ref": "#/definitions/StreamLocation"}
+      }}
+    },
     "Compression": {
       "description": "Compression settings",
       "type": "object",
@@ -276,82 +329,32 @@
       "description": "Lifecycle settings. When no lifecycle settings are supplied, the job and files will be deleted directly after retrieval of the file",
       "type": "object",
       "properties": {
-        "actionTime": {
-          "format": "date-time",
-          "description": "The time at which the job and files will be deleted, regardless of whether it has been retrieved or not. Maximal time is 1 day from job creation",
-          "type": "string"
+        "applicableJobStatusses": {
+          "description": "Job status needs to be in this list in order for the action to be performeld!",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "INIT",
+              "INPUTS_UPLOADED",
+              "PROCESSING",
+              "DONE",
+              "ERROR",
+              "DELETED"
+            ]
+          }
         },
         "action": {
           "type": "string",
-          "enum": ["DELETE"]
+          "enum": [
+            "DELETE",
+            "NONE"
+          ]
         },
         "type": {
           "type": "string",
-          "enum": [
-            "RETRIEVAL",
-            "TIME"
-          ]
+          "enum": ["RETRIEVAL"]
         }
-      }
-    },
-    "ConversionTask": {
-      "type": "object",
-      "properties": {
-        "jobId": {
-          "description": "The current job Id",
-          "readOnly": true,
-          "type": "string"
-        },
-        "queueId": {
-          "description": "The queue Id provided by a backend system",
-          "readOnly": true,
-          "type": "string"
-        },
-        "engine": {
-          "description": "The Engine being used",
-          "readOnly": true,
-          "type": "string",
-          "enum": [
-            "ADVANCED",
-            "PREMIUM",
-            "BASIC"
-          ]
-        },
-        "inputs": {
-          "description": "The names of the supplied files/inputs",
-          "readOnly": true,
-          "type": "array",
-          "items": {"type": "string"}
-        },
-        "documentId": {
-          "description": "The document Id provided by a backend system",
-          "readOnly": true,
-          "type": "string"
-        },
-        "status": {
-          "description": "The status of the Conversion task itself",
-          "readOnly": true,
-          "type": "string",
-          "enum": [
-            "REQUESTED",
-            "QUEUED",
-            "PROCESSING",
-            "DONE",
-            "ERROR"
-          ]
-        }
-      }
-    },
-    "ConversionJob": {
-      "description": "The PDF conversion job. Has access to the job settings.",
-      "type": "object",
-      "required": ["jobId"],
-      "properties": {
-        "jobId": {
-          "description": "The server generated job jobId. This jobId is checked against the jobId in the request path on overy invocation",
-          "type": "string"
-        },
-        "settings": {"$ref": "#/definitions/ConversionSettings"}
       }
     },
     "Error": {
@@ -376,6 +379,28 @@
         "message": {"type": "string"}
       }
     },
+    "ResultSettings": {
+      "description": "Result settings",
+      "type": "object",
+      "required": ["fileFormat"],
+      "properties": {
+        "lifecycle": {"$ref": "#/definitions/Lifecycle"},
+        "storageLocation": {
+          "description": "Result Storage location",
+          "$ref": "#/definitions/StorageLocation"
+        },
+        "compression": {"$ref": "#/definitions/Compression"},
+        "fileFormat": {
+          "type": "string",
+          "enum": [
+            "TIFF",
+            "PDF",
+            "XLSX",
+            "DOCX"
+          ]
+        }
+      }
+    },
     "StreamLocation": {
       "description": "Location record of data stream",
       "type": "object",
@@ -383,6 +408,10 @@
         "folderPath": {"type": "string"},
         "originalFileName": {"type": "string"},
         "fileName": {"type": "string"},
+        "id": {
+          "readOnly": true,
+          "type": "string"
+        },
         "containerId": {"type": "string"}
       }
     },
@@ -415,25 +444,32 @@
       }
     },
     "ConversionJobResponse": {
-      "description": "The PDF job. Has access to the job settings as well as ocr engine tasks",
+      "description": "The PDF job. Has access to the job settings as well as (ocr) engine tasks",
       "type": "object",
-      "required": [
-        "inputLocations",
-        "inputs",
-        "resultLocations",
-        "status"
-      ],
+      "required": ["status"],
       "properties": {
+        "result": {
+          "description": "The result(s)",
+          "readOnly": true,
+          "$ref": "#/definitions/ResultResponse"
+        },
+        "completionTime": {
+          "format": "date-time",
+          "description": "The completion date/time of this job in ISO 8601 format",
+          "readOnly": true,
+          "type": "string"
+        },
+        "input": {
+          "description": "The input(s)",
+          "readOnly": true,
+          "$ref": "#/definitions/InputResponse"
+        },
+        "jobId": {"type": "string"},
         "creationTime": {
           "format": "date-time",
           "description": "The creation date/time of this job in ISO 8601 format",
           "readOnly": true,
           "type": "string"
-        },
-        "inputs": {
-          "description": "The original input files. Currently supported inputs are: inputs, pdfs and office files",
-          "type": "array",
-          "items": {"type": "string"}
         },
         "conversionTasks": {
           "type": "array",
@@ -445,6 +481,7 @@
           "readOnly": true,
           "type": "string"
         },
+        "job": {"$ref": "#/definitions/ConversionJob"},
         "statusMessage": {
           "description": "A status message, which can be informational, warning or error. AA message here does not indicate an error perse",
           "readOnly": true,
@@ -456,34 +493,12 @@
           "readOnly": true,
           "type": "string"
         },
-        "completionTime": {
-          "format": "date-time",
-          "description": "The completion date/time of this job in ISO 8601 format",
-          "readOnly": true,
-          "type": "string"
-        },
-        "jobId": {"type": "string"},
-        "inputLocations": {
-          "description": "The storage locations of the input files.",
-          "type": "array",
-          "items": {"$ref": "#/definitions/StreamLocation"}
-        },
-        "resultLocations": {
-          "description": "The storage locations of the result files.",
-          "type": "array",
-          "items": {"$ref": "#/definitions/StreamLocation"}
-        },
-        "job": {"$ref": "#/definitions/ConversionJob"},
-        "resultLocationUrls": {
-          "description": "The storage location URL's of the result files.",
-          "type": "array",
-          "items": {"type": "string"}
-        },
         "status": {
           "description": "The status of the job",
           "readOnly": true,
           "type": "string",
           "enum": [
+            "INIT",
             "INPUTS_UPLOADED",
             "PROCESSING",
             "DONE",
@@ -493,11 +508,19 @@
         }
       }
     },
+    "InputResponse": {
+      "description": "Input response",
+      "type": "object",
+      "properties": {"streamLocations": {
+        "description": "Input Stream Locations",
+        "type": "array",
+        "items": {"$ref": "#/definitions/StreamLocation"}
+      }}
+    },
     "ConversionSettings": {
       "description": "Conversion settings",
       "type": "object",
       "properties": {
-        "lifecycle": {"$ref": "#/definitions/Lifecycle"},
         "qualityFactor": {
           "format": "int32",
           "description": "Set the quality factor for the resulting PDF. Range from 0 (lowest) to 10 (highest)",
@@ -505,7 +528,8 @@
           "type": "integer",
           "minimum": 0
         },
-        "outputFileName": {"type": "string"},
+        "result": {"$ref": "#/definitions/ResultSettings"},
+        "input": {"$ref": "#/definitions/InputSettings"},
         "engine": {
           "type": "string",
           "enum": [
@@ -514,7 +538,7 @@
             "PREMIUM"
           ]
         },
-        "compression": {"$ref": "#/definitions/Compression"},
+        "csv": {"$ref": "#/definitions/CSVSettings"},
         "containerConversion": {
           "type": "string",
           "enum": [
@@ -524,6 +548,7 @@
           ]
         },
         "version": {
+          "description": "The PDF version to use for conversion",
           "type": "string",
           "enum": [
             "PDF_1_4",
@@ -533,15 +558,9 @@
             "PDF_A_1b"
           ]
         },
-        "csvSettings": {"$ref": "#/definitions/CSVSettings"},
-        "outputFileFormat": {
-          "type": "string",
-          "enum": [
-            "TIFF",
-            "PDF",
-            "XLSX",
-            "DOCX"
-          ]
+        "jobLifecycle": {
+          "description": "The lifecycle of the job itself",
+          "$ref": "#/definitions/Lifecycle"
         },
         "ocrMode": {
           "type": "string",
@@ -560,6 +579,97 @@
         "type": "array",
         "items": {"$ref": "#/definitions/Error"}
       }}
+    },
+    "ConversionTaskInput": {
+      "description": "Conversion Task Input",
+      "type": "object",
+      "properties": {"streamLocations": {
+        "description": "Input Stream Locations",
+        "type": "array",
+        "items": {"$ref": "#/definitions/StreamLocation"}
+      }}
+    },
+    "ConversionTask": {
+      "type": "object",
+      "properties": {
+        "jobId": {
+          "description": "The current job Id",
+          "readOnly": true,
+          "type": "string"
+        },
+        "queueId": {
+          "description": "The queue Id provided by a backend system",
+          "readOnly": true,
+          "type": "string"
+        },
+        "engine": {
+          "description": "The Engine being used",
+          "readOnly": true,
+          "type": "string",
+          "enum": [
+            "ADVANCED",
+            "PREMIUM",
+            "BASIC"
+          ]
+        },
+        "conversionInput": {
+          "description": "Conversion input",
+          "readOnly": true,
+          "$ref": "#/definitions/ConversionTaskInput"
+        },
+        "documentId": {
+          "description": "The document Id provided by a backend system",
+          "readOnly": true,
+          "type": "string"
+        },
+        "status": {
+          "description": "The status of the Conversion task itself",
+          "readOnly": true,
+          "type": "string",
+          "enum": [
+            "REQUESTED",
+            "QUEUED",
+            "PROCESSING",
+            "DONE",
+            "ERROR"
+          ]
+        }
+      }
+    },
+    "ConversionJob": {
+      "description": "The PDF conversion job. Has access to the job settings.",
+      "type": "object",
+      "required": ["jobId"],
+      "properties": {
+        "jobId": {
+          "description": "The server generated job jobId. This jobId is checked against the jobId in the request path on overy invocation",
+          "type": "string"
+        },
+        "settings": {"$ref": "#/definitions/ConversionSettings"}
+      }
+    },
+    "StorageLocation": {
+      "description": "Storage Location",
+      "type": "object",
+      "properties": {
+        "folderPath": {"type": "string"},
+        "id": {
+          "readOnly": true,
+          "type": "string"
+        },
+        "containerId": {"type": "string"}
+      }
+    },
+    "InputSettings": {
+      "description": "Input settings",
+      "type": "object",
+      "properties": {
+        "lifecycle": {"$ref": "#/definitions/Lifecycle"},
+        "storageLocation": {
+          "description": "Input Storage location",
+          "$ref": "#/definitions/StorageLocation"
+        }
+      }
     }
   },
   "swagger": "2.0",
@@ -573,10 +683,10 @@
       "url": "https://sphereon.com",
       "email": "dev@sphereon.com"
     },
-    "description": "<b>The PDF conversion API 'conversion2pdf' converts image, office and PDF files to (searcheable) PDF files.<\/b>\r\n\r\nThe flow is generally as follows:\r\n1. First upload an image/file using the /conversion2pdf POST endpoint. You will get back a job response that contains a job with its associated settings.\r\n2. Upload any additional images/files using the /conversion2pdf/{jobId} POST endpoint when you want to merge additional image, office or PDF files. You will get back the update job response that contains a job with its associated settings. Currently you can only merge spreadsheets with spreadsheet, documents with documents and images/pdfs with images/pdfs\r\n3. Start the job from a PUT request to the /conversion2pdf/{jobid} endpoint, with the Job and Settings JSON as request body. The conversion to PDF will now start. The OCR setting is only applicable to images, since other files will always be searchable.\r\n4. Check the job status from the /conversion2pdf/{jobid} GET endpoint until the status has changed to DONE or ERROR. Messaging using a websocket will be available as an alternative in a future version\r\n5. Retrieve the PDF file using the /conversion2pdf/{jobid}/stream GET endpoint. This will return the PDF file only when the status is DONE. In other cases it will return the Job Response JSON (with http code 202 instead of 200)\r\n\r\n\r\n<b>Interactive testing: <\/b>A web based test console is available in the <a href=\"https://store.sphereon.com\">Sphereon API Store<\/a>",
+    "description": "<b>The PDF conversion API 'conversion2pdf' converts image, office and PDF files to (searcheable) PDF files.<\/b>\r\n\r\nThe flow is generally as follows:\r\n1. First create a job using the /conversion2pdf/jobs POST endpoint. You will get back a job response that contains a job with its associated settings.\r\n2. Upload one or more images/files using the /conversion2pdf/jobs/{jobId}/streams/multipart POST endpoint. You can also add stream locations from the storage API . You will get back the update job response that contains a job with its associated settings. Currently you can only merge spreadsheets with spreadsheet, documents with documents and images/pdfs with images/pdfs\r\n3. Start the job from a PUT request to the /conversion2pdf/jobs/{jobid} endpoint, with the Job and Settings JSON as request body. The conversion to PDF will now start. The OCR setting is only applicable to images, since other files will always be searchable.\r\n4. Check the job status from the /conversion2pdf/jobs/{jobid} GET endpoint until the status has changed to DONE or ERROR. Messaging using a websocket will be available as an alternative in a future version\r\n5. Retrieve the PDF file using the /conversion2pdf/jobs/{jobid}/streams/result GET endpoint. This will return the PDF file only when the status is DONE. In other cases it will return the Job Response JSON (with http code 202 instead of 200)\r\n\r\n\r\n<b>Interactive testing: <\/b>A web based test console is available in the <a href=\"https://store.sphereon.com\">Sphereon API Store<\/a>",
     "termsOfService": "https://sphereon.com",
-    "title": "PDF ",
-    "version": "1.0"
+    "title": "PDF",
+    "version": "1.1"
   },
   "tags": [{
     "name": "Conversion2PDF",

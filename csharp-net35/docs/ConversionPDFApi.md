@@ -1,17 +1,217 @@
 # Sphereon.SDK.Pdf.Api.ConversionPDFApi
 
-All URIs are relative to *https://gw.api.cloud.sphereon.com/*
+All URIs are relative to *https://gw.api.cloud.sphereon.com/pdf/1.1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**DeleteJob**](ConversionPDFApi.md#deletejob) | **DELETE** /pdf/1.0/conversion2pdf/{jobid} | Delete a job manually
-[**GetJob**](ConversionPDFApi.md#getjob) | **GET** /pdf/1.0/conversion2pdf/{jobid} | Job definition and state
-[**GetJobs**](ConversionPDFApi.md#getjobs) | **GET** /pdf/1.0/conversion2pdf | Get all jobs
-[**GetStream**](ConversionPDFApi.md#getstream) | **GET** /pdf/1.0/conversion2pdf/{jobid}/stream | Get the current result stream
-[**SubmitJob**](ConversionPDFApi.md#submitjob) | **PUT** /pdf/1.0/conversion2pdf/{jobid} | Submit PDF job for processing
-[**UploadAdditionalFile**](ConversionPDFApi.md#uploadadditionalfile) | **POST** /pdf/1.0/conversion2pdf/{jobid} | Upload an additional file
-[**UploadFile**](ConversionPDFApi.md#uploadfile) | **POST** /pdf/1.0/conversion2pdf | Upload first file
+[**AddInputFile**](ConversionPDFApi.md#addinputfile) | **POST** /conversion2pdf/jobs/{jobid}/streams/multipart | Upload a file
+[**AddInputStreamLocations**](ConversionPDFApi.md#addinputstreamlocations) | **POST** /conversion2pdf/jobs/{jobid}/streams/location | Add Input Stream Location(s)
+[**CreateJob**](ConversionPDFApi.md#createjob) | **POST** /conversion2pdf/jobs | Create a PDF conversion job
+[**DeleteJob**](ConversionPDFApi.md#deletejob) | **DELETE** /conversion2pdf/jobs/{jobid} | Delete a job manually
+[**GetJob**](ConversionPDFApi.md#getjob) | **GET** /conversion2pdf/jobs/{jobid} | Job definition and state
+[**GetJobs**](ConversionPDFApi.md#getjobs) | **GET** /conversion2pdf/jobs | Get all jobs
+[**GetStream**](ConversionPDFApi.md#getstream) | **GET** /conversion2pdf/jobs/{jobid}/streams/result | Get the current result stream
+[**SubmitJob**](ConversionPDFApi.md#submitjob) | **PUT** /conversion2pdf/jobs/{jobid} | Submit PDF job for processing
 
+
+<a name="addinputfile"></a>
+# **AddInputFile**
+> ConversionJobResponse AddInputFile (string jobid, System.IO.Stream stream)
+
+Upload a file
+
+Upload an image, office or pdf for conversion to PDF. Please note that you can upload multiple files. Conversion will not be started yet.
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using Sphereon.SDK.Pdf.Api;
+using Sphereon.SDK.Pdf.Client;
+using Sphereon.SDK.Pdf.Model;
+
+namespace Example
+{
+    public class AddInputFileExample
+    {
+        public void main()
+        {
+            
+            // Configure OAuth2 access token for authorization: oauth2schema
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
+            var apiInstance = new ConversionPDFApi();
+            var jobid = jobid_example;  // string | jobid
+            var stream = new System.IO.Stream(); // System.IO.Stream | The (additional) binary image or PDF (file/inputstream) to convert to PDF
+
+            try
+            {
+                // Upload a file
+                ConversionJobResponse result = apiInstance.AddInputFile(jobid, stream);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling ConversionPDFApi.AddInputFile: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **jobid** | **string**| jobid | 
+ **stream** | **System.IO.Stream**| The (additional) binary image or PDF (file/inputstream) to convert to PDF | 
+
+### Return type
+
+[**ConversionJobResponse**](ConversionJobResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: application/json;charset=UTF-8
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="addinputstreamlocations"></a>
+# **AddInputStreamLocations**
+> ConversionJobResponse AddInputStreamLocations (string jobid, List<StreamLocation> inputStreamLocations)
+
+Add Input Stream Location(s)
+
+Add image, office or pdf input stream location(s) from the storage API for conversion to PDF. Please note that you can upload multiple files. Conversion will not be started yet.
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using Sphereon.SDK.Pdf.Api;
+using Sphereon.SDK.Pdf.Client;
+using Sphereon.SDK.Pdf.Model;
+
+namespace Example
+{
+    public class AddInputStreamLocationsExample
+    {
+        public void main()
+        {
+            
+            // Configure OAuth2 access token for authorization: oauth2schema
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
+            var apiInstance = new ConversionPDFApi();
+            var jobid = jobid_example;  // string | jobid
+            var inputStreamLocations = new List<StreamLocation>(); // List<StreamLocation> | The (additional) binary image or PDF (file/inputstream) to convert to PDF
+
+            try
+            {
+                // Add Input Stream Location(s)
+                ConversionJobResponse result = apiInstance.AddInputStreamLocations(jobid, inputStreamLocations);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling ConversionPDFApi.AddInputStreamLocations: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **jobid** | **string**| jobid | 
+ **inputStreamLocations** | [**List<StreamLocation>**](StreamLocation.md)| The (additional) binary image or PDF (file/inputstream) to convert to PDF | 
+
+### Return type
+
+[**ConversionJobResponse**](ConversionJobResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json;charset=UTF-8
+ - **Accept**: application/json;charset=UTF-8
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="createjob"></a>
+# **CreateJob**
+> ConversionJobResponse CreateJob (ConversionSettings settings = null)
+
+Create a PDF conversion job
+
+Create a PDF conversion job using optional settings supplied, otherwise defaults will be used
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using Sphereon.SDK.Pdf.Api;
+using Sphereon.SDK.Pdf.Client;
+using Sphereon.SDK.Pdf.Model;
+
+namespace Example
+{
+    public class CreateJobExample
+    {
+        public void main()
+        {
+            
+            // Configure OAuth2 access token for authorization: oauth2schema
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
+            var apiInstance = new ConversionPDFApi();
+            var settings = new ConversionSettings(); // ConversionSettings | Optional settings to use for this job (optional) 
+
+            try
+            {
+                // Create a PDF conversion job
+                ConversionJobResponse result = apiInstance.CreateJob(settings);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling ConversionPDFApi.CreateJob: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **settings** | [**ConversionSettings**](ConversionSettings.md)| Optional settings to use for this job | [optional] 
+
+### Return type
+
+[**ConversionJobResponse**](ConversionJobResponse.md)
+
+### Authorization
+
+[oauth2schema](../README.md#oauth2schema)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json;charset=UTF-8
+ - **Accept**: application/json;charset=UTF-8
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="deletejob"></a>
 # **DeleteJob**
@@ -336,138 +536,6 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json;charset=UTF-8
- - **Accept**: application/json;charset=UTF-8
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-<a name="uploadadditionalfile"></a>
-# **UploadAdditionalFile**
-> ConversionJobResponse UploadAdditionalFile (string jobid, System.IO.Stream stream)
-
-Upload an additional file
-
-Upload an additional image, office or pdf for conversion to PDF. Conversion will not be started yet.
-
-### Example
-```csharp
-using System;
-using System.Diagnostics;
-using Sphereon.SDK.Pdf.Api;
-using Sphereon.SDK.Pdf.Client;
-using Sphereon.SDK.Pdf.Model;
-
-namespace Example
-{
-    public class UploadAdditionalFileExample
-    {
-        public void main()
-        {
-            
-            // Configure OAuth2 access token for authorization: oauth2schema
-            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
-
-            var apiInstance = new ConversionPDFApi();
-            var jobid = jobid_example;  // string | jobid
-            var stream = new System.IO.Stream(); // System.IO.Stream | The additional binary image or PDF (file/inputstream) to convert to PDF
-
-            try
-            {
-                // Upload an additional file
-                ConversionJobResponse result = apiInstance.UploadAdditionalFile(jobid, stream);
-                Debug.WriteLine(result);
-            }
-            catch (Exception e)
-            {
-                Debug.Print("Exception when calling ConversionPDFApi.UploadAdditionalFile: " + e.Message );
-            }
-        }
-    }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **jobid** | **string**| jobid | 
- **stream** | **System.IO.Stream**| The additional binary image or PDF (file/inputstream) to convert to PDF | 
-
-### Return type
-
-[**ConversionJobResponse**](ConversionJobResponse.md)
-
-### Authorization
-
-[oauth2schema](../README.md#oauth2schema)
-
-### HTTP request headers
-
- - **Content-Type**: multipart/form-data
- - **Accept**: application/json;charset=UTF-8
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-<a name="uploadfile"></a>
-# **UploadFile**
-> ConversionJobResponse UploadFile (System.IO.Stream stream)
-
-Upload first file
-
-Upload the first image, office or pdf file.
-
-### Example
-```csharp
-using System;
-using System.Diagnostics;
-using Sphereon.SDK.Pdf.Api;
-using Sphereon.SDK.Pdf.Client;
-using Sphereon.SDK.Pdf.Model;
-
-namespace Example
-{
-    public class UploadFileExample
-    {
-        public void main()
-        {
-            
-            // Configure OAuth2 access token for authorization: oauth2schema
-            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
-
-            var apiInstance = new ConversionPDFApi();
-            var stream = new System.IO.Stream(); // System.IO.Stream | The first image, office or PDF file to convert to PDF
-
-            try
-            {
-                // Upload first file
-                ConversionJobResponse result = apiInstance.UploadFile(stream);
-                Debug.WriteLine(result);
-            }
-            catch (Exception e)
-            {
-                Debug.Print("Exception when calling ConversionPDFApi.UploadFile: " + e.Message );
-            }
-        }
-    }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **stream** | **System.IO.Stream**| The first image, office or PDF file to convert to PDF | 
-
-### Return type
-
-[**ConversionJobResponse**](ConversionJobResponse.md)
-
-### Authorization
-
-[oauth2schema](../README.md#oauth2schema)
-
-### HTTP request headers
-
- - **Content-Type**: multipart/form-data
  - **Accept**: application/json;charset=UTF-8
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

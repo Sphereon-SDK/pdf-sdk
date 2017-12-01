@@ -24,7 +24,7 @@
 using System;
 using RestSharp;
 
-namespace Sphereon.SDK.Pdf.Client
+namespace Sphereon.sdk.pdf.Client
 {
     /// <summary>
     /// A delegate to ExceptionFactory method

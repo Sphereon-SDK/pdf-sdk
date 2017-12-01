@@ -16,6 +16,6 @@
 language: csharp
 mono:
   - latest
-solution: Sphereon.SDK.Pdf.sln
+solution: Sphereon.sdk.pdf.sln
 script:
   - /bin/sh ./mono_nunit_test.sh

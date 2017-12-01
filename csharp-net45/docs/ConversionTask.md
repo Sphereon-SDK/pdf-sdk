@@ -1,4 +1,4 @@
-# Sphereon.SDK.Pdf.Model.ConversionTask
+# Sphereon.sdk.pdf.Model.ConversionTask
 ## Properties
 
 Name | Type | Description | Notes

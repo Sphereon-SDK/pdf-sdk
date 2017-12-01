@@ -18,11 +18,11 @@
 SET CSCPATH=%SYSTEMROOT%\Microsoft.NET\Framework\v3.5
 
 if not exist ".\nuget.exe" powershell -Command "(new-object System.Net.WebClient).DownloadFile('https://nuget.org/nuget.exe', '.\nuget.exe')"
-.\nuget.exe install src\Sphereon.SDK.Pdf\packages.config -o packages
+.\nuget.exe install src\Sphereon.sdk.pdf\packages.config -o packages
 
 if not exist ".\bin" mkdir bin
 
 copy packages\Newtonsoft.Json.8.0.3\lib\net35\Newtonsoft.Json.dll bin\Newtonsoft.Json.dll
 copy packages\RestSharp.105.1.0\lib\net35\RestSharp.dll bin\RestSharp.dll
 
-%CSCPATH%\csc /reference:bin\Newtonsoft.Json.dll;bin\RestSharp.dll /target:library /out:bin\Sphereon.SDK.Pdf.dll /recurse:src\Sphereon.SDK.Pdf\*.cs /doc:bin\Sphereon.SDK.Pdf.xml
+%CSCPATH%\csc /reference:bin\Newtonsoft.Json.dll;bin\RestSharp.dll /target:library /out:bin\Sphereon.sdk.pdf.dll /recurse:src\Sphereon.sdk.pdf\*.cs /doc:bin\Sphereon.sdk.pdf.xml

@@ -1,4 +1,4 @@
-# Sphereon.SDK.Pdf.Api.ConversionPDFApi
+# Sphereon.sdk.pdf.Api.ConversionPDFApi
 
 All URIs are relative to *https://gw.api.cloud.sphereon.com/*
 
@@ -25,9 +25,9 @@ Delete the PDF job and all related files
 ```csharp
 using System;
 using System.Diagnostics;
-using Sphereon.SDK.Pdf.Api;
-using Sphereon.SDK.Pdf.Client;
-using Sphereon.SDK.Pdf.Model;
+using Sphereon.sdk.pdf.Api;
+using Sphereon.sdk.pdf.Client;
+using Sphereon.sdk.pdf.Model;
 
 namespace Example
 {
@@ -90,9 +90,9 @@ Get the PDF job definition and current state. Please not that you can differenti
 ```csharp
 using System;
 using System.Diagnostics;
-using Sphereon.SDK.Pdf.Api;
-using Sphereon.SDK.Pdf.Client;
-using Sphereon.SDK.Pdf.Model;
+using Sphereon.sdk.pdf.Api;
+using Sphereon.sdk.pdf.Client;
+using Sphereon.sdk.pdf.Model;
 
 namespace Example
 {
@@ -155,9 +155,9 @@ Get all PDF job definitions and their current state.
 ```csharp
 using System;
 using System.Diagnostics;
-using Sphereon.SDK.Pdf.Api;
-using Sphereon.SDK.Pdf.Client;
-using Sphereon.SDK.Pdf.Model;
+using Sphereon.sdk.pdf.Api;
+using Sphereon.sdk.pdf.Client;
+using Sphereon.sdk.pdf.Model;
 
 namespace Example
 {
@@ -220,9 +220,9 @@ Get the PDF as binary stream/file.  Our API generation does not allow changing t
 ```csharp
 using System;
 using System.Diagnostics;
-using Sphereon.SDK.Pdf.Api;
-using Sphereon.SDK.Pdf.Client;
-using Sphereon.SDK.Pdf.Model;
+using Sphereon.sdk.pdf.Api;
+using Sphereon.sdk.pdf.Client;
+using Sphereon.sdk.pdf.Model;
 
 namespace Example
 {
@@ -285,9 +285,9 @@ Convert the previously uploaded file(s) to PDF, using the supplied settings asso
 ```csharp
 using System;
 using System.Diagnostics;
-using Sphereon.SDK.Pdf.Api;
-using Sphereon.SDK.Pdf.Client;
-using Sphereon.SDK.Pdf.Model;
+using Sphereon.sdk.pdf.Api;
+using Sphereon.sdk.pdf.Client;
+using Sphereon.sdk.pdf.Model;
 
 namespace Example
 {
@@ -352,9 +352,9 @@ Upload an additional image, office or pdf for conversion to PDF. Conversion will
 ```csharp
 using System;
 using System.Diagnostics;
-using Sphereon.SDK.Pdf.Api;
-using Sphereon.SDK.Pdf.Client;
-using Sphereon.SDK.Pdf.Model;
+using Sphereon.sdk.pdf.Api;
+using Sphereon.sdk.pdf.Client;
+using Sphereon.sdk.pdf.Model;
 
 namespace Example
 {
@@ -421,9 +421,9 @@ Upload the first image, office or pdf file.
 ```csharp
 using System;
 using System.Diagnostics;
-using Sphereon.SDK.Pdf.Api;
-using Sphereon.SDK.Pdf.Client;
-using Sphereon.SDK.Pdf.Model;
+using Sphereon.sdk.pdf.Api;
+using Sphereon.sdk.pdf.Client;
+using Sphereon.sdk.pdf.Model;
 
 namespace Example
 {

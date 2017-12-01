@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Sphereon.SDK.Pdf.Client
+namespace Sphereon.sdk.pdf.Client
 {
     /// <summary>
     /// API Response

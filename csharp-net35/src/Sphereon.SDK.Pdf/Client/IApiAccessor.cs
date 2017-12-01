@@ -27,7 +27,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using RestSharp;
 
-namespace Sphereon.SDK.Pdf.Client
+namespace Sphereon.sdk.pdf.Client
 {
     /// <summary>
     /// Represents configuration aspects required to interact with the API endpoints.

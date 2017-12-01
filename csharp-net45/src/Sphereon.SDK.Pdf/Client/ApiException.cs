@@ -22,7 +22,7 @@
 
 using System;
 
-namespace Sphereon.SDK.Pdf.Client
+namespace Sphereon.sdk.pdf.Client
 {
     /// <summary>
     /// API Exception

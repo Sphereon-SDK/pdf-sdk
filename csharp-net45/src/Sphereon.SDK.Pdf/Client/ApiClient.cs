@@ -33,7 +33,7 @@ using System.Text;
 using Newtonsoft.Json;
 using RestSharp;
 
-namespace Sphereon.SDK.Pdf.Client
+namespace Sphereon.sdk.pdf.Client
 {
     /// <summary>
     /// API client is mainly responsible for making the HTTP call to the API backend.

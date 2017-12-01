@@ -22,21 +22,21 @@ echo "[INFO] Target framework: ${frameworkVersion}"
 echo "[INFO] Download nuget and packages"
 wget -nc https://nuget.org/nuget.exe;
 mozroots --import --sync
-mono nuget.exe install src/Sphereon.SDK.Pdf/packages.config -o packages;
+mono nuget.exe install src/Sphereon.sdk.pdf/packages.config -o packages;
 
 echo "[INFO] Copy DLLs to the 'bin' folder"
 mkdir -p bin;
 cp packages/Newtonsoft.Json.8.0.3/lib/net35/Newtonsoft.Json.dll bin/Newtonsoft.Json.dll;
 cp packages/RestSharp.105.1.0/lib/net35/RestSharp.dll bin/RestSharp.dll;
 
-echo "[INFO] Run 'mcs' to build bin/Sphereon.SDK.Pdf.dll"
+echo "[INFO] Run 'mcs' to build bin/Sphereon.sdk.pdf.dll"
 mcs -sdk:${netfx} -r:bin/Newtonsoft.Json.dll,\
 bin/RestSharp.dll,\
 System.Runtime.Serialization.dll \
 -target:library \
--out:bin/Sphereon.SDK.Pdf.dll \
--recurse:'src/Sphereon.SDK.Pdf/*.cs' \
--doc:bin/Sphereon.SDK.Pdf.xml \
+-out:bin/Sphereon.sdk.pdf.dll \
+-recurse:'src/Sphereon.sdk.pdf/*.cs' \
+-doc:bin/Sphereon.sdk.pdf.xml \
 -platform:anycpu
 
 if [ $? -ne 0 ]
@@ -44,5 +44,5 @@ then
   echo "[ERROR] Compilation failed with exit code $?"
   exit 1
 else
-  echo "[INFO] bin/Sphereon.SDK.Pdf.dll was created successfully"
+  echo "[INFO] bin/Sphereon.sdk.pdf.dll was created successfully"
 fi

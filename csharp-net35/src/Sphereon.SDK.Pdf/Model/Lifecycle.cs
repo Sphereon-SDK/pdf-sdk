@@ -31,7 +31,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Sphereon.SDK.Pdf.Model
+namespace Sphereon.sdk.pdf.Model
 {
     /// <summary>
     /// Lifecycle settings. When no lifecycle settings are supplied, the job and files will be deleted directly after retrieval of the file

@@ -24,11 +24,11 @@ limitations under the License.
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7C5B0207-624B-49C7-85C1-67E835F3DF16}</ProjectGuid>
+    <ProjectGuid>{BCA9223C-8329-40FB-9618-A0AC72FEFD1E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sphereon.SDK.Pdf</RootNamespace>
-    <AssemblyName>Sphereon.SDK.Pdf</AssemblyName>
+    <RootNamespace>Sphereon.sdk.pdf</RootNamespace>
+    <AssemblyName>Sphereon.sdk.pdf</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

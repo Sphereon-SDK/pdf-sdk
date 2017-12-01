@@ -1,4 +1,4 @@
-# Sphereon.SDK.Pdf.Model.Lifecycle
+# Sphereon.sdk.pdf.Model.Lifecycle
 ## Properties
 
 Name | Type | Description | Notes

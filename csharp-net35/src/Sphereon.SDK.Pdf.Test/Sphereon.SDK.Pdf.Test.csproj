@@ -27,8 +27,8 @@ limitations under the License.
     <ProjectGuid>{19F1DEBC-DE5E-4517-8062-F000CD499087}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sphereon.SDK.Pdf.Test</RootNamespace>
-    <AssemblyName>Sphereon.SDK.Pdf.Test</AssemblyName>
+    <RootNamespace>Sphereon.sdk.pdf.Test</RootNamespace>
+    <AssemblyName>Sphereon.sdk.pdf.Test</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -85,9 +85,9 @@ limitations under the License.
   </ItemGroup>
   <Import Project="$(MsBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-      <ProjectReference Include="..\Sphereon.SDK.Pdf\Sphereon.SDK.Pdf.csproj">
-          <Project>{8CEE77F1-FB91-470A-8CC8-6D694B592244}</Project>
-          <Name>Sphereon.SDK.Pdf</Name>
+      <ProjectReference Include="..\Sphereon.sdk.pdf\Sphereon.sdk.pdf.csproj">
+          <Project>{400DA690-22A4-41F7-897F-3D66E92A52D7}</Project>
+          <Name>Sphereon.sdk.pdf</Name>
       </ProjectReference>
   </ItemGroup>
 </Project>

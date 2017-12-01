@@ -1,4 +1,4 @@
-# Sphereon.SDK.Pdf.Model.Compression
+# Sphereon.sdk.pdf.Model.Compression
 ## Properties
 
 Name | Type | Description | Notes

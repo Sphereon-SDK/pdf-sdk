@@ -1,4 +1,4 @@
-# Sphereon.SDK.Pdf.Model.ConversionSettings
+# Sphereon.sdk.pdf.Model.ConversionSettings
 ## Properties
 
 Name | Type | Description | Notes

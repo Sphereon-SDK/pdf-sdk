@@ -1,4 +1,4 @@
-# Sphereon.SDK.Pdf.Model.StreamLocation
+# Sphereon.sdk.pdf.Model.StreamLocation
 ## Properties
 
 Name | Type | Description | Notes

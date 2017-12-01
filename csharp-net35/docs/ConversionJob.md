@@ -1,4 +1,4 @@
-# Sphereon.SDK.Pdf.Model.ConversionJob
+# Sphereon.sdk.pdf.Model.ConversionJob
 ## Properties
 
 Name | Type | Description | Notes

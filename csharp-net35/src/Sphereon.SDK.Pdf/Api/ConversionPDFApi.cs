@@ -25,10 +25,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using RestSharp;
-using Sphereon.SDK.Pdf.Client;
-using Sphereon.SDK.Pdf.Model;
+using Sphereon.sdk.pdf.Client;
+using Sphereon.sdk.pdf.Model;
 
-namespace Sphereon.SDK.Pdf.Api
+namespace Sphereon.sdk.pdf.Api
 {
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
@@ -42,7 +42,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <remarks>
         /// Delete the PDF job and all related files
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobid">jobid</param>
         /// <returns>ConversionJobResponse</returns>
         ConversionJobResponse DeleteJob (string jobid);
@@ -53,7 +53,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <remarks>
         /// Delete the PDF job and all related files
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobid">jobid</param>
         /// <returns>ApiResponse of ConversionJobResponse</returns>
         ApiResponse<ConversionJobResponse> DeleteJobWithHttpInfo (string jobid);
@@ -63,7 +63,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <remarks>
         /// Get the PDF job definition and current state. Please not that you can differentiate based on http response status
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobid">jobid</param>
         /// <returns>ConversionJobResponse</returns>
         ConversionJobResponse GetJob (string jobid);
@@ -74,7 +74,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <remarks>
         /// Get the PDF job definition and current state. Please not that you can differentiate based on http response status
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobid">jobid</param>
         /// <returns>ApiResponse of ConversionJobResponse</returns>
         ApiResponse<ConversionJobResponse> GetJobWithHttpInfo (string jobid);
@@ -84,7 +84,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <remarks>
         /// Get all PDF job definitions and their current state.
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="status">A list of status to filter on. (optional)</param>
         /// <returns>ConversionJobResponse</returns>
         ConversionJobResponse GetJobs (List<string> status = null);
@@ -95,7 +95,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <remarks>
         /// Get all PDF job definitions and their current state.
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="status">A list of status to filter on. (optional)</param>
         /// <returns>ApiResponse of ConversionJobResponse</returns>
         ApiResponse<ConversionJobResponse> GetJobsWithHttpInfo (List<string> status = null);
@@ -105,7 +105,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <remarks>
         /// Get the PDF as binary stream/file.  Our API generation does not allow changing the media type based on the Accepted header unfortunately.&lt;br/&gt;This means we use a seperate path postfix with the value &#39;/stream&#39;.  This API only returns the PDF when the response status code is zero! In other cases nothing is returned or the Job JSON when it is still being executed
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobid">jobid</param>
         /// <returns>byte[]</returns>
         byte[] GetStream (string jobid);
@@ -116,7 +116,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <remarks>
         /// Get the PDF as binary stream/file.  Our API generation does not allow changing the media type based on the Accepted header unfortunately.&lt;br/&gt;This means we use a seperate path postfix with the value &#39;/stream&#39;.  This API only returns the PDF when the response status code is zero! In other cases nothing is returned or the Job JSON when it is still being executed
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobid">jobid</param>
         /// <returns>ApiResponse of byte[]</returns>
         ApiResponse<byte[]> GetStreamWithHttpInfo (string jobid);
@@ -126,7 +126,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <remarks>
         /// Convert the previously uploaded file(s) to PDF, using the supplied settings associated with the job in the request body. You can only submit the job after a new Job is created with status INPUTS_UPLOADED or resubmit an existing Job with status ERROR. In all cases the job Id in the path must match the jobId in the request
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobid">jobid</param>
         /// <param name="job">jobEntity</param>
         /// <returns>ConversionJobResponse</returns>
@@ -138,7 +138,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <remarks>
         /// Convert the previously uploaded file(s) to PDF, using the supplied settings associated with the job in the request body. You can only submit the job after a new Job is created with status INPUTS_UPLOADED or resubmit an existing Job with status ERROR. In all cases the job Id in the path must match the jobId in the request
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobid">jobid</param>
         /// <param name="job">jobEntity</param>
         /// <returns>ApiResponse of ConversionJobResponse</returns>
@@ -149,7 +149,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <remarks>
         /// Upload an additional image, office or pdf for conversion to PDF. Conversion will not be started yet.
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobid">jobid</param>
         /// <param name="stream">The additional binary image or PDF (file/inputstream) to convert to PDF</param>
         /// <param name="fileName">Optional input file name. (optional)</param>
@@ -162,7 +162,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <remarks>
         /// Upload an additional image, office or pdf for conversion to PDF. Conversion will not be started yet.
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobid">jobid</param>
         /// <param name="stream">The additional binary image or PDF (file/inputstream) to convert to PDF</param>
         /// <param name="fileName">Optional input file name. (optional)</param>
@@ -174,7 +174,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <remarks>
         /// Upload the first image, office or pdf file.
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="stream">The first image, office or PDF file to convert to PDF</param>
         /// <param name="fileName">Optional input file name. (optional)</param>
         /// <returns>ConversionJobResponse</returns>
@@ -186,7 +186,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <remarks>
         /// Upload the first image, office or pdf file.
         /// </remarks>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="stream">The first image, office or PDF file to convert to PDF</param>
         /// <param name="fileName">Optional input file name. (optional)</param>
         /// <returns>ApiResponse of ConversionJobResponse</returns>
@@ -199,7 +199,7 @@ namespace Sphereon.SDK.Pdf.Api
     /// </summary>
     public partial class ConversionPDFApi : IConversionPDFApi
     {
-        private Sphereon.SDK.Pdf.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
+        private Sphereon.sdk.pdf.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConversionPDFApi"/> class.
@@ -209,7 +209,7 @@ namespace Sphereon.SDK.Pdf.Api
         {
             this.Configuration = new Configuration(new ApiClient(basePath));
 
-            ExceptionFactory = Sphereon.SDK.Pdf.Client.Configuration.DefaultExceptionFactory;
+            ExceptionFactory = Sphereon.sdk.pdf.Client.Configuration.DefaultExceptionFactory;
 
             // ensure API client has configuration ready
             if (Configuration.ApiClient.Configuration == null)
@@ -231,7 +231,7 @@ namespace Sphereon.SDK.Pdf.Api
             else
                 this.Configuration = configuration;
 
-            ExceptionFactory = Sphereon.SDK.Pdf.Client.Configuration.DefaultExceptionFactory;
+            ExceptionFactory = Sphereon.sdk.pdf.Client.Configuration.DefaultExceptionFactory;
 
             // ensure API client has configuration ready
             if (Configuration.ApiClient.Configuration == null)
@@ -268,7 +268,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <summary>
         /// Provides a factory method hook for the creation of exceptions.
         /// </summary>
-        public Sphereon.SDK.Pdf.Client.ExceptionFactory ExceptionFactory
+        public Sphereon.sdk.pdf.Client.ExceptionFactory ExceptionFactory
         {
             get
             {
@@ -306,7 +306,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <summary>
         /// Delete a job manually Delete the PDF job and all related files
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobid">jobid</param>
         /// <returns>ConversionJobResponse</returns>
         public ConversionJobResponse DeleteJob (string jobid)
@@ -318,7 +318,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <summary>
         /// Delete a job manually Delete the PDF job and all related files
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobid">jobid</param>
         /// <returns>ApiResponse of ConversionJobResponse</returns>
         public ApiResponse< ConversionJobResponse > DeleteJobWithHttpInfo (string jobid)
@@ -383,7 +383,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <summary>
         /// Job definition and state Get the PDF job definition and current state. Please not that you can differentiate based on http response status
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobid">jobid</param>
         /// <returns>ConversionJobResponse</returns>
         public ConversionJobResponse GetJob (string jobid)
@@ -395,7 +395,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <summary>
         /// Job definition and state Get the PDF job definition and current state. Please not that you can differentiate based on http response status
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobid">jobid</param>
         /// <returns>ApiResponse of ConversionJobResponse</returns>
         public ApiResponse< ConversionJobResponse > GetJobWithHttpInfo (string jobid)
@@ -460,7 +460,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <summary>
         /// Get all jobs Get all PDF job definitions and their current state.
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="status">A list of status to filter on. (optional)</param>
         /// <returns>ConversionJobResponse</returns>
         public ConversionJobResponse GetJobs (List<string> status = null)
@@ -472,7 +472,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <summary>
         /// Get all jobs Get all PDF job definitions and their current state.
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="status">A list of status to filter on. (optional)</param>
         /// <returns>ApiResponse of ConversionJobResponse</returns>
         public ApiResponse< ConversionJobResponse > GetJobsWithHttpInfo (List<string> status = null)
@@ -534,7 +534,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <summary>
         /// Get the current result stream Get the PDF as binary stream/file.  Our API generation does not allow changing the media type based on the Accepted header unfortunately.&lt;br/&gt;This means we use a seperate path postfix with the value &#39;/stream&#39;.  This API only returns the PDF when the response status code is zero! In other cases nothing is returned or the Job JSON when it is still being executed
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobid">jobid</param>
         /// <returns>byte[]</returns>
         public byte[] GetStream (string jobid)
@@ -546,7 +546,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <summary>
         /// Get the current result stream Get the PDF as binary stream/file.  Our API generation does not allow changing the media type based on the Accepted header unfortunately.&lt;br/&gt;This means we use a seperate path postfix with the value &#39;/stream&#39;.  This API only returns the PDF when the response status code is zero! In other cases nothing is returned or the Job JSON when it is still being executed
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobid">jobid</param>
         /// <returns>ApiResponse of byte[]</returns>
         public ApiResponse< byte[] > GetStreamWithHttpInfo (string jobid)
@@ -611,7 +611,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <summary>
         /// Submit PDF job for processing Convert the previously uploaded file(s) to PDF, using the supplied settings associated with the job in the request body. You can only submit the job after a new Job is created with status INPUTS_UPLOADED or resubmit an existing Job with status ERROR. In all cases the job Id in the path must match the jobId in the request
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobid">jobid</param>
         /// <param name="job">jobEntity</param>
         /// <returns>ConversionJobResponse</returns>
@@ -624,7 +624,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <summary>
         /// Submit PDF job for processing Convert the previously uploaded file(s) to PDF, using the supplied settings associated with the job in the request body. You can only submit the job after a new Job is created with status INPUTS_UPLOADED or resubmit an existing Job with status ERROR. In all cases the job Id in the path must match the jobId in the request
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobid">jobid</param>
         /// <param name="job">jobEntity</param>
         /// <returns>ApiResponse of ConversionJobResponse</returns>
@@ -701,7 +701,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <summary>
         /// Upload an additional file Upload an additional image, office or pdf for conversion to PDF. Conversion will not be started yet.
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobid">jobid</param>
         /// <param name="stream">The additional binary image or PDF (file/inputstream) to convert to PDF</param>
         /// <param name="fileName">Optional input file name. (optional)</param>
@@ -715,7 +715,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <summary>
         /// Upload an additional file Upload an additional image, office or pdf for conversion to PDF. Conversion will not be started yet.
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobid">jobid</param>
         /// <param name="stream">The additional binary image or PDF (file/inputstream) to convert to PDF</param>
         /// <param name="fileName">Optional input file name. (optional)</param>
@@ -787,7 +787,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <summary>
         /// Upload first file Upload the first image, office or pdf file.
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="stream">The first image, office or PDF file to convert to PDF</param>
         /// <param name="fileName">Optional input file name. (optional)</param>
         /// <returns>ConversionJobResponse</returns>
@@ -800,7 +800,7 @@ namespace Sphereon.SDK.Pdf.Api
         /// <summary>
         /// Upload first file Upload the first image, office or pdf file.
         /// </summary>
-        /// <exception cref="Sphereon.SDK.Pdf.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Sphereon.sdk.pdf.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="stream">The first image, office or PDF file to convert to PDF</param>
         /// <param name="fileName">Optional input file name. (optional)</param>
         /// <returns>ApiResponse of ConversionJobResponse</returns>

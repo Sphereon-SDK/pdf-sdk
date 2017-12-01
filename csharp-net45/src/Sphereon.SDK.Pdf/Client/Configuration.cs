@@ -27,7 +27,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Sphereon.SDK.Pdf.Client
+namespace Sphereon.sdk.pdf.Client
 {
     /// <summary>
     /// Represents a set of configuration settings
@@ -323,7 +323,7 @@ namespace Sphereon.SDK.Pdf.Client
         /// </summary>
         public static String ToDebugReport()
         {
-            String report = "C# SDK (Sphereon.SDK.Pdf) Debug Report:\n";
+            String report = "C# SDK (Sphereon.sdk.pdf) Debug Report:\n";
             report += "    OS: " + Environment.OSVersion + "\n";
             report += "    .NET Framework Version: " + Assembly
                      .GetExecutingAssembly()

@@ -1,4 +1,4 @@
-# Sphereon.sdk.pdf.Model.Error
+# Sphereon.SDK.Pdf.Model.Error
 ## Properties
 
 Name | Type | Description | Notes

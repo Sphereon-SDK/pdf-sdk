@@ -1,4 +1,4 @@
-# Sphereon.sdk.pdf.Model.CSVSettings
+# Sphereon.SDK.Pdf.Model.CSVSettings
 ## Properties
 
 Name | Type | Description | Notes

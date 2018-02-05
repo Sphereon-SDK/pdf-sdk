@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**level** | **Number** | Compression level. Valid range from 0 (minimal compression) to 10 (maximal compression) | [optional] 
+**level** | **Number** | Compression level. Value from 0 (min) to 10 (max) allowed | [optional] 
 **type** | **String** | Compression type. ADVANCED is only allowed and should be used with the ADVANCED engine | [optional] 
 
 

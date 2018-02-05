@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 <a name="addInputFile"></a>
 # **addInputFile**
-> ConversionJobResponse addInputFile(jobid, stream)
+> ConversionJobResponse addInputFile(jobid, stream, opts)
 
 Upload a file
 
@@ -37,6 +37,9 @@ var jobid = "jobid_example"; // String | jobid
 
 var stream = "/path/to/file.txt"; // File | The (additional) binary image or PDF (file/inputstream) to convert to PDF
 
+var opts = { 
+  'fileName': "fileName_example" // String | Optional input file name.
+};
 
 var callback = function(error, data, response) {
   if (error) {
@@ -45,7 +48,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.addInputFile(jobid, stream, callback);
+apiInstance.addInputFile(jobid, stream, opts, callback);
 ```
 
 ### Parameters
@@ -54,6 +57,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **jobid** | **String**| jobid | 
  **stream** | **File**| The (additional) binary image or PDF (file/inputstream) to convert to PDF | 
+ **fileName** | **String**| Optional input file name. | [optional] 
 
 ### Return type
 
@@ -180,7 +184,7 @@ Name | Type | Description  | Notes
 
 Delete a job manually
 
-Delete the PDF job and all related files
+Delete the PDF job and all related files.
 
 ### Example
 ```javascript
@@ -231,7 +235,7 @@ Name | Type | Description  | Notes
 
 Job definition and state
 
-Get the PDF job definition and current state. Please not that you can differentiate based on http response status
+Get the PDF job definition and current state. Please note that you can differentiate based on http response status.
 
 ### Example
 ```javascript
@@ -334,7 +338,7 @@ Name | Type | Description  | Notes
 
 Get the current result stream
 
-Get the PDF as binary stream/file.  Our API generation does not allow changing the media type based on the Accepted header unfortunately.&lt;br/&gt;This means we use a seperate path postfix with the value &#39;/stream&#39;.  This API only returns the PDF when the response status code is zero! In other cases nothing is returned or the Job JSON when it is still being executed
+Get the PDF as binary stream/file.  Our API generation does not allow changing the media type based on the Accepted header unfortunately.&lt;br/&gt;This means we use a seperate path postfix with the value &#39;/stream&#39;.  This API only returns the PDF when the response status.
 
 ### Example
 ```javascript
@@ -385,7 +389,7 @@ Name | Type | Description  | Notes
 
 Submit PDF job for processing
 
-Convert the previously uploaded file(s) to PDF, using the supplied settings associated with the job in the request body. You can only submit the job after a new Job is created with status INPUTS_UPLOADED or resubmit an existing Job with status ERROR. In all cases the job Id in the path must match the jobId in the request
+Start PDF conversion. Convert the previously uploaded file(s) to PDF. The settings supplied with the job in the request body are used for the conversion. You can only submit the job after a new Job is created with status INPUTS_UPLOADED or resubmit an existing Job with status ERROR. In all cases the job Id in the path must match the jobId in the request.
 
 ### Example
 ```javascript

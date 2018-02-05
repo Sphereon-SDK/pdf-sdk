@@ -1,6 +1,6 @@
 /**
  * PDF
- * <b>The PDF conversion API 'conversion2pdf' converts image, office and PDF files to (searcheable) PDF files.</b>    The flow is generally as follows:  1. First create a job using the /conversion2pdf/jobs POST endpoint. You will get back a job response that contains a job with its associated settings.  2. Upload one or more images/files using the /conversion2pdf/jobs/{jobId}/streams/multipart POST endpoint. You can also add stream locations from the storage API . You will get back the update job response that contains a job with its associated settings. Currently you can only merge spreadsheets with spreadsheet, documents with documents and images/pdfs with images/pdfs  3. Start the job from a PUT request to the /conversion2pdf/jobs/{jobid} endpoint, with the Job and Settings JSON as request body. The conversion to PDF will now start. The OCR setting is only applicable to images, since other files will always be searchable.  4. Check the job status from the /conversion2pdf/jobs/{jobid} GET endpoint until the status has changed to DONE or ERROR. Messaging using a websocket will be available as an alternative in a future version  5. Retrieve the PDF file using the /conversion2pdf/jobs/{jobid}/streams/result GET endpoint. This will return the PDF file only when the status is DONE. In other cases it will return the Job Response JSON (with http code 202 instead of 200)      <b>Interactive testing: </b>A web based test console is available in the <a href=\"https://store.sphereon.com\">Sphereon API Store</a>
+ * The PDF conversion API 'conversion2pdf' converts image, office and PDF files to (searcheable) PDF files.    The flow is generally as follows:  1. First create a job using the /conversion2pdf/jobs POST endpoint. You will get back a job response that contains a job with its associated settings.  2. Upload one or more images/files using the /conversion2pdf/jobs/{jobId}/streams/multipart POST endpoint. You can also add stream locations from the storage API . You will get back the update job response that contains a job with its associated settings. Currently you can only merge spreadsheets with spreadsheet, documents with documents and images/pdfs with images/pdfs  3. Start the job from a PUT request to the /conversion2pdf/jobs/{jobid} endpoint, with the Job and Settings JSON as request body. The conversion to PDF will now start. The OCR setting is only applicable to images, since other files will always be searchable.  4. Check the job status from the /conversion2pdf/jobs/{jobid} GET endpoint until the status has changed to DONE or ERROR. Messaging using a websocket will be available as an alternative in a future version  5. Retrieve the PDF file using the /conversion2pdf/jobs/{jobid}/streams/result GET endpoint. This will return the PDF file only when the status is DONE. In other cases it will return the Job Response JSON (with http code 202 instead of 200)      Interactive testing: A web based test console is available in the <a href=\"https://store.sphereon.com\">Sphereon API Store</a>
  *
  * OpenAPI spec version: 1.1
  * Contact: dev@sphereon.com
@@ -61,10 +61,13 @@
      * Upload an image, office or pdf for conversion to PDF. Please note that you can upload multiple files. Conversion will not be started yet.
      * @param {String} jobid jobid
      * @param {File} stream The (additional) binary image or PDF (file/inputstream) to convert to PDF
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.fileName Optional input file name.
      * @param {module:api/Conversion2PDFApi~addInputFileCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/ConversionJobResponse}
      */
-    this.addInputFile = function(jobid, stream, callback) {
+    this.addInputFile = function(jobid, stream, opts, callback) {
+      opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'jobid' is set
@@ -82,6 +85,7 @@
         'jobid': jobid
       };
       var queryParams = {
+        'fileName': opts['fileName']
       };
       var headerParams = {
       };
@@ -205,7 +209,7 @@
 
     /**
      * Delete a job manually
-     * Delete the PDF job and all related files
+     * Delete the PDF job and all related files.
      * @param {String} jobid jobid
      * @param {module:api/Conversion2PDFApi~deleteJobCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/ConversionJobResponse}
@@ -251,7 +255,7 @@
 
     /**
      * Job definition and state
-     * Get the PDF job definition and current state. Please not that you can differentiate based on http response status
+     * Get the PDF job definition and current state. Please note that you can differentiate based on http response status.
      * @param {String} jobid jobid
      * @param {module:api/Conversion2PDFApi~getJobCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/ConversionJobResponse}
@@ -340,7 +344,7 @@
 
     /**
      * Get the current result stream
-     * Get the PDF as binary stream/file.  Our API generation does not allow changing the media type based on the Accepted header unfortunately.&lt;br/&gt;This means we use a seperate path postfix with the value &#39;/stream&#39;.  This API only returns the PDF when the response status code is zero! In other cases nothing is returned or the Job JSON when it is still being executed
+     * Get the PDF as binary stream/file.  Our API generation does not allow changing the media type based on the Accepted header unfortunately.&lt;br/&gt;This means we use a seperate path postfix with the value &#39;/stream&#39;.  This API only returns the PDF when the response status.
      * @param {String} jobid jobid
      * @param {module:api/Conversion2PDFApi~getStreamCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link 'Blob'}
@@ -386,7 +390,7 @@
 
     /**
      * Submit PDF job for processing
-     * Convert the previously uploaded file(s) to PDF, using the supplied settings associated with the job in the request body. You can only submit the job after a new Job is created with status INPUTS_UPLOADED or resubmit an existing Job with status ERROR. In all cases the job Id in the path must match the jobId in the request
+     * Start PDF conversion. Convert the previously uploaded file(s) to PDF. The settings supplied with the job in the request body are used for the conversion. You can only submit the job after a new Job is created with status INPUTS_UPLOADED or resubmit an existing Job with status ERROR. In all cases the job Id in the path must match the jobId in the request.
      * @param {String} jobid jobid
      * @param {module:model/ConversionJob} job jobEntity
      * @param {module:api/Conversion2PDFApi~submitJobCallback} callback The callback function, accepting three arguments: error, data, response

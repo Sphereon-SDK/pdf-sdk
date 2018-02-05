@@ -13,6 +13,10 @@
         <sdk-package>com.sphereon.sdk.pdf</sdk-package>
         <sdk-package-csharp>Sphereon.SDK.Pdf</sdk-package-csharp>
         <sdk-package-javascript>SphereonSDKPdf</sdk-package-javascript>
+        <sdk-package-version>1.1.0</sdk-package-version>
+
+        <swagger-coden-maven-plugin.version>2.2.3</swagger-coden-maven-plugin.version>
+        <swagger-coden-verbose>false</swagger-coden-verbose>
 
         <swagger-annotations-version>1.5.9</swagger-annotations-version>
         <jackson-version>2.4.2</jackson-version>

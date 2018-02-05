@@ -1,6 +1,6 @@
 /**
  * PDF
- * The PDF conversion API 'conversion2pdf' converts image, office and PDF files to (searcheable) PDF files.    The flow is generally as follows:  1. First create a job using the /conversion2pdf/jobs POST endpoint. You will get back a job response that contains a job with its associated settings.  2. Upload one or more images/files using the /conversion2pdf/jobs/{jobId}/streams/multipart POST endpoint. You can also add stream locations from the storage API . You will get back the update job response that contains a job with its associated settings. Currently you can only merge spreadsheets with spreadsheet, documents with documents and images/pdfs with images/pdfs  3. Start the job from a PUT request to the /conversion2pdf/jobs/{jobid} endpoint, with the Job and Settings JSON as request body. The conversion to PDF will now start. The OCR setting is only applicable to images, since other files will always be searchable.  4. Check the job status from the /conversion2pdf/jobs/{jobid} GET endpoint until the status has changed to DONE or ERROR. Messaging using a websocket will be available as an alternative in a future version  5. Retrieve the PDF file using the /conversion2pdf/jobs/{jobid}/streams/result GET endpoint. This will return the PDF file only when the status is DONE. In other cases it will return the Job Response JSON (with http code 202 instead of 200)      Interactive testing: A web based test console is available in the <a href=\"https://store.sphereon.com\">Sphereon API Store</a>
+ * <b>The PDF conversion API 'conversion2pdf' converts image, office and PDF files to (searcheable) PDF files.</b>    The flow is generally as follows:  1. First create a job using the /conversion2pdf/jobs POST endpoint. You will get back a job response that contains a job with its associated settings.  2. Upload one or more images/files using the /conversion2pdf/jobs/{jobId}/streams/multipart POST endpoint. You can also add stream locations from the storage API . You will get back the update job response that contains a job with its associated settings. Currently you can only merge spreadsheets with spreadsheet, documents with documents and images/pdfs with images/pdfs  3. Start the job from a PUT request to the /conversion2pdf/jobs/{jobid} endpoint, with the Job and Settings JSON as request body. The conversion to PDF will now start. The OCR setting is only applicable to images, since other files will always be searchable.  4. Check the job status from the /conversion2pdf/jobs/{jobid} GET endpoint until the status has changed to DONE or ERROR. Messaging using a websocket will be available as an alternative in a future version  5. Retrieve the PDF file using the /conversion2pdf/jobs/{jobid}/streams/result GET endpoint. This will return the PDF file only when the status is DONE. In other cases it will return the Job Response JSON (with http code 202 instead of 200)      <b>Interactive testing: </b>A web based test console is available in the <a href=\"https://store.sphereon.com\">Sphereon API Store</a>
  *
  * OpenAPI spec version: 1.1
  * Contact: dev@sphereon.com
@@ -14,123 +14,214 @@
  *
  */
 
-(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    // AMD.
-    define(['expect.js', '../../src/index'], factory);
-  } else if (typeof module === 'object' && module.exports) {
-    // CommonJS-like environments that support module.exports, like Node.
-    factory(require('expect.js'), require('../../src/index'));
-  } else {
-    // Browser globals (root is window)
-    factory(root.expect, root.Pdf);
-  }
-}(this, function(expect, Pdf) {
-  'use strict';
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD.
+        define(['expect.js', '../../src/index'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        // CommonJS-like environments that support module.exports, like Node.
+        factory(require('expect.js'), require('../../src/index'));
+    } else {
+        // Browser globals (root is window)
+        factory(root.expect, root.Pdf);
+    }
+}(this, function (expect, Pdf) {
+    'use strict';
 
-  var instance;
+    const CONNECTION_TIMEOUT = 40000;
+    const ACCESS_TOKEN = process.env.TESTS_JS_PDF_ACCESSTOKEN;
 
-  beforeEach(function() {
-    instance = new Pdf.Conversion2PDFApi();
-  });
+    const assert = require('assert');
+    const fs = require('fs');
+    const os = require('os');
+    const path = require('path');
 
-  var getProperty = function(object, getter, property) {
-    // Use getter method if present; otherwise, get the property directly.
-    if (typeof object[getter] === 'function')
-      return object[getter]();
-    else
-      return object[property];
-  }
+    var instance;
 
-  var setProperty = function(object, setter, property, value) {
-    // Use setter method if present; otherwise, set the property directly.
-    if (typeof object[setter] === 'function')
-      object[setter](value);
-    else
-      object[property] = value;
-  }
+    var jobId;
+    var job;
 
-  describe('Conversion2PDFApi', function() {
-    describe('addInputFile', function() {
-      it('should call addInputFile successfully', function(done) {
-        //uncomment below and update the code to test addInputFile
-        //instance.addInputFile(function(error) {
-        //  if (error) throw error;
-        //expect().to.be();
-        //});
-        done();
-      });
-    });
-    describe('addInputStreamLocations', function() {
-      it('should call addInputStreamLocations successfully', function(done) {
-        //uncomment below and update the code to test addInputStreamLocations
-        //instance.addInputStreamLocations(function(error) {
-        //  if (error) throw error;
-        //expect().to.be();
-        //});
-        done();
-      });
-    });
-    describe('createJob', function() {
-      it('should call createJob successfully', function(done) {
-        //uncomment below and update the code to test createJob
-        //instance.createJob(function(error) {
-        //  if (error) throw error;
-        //expect().to.be();
-        //});
-        done();
-      });
-    });
-    describe('deleteJob', function() {
-      it('should call deleteJob successfully', function(done) {
-        //uncomment below and update the code to test deleteJob
-        //instance.deleteJob(function(error) {
-        //  if (error) throw error;
-        //expect().to.be();
-        //});
-        done();
-      });
-    });
-    describe('getJob', function() {
-      it('should call getJob successfully', function(done) {
-        //uncomment below and update the code to test getJob
-        //instance.getJob(function(error) {
-        //  if (error) throw error;
-        //expect().to.be();
-        //});
-        done();
-      });
-    });
-    describe('getJobs', function() {
-      it('should call getJobs successfully', function(done) {
-        //uncomment below and update the code to test getJobs
-        //instance.getJobs(function(error) {
-        //  if (error) throw error;
-        //expect().to.be();
-        //});
-        done();
-      });
-    });
-    describe('getStream', function() {
-      it('should call getStream successfully', function(done) {
-        //uncomment below and update the code to test getStream
-        //instance.getStream(function(error) {
-        //  if (error) throw error;
-        //expect().to.be();
-        //});
-        done();
-      });
-    });
-    describe('submitJob', function() {
-      it('should call submitJob successfully', function(done) {
-        //uncomment below and update the code to test submitJob
-        //instance.submitJob(function(error) {
-        //  if (error) throw error;
-        //expect().to.be();
-        //});
-        done();
-      });
-    });
-  });
+    beforeEach(function () {
+        instance = new Pdf.Conversion2PDFApi();
 
+        var defaultClient = Pdf.ApiClient.instance;
+        const oauth2schema = defaultClient.authentications['oauth2schema'];
+        oauth2schema.accessToken = ACCESS_TOKEN;
+        defaultClient.timeout = CONNECTION_TIMEOUT;
+    });
+
+    var getProperty = function (object, getter, property) {
+        // Use getter method if present; otherwise, get the property directly.
+        if (typeof object[getter] === 'function')
+            return object[getter]();
+        else
+            return object[property];
+    }
+
+    var setProperty = function (object, setter, property, value) {
+        // Use setter method if present; otherwise, set the property directly.
+        if (typeof object[setter] === 'function')
+            object[setter](value);
+        else
+            object[property] = value;
+    }
+
+    describe('Conversion2PDFApi', function () {
+        describe('createJob', function () {
+            it('should call createJob successfully', function (done) {
+                var settings = new Pdf.ConversionSettings();
+                settings.engine = Pdf.ConversionSettings.EngineEnum.ADVANCED;
+                settings.jobLifecycle = new Pdf.Lifecycle();
+                settings.jobLifecycle.action = Pdf.Lifecycle.ActionEnum.NONE;
+                settings.jobLifecycle.type = Pdf.Lifecycle.TypeEnum.RETRIEVAL;
+
+                console.log("createJob settings: " + JSON.stringify(settings));
+
+                const opts = {settings: settings};
+                instance.createJob(opts, function (error, data, response) {
+                    handleError(error, response);
+
+                    console.log("create job response: " + JSON.stringify(data));
+
+                    expect(data.status).to.be(Pdf.ConversionJobResponse.StatusEnum.INIT);
+                    jobId = data.jobId;
+                    console.log("jobId: " + jobId);
+                    done();
+                });
+            });
+        });
+        describe('addInputFile', function () {
+            it('should call addInputFile successfully', function (done) {
+                this.timeout(CONNECTION_TIMEOUT * 2);
+                var time = (new Date).getTime();
+                var uploadTempFile = path.join(os.tmpdir(), `test-stream-${time}.txt`);
+
+                console.log("upload file: " + uploadTempFile);
+                console.log("jobId: " + jobId);
+
+                const writeStream = fs.createWriteStream(uploadTempFile);
+                writeStream.write("text text");
+                writeStream.end(function () {
+                    const readStream = fs.createReadStream(uploadTempFile);
+                    instance.addInputFile(jobId, readStream, function (error, data, response) {
+                        handleError(error, response);
+
+                        console.log("upload file response: " + JSON.stringify(data));
+                        job = data;
+
+                        expect(data.status).to.be(Pdf.ConversionJobResponse.StatusEnum.INPUTS_UPLOADED);
+                        done();
+                    });
+                });
+            });
+        });
+        describe('addInputStreamLocations', function () {
+            it('should call addInputStreamLocations successfully', function (done) {
+                //uncomment below and update the code to test addInputStreamLocations
+                //instance.addInputStreamLocations(function(error) {
+                //  handleError(error, response);
+                //expect().to.be();
+                //});
+                done();
+            });
+        });
+        describe('getJobs', function () {
+            it('should call getJobs successfully', function (done) {
+                //uncomment below and update the code to test addInputStreamLocations
+                //instance.getJobs(function(error) {
+                //  handleError(error, response);
+                //expect().to.be();
+                //});
+                done();
+            });
+        });
+        describe('submitJob', function () {
+            it('should call submitJob successfully', function (done) {
+                console.log("submit: " + jobId);
+                console.log("job: " + JSON.stringify(job));
+
+                instance.submitJob(jobId, job, function (error, data, response) {
+                    handleError(error, response);
+
+                    console.log("submit job response: " + JSON.stringify(data));
+
+                    expect().to.be();
+                    done();
+                });
+            });
+        });
+        describe('getJob', function () {
+            this.timeout(CONNECTION_TIMEOUT * 2);
+            it('should call getJob successfully', function (done) {
+                instance.getJob(jobId, function (error, data, response) {
+                    handleError(error, response);
+                    expect(data.status).to.be(Pdf.ConversionJobResponse.StatusEnum.PROCESSING);
+                    done();
+                });
+            });
+        });
+        describe('wait', function () {
+            this.timeout(CONNECTION_TIMEOUT * 2);
+            it('waiting for conversion is complete', function (done) {
+                // poll until conversion job finished processing
+                var pollInterval = 1000;
+                var poll = function () {
+                    var timer = 0;
+                    console.log("poll: " + jobId);
+                    instance.getJob(jobId, function (error, data, response) {
+                        if (error) {
+                            console.error(error)
+                        } else {
+                            console.log("polled: " + JSON.stringify(data));
+                            if (data != null && data.status != Pdf.ConversionJobResponse.StatusEnum.PROCESSING) {
+                                done();
+                            } else {
+                                timer = setTimeout(poll, pollInterval);
+                            }
+                        }
+                    });
+                };
+                poll();
+            });
+        });
+        describe('getStream', function () {
+            this.timeout(CONNECTION_TIMEOUT * 2);
+            it('should call getStream successfully', function (done) {
+                var time = (new Date).getTime();
+                var tmpFilename = path.join(os.tmpdir(), `test-stream-${time}.pdf`);
+                instance.getStream(jobId, function (error, data, response) {
+                    handleError(error, response);
+                    const writeStream = fs.createWriteStream(tmpFilename);
+                    writeStream.write(data);
+                    writeStream.end(function () {
+                        console.log("The file was saved!");
+                         done();
+                    });
+                });
+            });
+        });
+        describe('deleteJob', function () {
+            it('should call deleteJob successfully', function (done) {
+                instance.deleteJob(jobId, function (error, data, response) {
+                    handleError(error, response);
+                    console.log("delete job response: " + JSON.stringify(data));
+                    expect(data.status).to.be(Pdf.ConversionJobResponse.StatusEnum.DELETED);
+                    done();
+                });
+            });
+        });
+    });
+
+    function handleError(error, response) {
+        if (error) {
+            let message = error;
+            if (response) {
+                message += ", HTTP status code: " + response.statusCode;
+                if (response.text) {
+                    message += ", Reponse body: " + JSON.stringify(response);
+                }
+            }
+            throw message;
+        }
+    }
 }));

@@ -16,53 +16,95 @@
 
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
-    // AMD.
-    define(['expect.js', '../../src/index'], factory);
+    // AMD. Register as an anonymous module.
+    define(['ApiClient'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    factory(require('expect.js'), require('../../src/index'));
+    module.exports = factory(require('../ApiClient'));
   } else {
     // Browser globals (root is window)
-    factory(root.expect, root.Pdf);
+    if (!root.Pdf) {
+      root.Pdf = {};
+    }
+    root.Pdf.Compression = factory(root.Pdf.ApiClient);
   }
-}(this, function(expect, Pdf) {
+}(this, function(ApiClient) {
   'use strict';
 
-  var instance;
 
-  beforeEach(function() {
-    instance = new Pdf.InputResponse();
-  });
 
-  var getProperty = function(object, getter, property) {
-    // Use getter method if present; otherwise, get the property directly.
-    if (typeof object[getter] === 'function')
-      return object[getter]();
-    else
-      return object[property];
+
+  /**
+   * The Compression model module.
+   * @module model/Compression
+   * @version 1.1
+   */
+
+  /**
+   * Constructs a new <code>Compression</code>.
+   * Compression settings
+   * @alias module:model/Compression
+   * @class
+   */
+  var exports = function() {
+    var _this = this;
+
+
+
+  };
+
+  /**
+   * Constructs a <code>Compression</code> from a plain JavaScript object, optionally creating a new instance.
+   * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
+   * @param {Object} data The plain JavaScript object bearing properties of interest.
+   * @param {module:model/Compression} obj Optional instance to populate.
+   * @return {module:model/Compression} The populated <code>Compression</code> instance.
+   */
+  exports.constructFromObject = function(data, obj) {
+    if (data) {
+      obj = obj || new exports();
+
+      if (data.hasOwnProperty('level')) {
+        obj['level'] = ApiClient.convertToType(data['level'], 'Number');
+      }
+      if (data.hasOwnProperty('type')) {
+        obj['type'] = ApiClient.convertToType(data['type'], 'String');
+      }
+    }
+    return obj;
   }
 
-  var setProperty = function(object, setter, property, value) {
-    // Use setter method if present; otherwise, set the property directly.
-    if (typeof object[setter] === 'function')
-      object[setter](value);
-    else
-      object[property] = value;
-  }
+  /**
+   * Compression level. Valid range from 0 (minimal compression) to 10 (maximal compression)
+   * @member {Number} level
+   */
+  exports.prototype['level'] = undefined;
+  /**
+   * Compression type. ADVANCED is only allowed and should be used with the ADVANCED engine
+   * @member {module:model/Compression.TypeEnum} type
+   */
+  exports.prototype['type'] = undefined;
 
-  describe('InputResponse', function() {
-    it('should create an instance of InputResponse', function() {
-      // uncomment below and update the code to test InputResponse
-      //var instane = new Pdf.InputResponse();
-      //expect(instance).to.be.a(Pdf.InputResponse);
-    });
 
-    it('should have the property streamLocations (base name: "streamLocations")', function() {
-      // uncomment below and update the code to test the property streamLocations
-      //var instane = new Pdf.InputResponse();
-      //expect(instance).to.be();
-    });
+  /**
+   * Allowed values for the <code>type</code> property.
+   * @enum {String}
+   * @readonly
+   */
+  exports.TypeEnum = {
+    /**
+     * value: "NONE"
+     * @const
+     */
+    "NONE": "NONE",
+    /**
+     * value: "ADVANCED"
+     * @const
+     */
+    "ADVANCED": "ADVANCED"  };
 
-  });
 
+  return exports;
 }));
+
+

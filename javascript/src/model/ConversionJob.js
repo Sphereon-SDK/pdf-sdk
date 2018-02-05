@@ -16,53 +16,78 @@
 
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
-    // AMD.
-    define(['expect.js', '../../src/index'], factory);
+    // AMD. Register as an anonymous module.
+    define(['ApiClient', 'model/ConversionSettings'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    factory(require('expect.js'), require('../../src/index'));
+    module.exports = factory(require('../ApiClient'), require('./ConversionSettings'));
   } else {
     // Browser globals (root is window)
-    factory(root.expect, root.Pdf);
+    if (!root.Pdf) {
+      root.Pdf = {};
+    }
+    root.Pdf.ConversionJob = factory(root.Pdf.ApiClient, root.Pdf.ConversionSettings);
   }
-}(this, function(expect, Pdf) {
+}(this, function(ApiClient, ConversionSettings) {
   'use strict';
 
-  var instance;
 
-  beforeEach(function() {
-    instance = new Pdf.InputResponse();
-  });
 
-  var getProperty = function(object, getter, property) {
-    // Use getter method if present; otherwise, get the property directly.
-    if (typeof object[getter] === 'function')
-      return object[getter]();
-    else
-      return object[property];
+
+  /**
+   * The ConversionJob model module.
+   * @module model/ConversionJob
+   * @version 1.1
+   */
+
+  /**
+   * Constructs a new <code>ConversionJob</code>.
+   * The PDF conversion job. Has access to the job settings.
+   * @alias module:model/ConversionJob
+   * @class
+   * @param jobId {String} The server generated job jobId. This jobId is checked against the jobId in the request path on overy invocation
+   */
+  var exports = function(jobId) {
+    var _this = this;
+
+    _this['jobId'] = jobId;
+
+  };
+
+  /**
+   * Constructs a <code>ConversionJob</code> from a plain JavaScript object, optionally creating a new instance.
+   * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
+   * @param {Object} data The plain JavaScript object bearing properties of interest.
+   * @param {module:model/ConversionJob} obj Optional instance to populate.
+   * @return {module:model/ConversionJob} The populated <code>ConversionJob</code> instance.
+   */
+  exports.constructFromObject = function(data, obj) {
+    if (data) {
+      obj = obj || new exports();
+
+      if (data.hasOwnProperty('jobId')) {
+        obj['jobId'] = ApiClient.convertToType(data['jobId'], 'String');
+      }
+      if (data.hasOwnProperty('settings')) {
+        obj['settings'] = ConversionSettings.constructFromObject(data['settings']);
+      }
+    }
+    return obj;
   }
 
-  var setProperty = function(object, setter, property, value) {
-    // Use setter method if present; otherwise, set the property directly.
-    if (typeof object[setter] === 'function')
-      object[setter](value);
-    else
-      object[property] = value;
-  }
+  /**
+   * The server generated job jobId. This jobId is checked against the jobId in the request path on overy invocation
+   * @member {String} jobId
+   */
+  exports.prototype['jobId'] = undefined;
+  /**
+   * @member {module:model/ConversionSettings} settings
+   */
+  exports.prototype['settings'] = undefined;
 
-  describe('InputResponse', function() {
-    it('should create an instance of InputResponse', function() {
-      // uncomment below and update the code to test InputResponse
-      //var instane = new Pdf.InputResponse();
-      //expect(instance).to.be.a(Pdf.InputResponse);
-    });
 
-    it('should have the property streamLocations (base name: "streamLocations")', function() {
-      // uncomment below and update the code to test the property streamLocations
-      //var instane = new Pdf.InputResponse();
-      //expect(instance).to.be();
-    });
 
-  });
-
+  return exports;
 }));
+
+

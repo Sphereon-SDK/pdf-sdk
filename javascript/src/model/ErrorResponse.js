@@ -16,53 +16,68 @@
 
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
-    // AMD.
-    define(['expect.js', '../../src/index'], factory);
+    // AMD. Register as an anonymous module.
+    define(['ApiClient', 'model/Error'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    factory(require('expect.js'), require('../../src/index'));
+    module.exports = factory(require('../ApiClient'), require('./Error'));
   } else {
     // Browser globals (root is window)
-    factory(root.expect, root.Pdf);
+    if (!root.Pdf) {
+      root.Pdf = {};
+    }
+    root.Pdf.ErrorResponse = factory(root.Pdf.ApiClient, root.Pdf.Error);
   }
-}(this, function(expect, Pdf) {
+}(this, function(ApiClient, Error) {
   'use strict';
 
-  var instance;
 
-  beforeEach(function() {
-    instance = new Pdf.InputResponse();
-  });
 
-  var getProperty = function(object, getter, property) {
-    // Use getter method if present; otherwise, get the property directly.
-    if (typeof object[getter] === 'function')
-      return object[getter]();
-    else
-      return object[property];
+
+  /**
+   * The ErrorResponse model module.
+   * @module model/ErrorResponse
+   * @version 1.1
+   */
+
+  /**
+   * Constructs a new <code>ErrorResponse</code>.
+   * The error response
+   * @alias module:model/ErrorResponse
+   * @class
+   */
+  var exports = function() {
+    var _this = this;
+
+
+  };
+
+  /**
+   * Constructs a <code>ErrorResponse</code> from a plain JavaScript object, optionally creating a new instance.
+   * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
+   * @param {Object} data The plain JavaScript object bearing properties of interest.
+   * @param {module:model/ErrorResponse} obj Optional instance to populate.
+   * @return {module:model/ErrorResponse} The populated <code>ErrorResponse</code> instance.
+   */
+  exports.constructFromObject = function(data, obj) {
+    if (data) {
+      obj = obj || new exports();
+
+      if (data.hasOwnProperty('errors')) {
+        obj['errors'] = ApiClient.convertToType(data['errors'], [Error]);
+      }
+    }
+    return obj;
   }
 
-  var setProperty = function(object, setter, property, value) {
-    // Use setter method if present; otherwise, set the property directly.
-    if (typeof object[setter] === 'function')
-      object[setter](value);
-    else
-      object[property] = value;
-  }
+  /**
+   * @member {Array.<module:model/Error>} errors
+   */
+  exports.prototype['errors'] = undefined;
 
-  describe('InputResponse', function() {
-    it('should create an instance of InputResponse', function() {
-      // uncomment below and update the code to test InputResponse
-      //var instane = new Pdf.InputResponse();
-      //expect(instance).to.be.a(Pdf.InputResponse);
-    });
 
-    it('should have the property streamLocations (base name: "streamLocations")', function() {
-      // uncomment below and update the code to test the property streamLocations
-      //var instane = new Pdf.InputResponse();
-      //expect(instance).to.be();
-    });
 
-  });
-
+  return exports;
 }));
+
+

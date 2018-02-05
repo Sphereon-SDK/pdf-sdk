@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**applicableJobStatusses** | **[String]** | Job status needs to be in this list in order for the action to be performed! | [optional] 
+**applicableJobStatusses** | **[String]** | Job status needs to be in this list in order for the action to be performeld! | [optional] 
 **action** | **String** |  | [optional] 
 **type** | **String** |  | [optional] 
 

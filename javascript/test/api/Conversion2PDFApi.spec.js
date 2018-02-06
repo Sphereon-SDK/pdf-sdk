@@ -46,6 +46,10 @@
 
         var defaultClient = Pdf.ApiClient.instance;
         const oauth2schema = defaultClient.authentications['oauth2schema'];
+        if (ACCESS_TOKEN == null) {
+            console.error("Please create an environment variable with the PDF Auth token named: TESTS_JS_PDF_ACCESSTOKEN")
+        }
+
         oauth2schema.accessToken = ACCESS_TOKEN;
         defaultClient.timeout = CONNECTION_TIMEOUT;
     });

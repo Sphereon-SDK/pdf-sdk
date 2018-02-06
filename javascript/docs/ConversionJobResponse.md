@@ -3,14 +3,14 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**result** | [**ResultResponse**](ResultResponse.md) | The result(s) | [optional] 
+**result** | [**ResultResponse**](ResultResponse.md) | The result(s) | 
 **completionTime** | **Date** | The completion date/time of this job in ISO 8601 format | [optional] 
-**input** | [**InputResponse**](InputResponse.md) | The input(s) | [optional] 
-**jobId** | **String** |  | [optional] 
+**input** | [**InputResponse**](InputResponse.md) | The input(s) | 
+**jobId** | **String** | The job id | 
 **creationTime** | **Date** | The creation date/time of this job in ISO 8601 format | [optional] 
 **conversionTasks** | [**[ConversionTask]**](ConversionTask.md) |  | [optional] 
 **updateTime** | **Date** | The last update date/time of this job in ISO 8601 format | [optional] 
-**job** | [**ConversionJob**](ConversionJob.md) | The job | [optional] 
+**job** | [**ConversionJob**](ConversionJob.md) | The job | 
 **statusMessage** | **String** | A status message, which can be informational, warning or error. AA message here does not indicate an error perse | [optional] 
 **queueTime** | **Date** | The conversion queue date/time of this job in ISO 8601 format | [optional] 
 **status** | **String** | The status of the job | 

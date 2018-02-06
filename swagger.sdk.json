@@ -210,7 +210,7 @@
       "summary": "Get the current result stream",
       "security": [{"oauth2schema": ["global"]}],
       "produces": ["application/octet-stream"],
-      "description": "Get the PDF as binary stream/file.\r\nOur API generation does not allow changing the media type based on the Accepted header unfortunately.<br/>This means we use a seperate path postfix with the value '/stream'.\r\nThis API only returns the PDF when the response status.",
+      "description": "Get the PDF as binary stream/file.\r\nOur API generation does not allow changing the media type based on the Accepted header unfortunately.\r\nThis means we use a seperate path postfix with the value '/stream'.\r\nThis API only returns the PDF when the response status.",
       "operationId": "getStream",
       "responses": {
         "200": {
@@ -255,7 +255,7 @@
       "responses": {
         "200": {
           "schema": {"$ref": "#/definitions/ConversionJobResponse"},
-          "description": "file uploaded. The JSON Job response will be returned in the body."
+          "description": "File uploaded. The JSON Job response will be returned in the body."
         },
         "400": {
           "schema": {"$ref": "#/definitions/ErrorResponse"},
@@ -398,9 +398,9 @@
         },
         "compression": {"$ref": "#/definitions/Compression"},
         "fileFormat": {
+          "description": "Resulting file format. Restrictions apply. Default : PDF",
           "type": "string",
           "enum": [
-            "TIFF",
             "PDF",
             "XLSX",
             "DOCX"
@@ -424,6 +424,7 @@
       }
     },
     "CSVSettings": {
+      "description": "Specify CSV settings if one of the input files is a CSV",
       "type": "object",
       "properties": {
         "separatorCharacter": {
@@ -454,7 +455,13 @@
     "ConversionJobResponse": {
       "description": "The PDF job. Has access to the job settings as well as (ocr) engine tasks",
       "type": "object",
-      "required": ["status"],
+      "required": [
+        "input",
+        "job",
+        "jobId",
+        "result",
+        "status"
+      ],
       "properties": {
         "result": {
           "description": "The result(s)",
@@ -472,7 +479,11 @@
           "readOnly": true,
           "$ref": "#/definitions/InputResponse"
         },
-        "jobId": {"type": "string"},
+        "jobId": {
+          "description": "The job id",
+          "readOnly": true,
+          "type": "string"
+        },
         "creationTime": {
           "format": "date-time",
           "description": "The creation date/time of this job in ISO 8601 format",
@@ -491,6 +502,7 @@
         },
         "job": {
           "description": "The job",
+          "readOnly": true,
           "$ref": "#/definitions/ConversionJob"
         },
         "statusMessage": {
@@ -530,9 +542,16 @@
           "type": "integer",
           "minimum": 0
         },
-        "result": {"$ref": "#/definitions/ResultSettings"},
-        "input": {"$ref": "#/definitions/InputSettings"},
+        "result": {
+          "description": "The result file and lifecycle settings",
+          "$ref": "#/definitions/ResultSettings"
+        },
+        "input": {
+          "description": "The input file and lifecycle settings",
+          "$ref": "#/definitions/InputSettings"
+        },
         "engine": {
+          "description": "Engine to use for conversion. Costs apply. Default engine : ADVANCED",
           "type": "string",
           "enum": [
             "BASIC",
@@ -542,6 +561,7 @@
         },
         "csv": {"$ref": "#/definitions/CSVSettings"},
         "containerConversion": {
+          "description": "Specify which container to process. Currently used for email (ALL=Both message and attachments, MAIN=Only message, SUB=attachments",
           "type": "string",
           "enum": [
             "ALL",
@@ -550,7 +570,7 @@
           ]
         },
         "version": {
-          "description": "The PDF version to use for conversion",
+          "description": "The PDF version to use for conversion. Default value : PDF1_7",
           "type": "string",
           "enum": [
             "PDF_1_4",
@@ -565,6 +585,7 @@
           "$ref": "#/definitions/Lifecycle"
         },
         "ocrMode": {
+          "description": "Specify if a file must be processed by OCR engine. Default ocrMode : AUTO (only when not already processed)",
           "type": "string",
           "enum": [
             "ALWAYS",
@@ -656,7 +677,10 @@
           "description": "The server generated job jobId. This jobId is checked against the jobId in the request path on overy invocation",
           "type": "string"
         },
-        "settings": {"$ref": "#/definitions/ConversionSettings"}
+        "settings": {
+          "description": "The settings to use during the conversion job",
+          "$ref": "#/definitions/ConversionSettings"
+        }
       }
     },
     "StorageLocation": {
@@ -672,12 +696,15 @@
       }
     },
     "InputSettings": {
-      "description": "Input settings",
+      "description": "Input settings. Specify, if applicable, external location of the inputfile(s)",
       "type": "object",
       "properties": {
-        "lifecycle": {"$ref": "#/definitions/Lifecycle"},
+        "lifecycle": {
+          "description": "The lifecycle of input files",
+          "$ref": "#/definitions/Lifecycle"
+        },
         "storageLocation": {
-          "description": "Input Storage location",
+          "description": "Input Storage location. This where input files will be stored when addInput is called",
           "$ref": "#/definitions/StorageLocation"
         }
       }

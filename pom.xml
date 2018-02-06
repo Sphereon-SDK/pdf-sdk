@@ -15,9 +15,9 @@
         <sdk-package-javascript>SphereonSDKPdf</sdk-package-javascript>
         <sdk-package-version>1.1.0</sdk-package-version>
 
-        <swagger-coden-maven-plugin.version>2.2.3</swagger-coden-maven-plugin.version>
-        <swagger-coden-maven-plugin-javascript.version>2.3.1</swagger-coden-maven-plugin-javascript.version>
-        <swagger-coden-verbose>false</swagger-coden-verbose>
+        <swagger-codegen-maven-plugin.version>2.2.3</swagger-codegen-maven-plugin.version>
+        <swagger-codegen-maven-plugin-javascript.version>2.3.1</swagger-codegen-maven-plugin-javascript.version>
+        <swagger-codegen-verbose>false</swagger-codegen-verbose>
 
         <swagger-annotations-version>1.5.9</swagger-annotations-version>
         <jackson-version>2.4.2</jackson-version>
@@ -109,7 +109,7 @@
                     <plugin>
                         <groupId>io.swagger</groupId>
                         <artifactId>swagger-codegen-maven-plugin</artifactId>
-                        <version>${swagger-coden-maven-plugin.version}</version>
+                        <version>${swagger-codegen-maven-plugin.version}</version>
                         <executions>
                             <execution>
                                 <goals>
@@ -121,7 +121,7 @@
                                     <configOptions>
                                         <dateLibrary>java8</dateLibrary>
                                     </configOptions>
-                                    <verbose>${swagger-coden-verbose}</verbose>
+                                    <verbose>${swagger-codegen-verbose}</verbose>
                                     <output>${project.basedir}/html-docs</output>
                                     <groupId>com.sphereon.sdk</groupId>
                                     <artifactId>pdf-sdk-html-docs</artifactId>
@@ -145,7 +145,7 @@
                     <plugin>
                         <groupId>io.swagger</groupId>
                         <artifactId>swagger-codegen-maven-plugin</artifactId>
-                        <version>${swagger-coden-maven-plugin.version}</version>
+                        <version>${swagger-codegen-maven-plugin.version}</version>
                         <executions>
                             <execution>
                                 <goals>
@@ -161,7 +161,7 @@
                                         <dateLibrary>java8</dateLibrary>
                                     </configOptions>
                                     <library>okhttp-gson</library>
-                                    <verbose>${swagger-coden-verbose}</verbose>
+                                    <verbose>${swagger-codegen-verbose}</verbose>
                                     <output>${project.basedir}/java8-okhttp-gson</output>
                                     <groupId>com.sphereon.sdk</groupId>
                                     <artifactId>pdf-sdk-java8-okhttp-gson</artifactId>
@@ -198,7 +198,7 @@
                                         <dateLibrary>java8</dateLibrary>
                                     </configOptions>
                                     <library>jersey2</library>
-                                    <verbose>${swagger-coden-verbose}</verbose>
+                                    <verbose>${swagger-codegen-verbose}</verbose>
                                     <output>${project.basedir}/java8-jersey2</output>
                                     <groupId>com.sphereon.sdk</groupId>
                                     <artifactId>pdf-sdk-java8-jersey2</artifactId>
@@ -214,7 +214,7 @@
                 </plugins>
             </build>
         </profile>
--->
+
 
         <profile>
             <id>java8-retrofit2</id>
@@ -223,7 +223,7 @@
                     <plugin>
                         <groupId>io.swagger</groupId>
                         <artifactId>swagger-codegen-maven-plugin</artifactId>
-                        <version>${swagger-coden-maven-plugin.version}</version>
+                        <version>${swagger-codegen-maven-plugin.version}</version>
                         <executions>
                             <execution>
                                 <goals>
@@ -236,7 +236,7 @@
                                         <dateLibrary>java8</dateLibrary>
                                     </configOptions>
                                     <library>retrofit2</library>
-                                    <verbose>${swagger-coden-verbose}</verbose>
+                                    <verbose>${swagger-codegen-verbose}</verbose>
                                     <output>${project.basedir}/java8-retrofit2</output>
                                     <groupId>com.sphereon.sdk</groupId>
                                     <artifactId>pdf-sdk-java8-retrofit2</artifactId>
@@ -252,7 +252,7 @@
                 </plugins>
             </build>
         </profile>
-
+-->
         <profile>
             <id>javascript</id>
             <build>
@@ -260,7 +260,7 @@
                     <plugin>
                         <groupId>io.swagger</groupId>
                         <artifactId>swagger-codegen-maven-plugin</artifactId>
-                        <version>${swagger-coden-maven-plugin-javascript.version}</version>
+                        <version>${swagger-codegen-maven-plugin-javascript.version}</version>
                         <executions>
                             <execution>
                                 <goals>
@@ -275,7 +275,7 @@
                                     <configOptions>
                                         <dateLibrary>java8</dateLibrary>
                                     </configOptions>
-                                    <verbose>${swagger-coden-verbose}</verbose>
+                                    <verbose>${swagger-codegen-verbose}</verbose>
                                     <output>${project.basedir}/javascript</output>
                                     <groupId>com.sphereon.sdk</groupId>
                                     <artifactId>pdf-sdk-javascript</artifactId>
@@ -298,7 +298,7 @@
                     <plugin>
                         <groupId>io.swagger</groupId>
                         <artifactId>swagger-codegen-maven-plugin</artifactId>
-                        <version>${swagger-coden-maven-plugin.version}</version>
+                        <version>${swagger-codegen-maven-plugin.version}</version>
 
                         <executions>
 
@@ -321,7 +321,7 @@
                                         <packageVersion>${sdk-package-version}</packageVersion>
                                     </configOptions>
                                     <configurationFile>src/main/resources/config/csharp-net45.json</configurationFile>
-                                    <verbose>${swagger-coden-verbose}</verbose>
+                                    <verbose>${swagger-codegen-verbose}</verbose>
                                     <output>${project.basedir}/csharp-net45</output>
                                     <groupId>com.sphereon.sdk</groupId>
                                     <artifactId>pdf-sdk-csharp-net45</artifactId>
@@ -345,7 +345,7 @@
                     <plugin>
                         <groupId>io.swagger</groupId>
                         <artifactId>swagger-codegen-maven-plugin</artifactId>
-                        <version>${swagger-coden-maven-plugin.version}</version>
+                        <version>${swagger-codegen-maven-plugin.version}</version>
                         <executions>
                             <execution>
                                 <goals>
@@ -364,7 +364,7 @@
                                         <targetFramework>v3.5</targetFramework>
                                     </configOptions>
                                     <configurationFile>src/main/resources/config/csharp-net35.json</configurationFile>
-                                    <verbose>${swagger-coden-verbose}</verbose>
+                                    <verbose>${swagger-codegen-verbose}</verbose>
                                     <output>${project.basedir}/csharp-net35</output>
                                     <groupId>com.sphereon.sdk</groupId>
                                     <artifactId>pdf-sdk-csharp-net35</artifactId>

@@ -4,14 +4,14 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **qualityFactor** | **Number** | Set the quality factor for the resulting PDF. Range from 0 (lowest) to 10 (highest) | [optional] 
-**result** | [**ResultSettings**](ResultSettings.md) |  | [optional] 
-**input** | [**InputSettings**](InputSettings.md) |  | [optional] 
-**engine** | **String** |  | [optional] 
+**result** | [**ResultSettings**](ResultSettings.md) | The result file and lifecycle settings | [optional] 
+**input** | [**InputSettings**](InputSettings.md) | The input file and lifecycle settings | [optional] 
+**engine** | **String** | Engine to use for conversion. Costs apply. Default engine : ADVANCED | [optional] 
 **csv** | [**CSVSettings**](CSVSettings.md) |  | [optional] 
-**containerConversion** | **String** |  | [optional] 
-**version** | **String** | The PDF version to use for conversion | [optional] 
+**containerConversion** | **String** | Specify which container to process. Currently used for email (ALL&#x3D;Both message and attachments, MAIN&#x3D;Only message, SUB&#x3D;attachments | [optional] 
+**version** | **String** | The PDF version to use for conversion. Default value : PDF1_7 | [optional] 
 **jobLifecycle** | [**Lifecycle**](Lifecycle.md) | The lifecycle of the job itself | [optional] 
-**ocrMode** | **String** |  | [optional] 
+**ocrMode** | **String** | Specify if a file must be processed by OCR engine. Default ocrMode : AUTO (only when not already processed) | [optional] 
 
 
 <a name="EngineEnum"></a>

@@ -410,7 +410,7 @@ Name | Type | Description  | Notes
 
 Get the current result stream
 
-Get the PDF as binary stream/file.  Our API generation does not allow changing the media type based on the Accepted header unfortunately.<br/>This means we use a seperate path postfix with the value '/stream'.  This API only returns the PDF when the response status.
+Get the PDF as binary stream/file.  Our API generation does not allow changing the media type based on the Accepted header unfortunately.  This means we use a seperate path postfix with the value '/stream'.  This API only returns the PDF when the response status.
 
 ### Example
 ```csharp

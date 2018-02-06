@@ -6,20 +6,33 @@
   <packaging>jar</packaging>
   <name>pdf-sdk-java8-okhttp-gson</name>
   <version>1.1.0-SNAPSHOT</version>
-  <url>https://github.com/swagger-api/swagger-codegen</url>
-  <description>Swagger Java</description>
+  <url>https://github.com/Sphereon-SDK/pdf-SDK</url>
+  <description>PDF Conversion SDK</description>
+
+  <distributionManagement>
+    <repository>
+      <id>sphereon-sdk-releases</id>
+      <url>http://nexus.qa.sphereon.com/nexus/content/repositories/sphereon-sdk-releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>sphereon-sdk-snapshots</id>
+      <url>http://nexus.qa.sphereon.com/nexus/content/repositories/sphereon-sdk-snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+
   <scm>
-    <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
-    <developerConnection>scm:git:git@github.com:swagger-api/swagger-codegen.git</developerConnection>
-    <url>https://github.com/swagger-api/swagger-codegen</url>
+    <connection>scm:git:git@github.com:Sphereon-SDK/pdf-sdk.git</connection>
+    <developerConnection>scm:git:git@github.com:Sphereon-SDK/pdf-sdk.git</developerConnection>
+    <url>https://github.com/Sphereon-SDK/pdf-sdk</url>
   </scm>
+
   <prerequisites>
     <maven>2.2.0</maven>
   </prerequisites>
 
   <licenses>
     <license>
-      <name>Unlicense</name>
+      <name>Apache2</name>
       <url>http://www.apache.org/licenses/LICENSE-2.0</url>
       <distribution>repo</distribution>
     </license>
@@ -27,10 +40,10 @@
 
   <developers>
     <developer>
-      <name>Swagger</name>
-      <email>apiteam@swagger.io</email>
-      <organization>Swagger</organization>
-      <organizationUrl>http://swagger.io</organizationUrl>
+      <name>Sphereon</name>
+      <email>dev@sphereon.com</email>
+      <organization>Sphereon B.V.</organization>
+      <organizationUrl>https://sphereon.com</organizationUrl>
     </developer>
   </developers>
 
@@ -221,6 +234,6 @@
     <maven-plugin-version>1.0.0</maven-plugin-version>
     <junit-version>4.12</junit-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <authentication-lib.version>0.1.1-SNAPSHOT</authentication-lib.version>
+    <authentication-lib.version>0.1.1</authentication-lib.version>
   </properties>
 </project>

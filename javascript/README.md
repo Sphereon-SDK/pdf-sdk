@@ -21,7 +21,8 @@ please follow the procedure in ["Publishing npm packages"](https://docs.npmjs.co
 Then install it via:
 
 ```shell
-npm install pdf --save
+npm config set registry http://nexus.qa.sphereon.com/repository/sphereon-public-npm/
+npm install @sphereon/pdf --save
 ```
 
 ##### Local development
@@ -48,15 +49,6 @@ npm link /path/to/<JAVASCRIPT_CLIENT_DIR>
 You should now be able to `require('pdf')` in javascript files from the directory you ran the last 
 command above from.
 
-#### git
-#
-If the library is hosted at a git repository, e.g.
-https://github.com/GIT_USER_ID/GIT_REPO_ID
-then install it via:
-
-```shell
-    npm install GIT_USER_ID/GIT_REPO_ID --save
-```
 
 ### For browser
 

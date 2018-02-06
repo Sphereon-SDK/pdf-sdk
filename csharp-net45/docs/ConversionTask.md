@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 **JobId** | **string** | The current job Id | [optional] 
 **QueueId** | **string** | The queue Id provided by a backend system | [optional] 
 **Engine** | **string** | The Engine being used | [optional] 
-**Inputs** | **List&lt;string&gt;** | The names of the supplied files/inputs | [optional] 
+**ConversionInput** | [**ConversionTaskInput**](ConversionTaskInput.md) | Conversion input | [optional] 
 **DocumentId** | **string** | The document Id provided by a backend system | [optional] 
 **Status** | **string** | The status of the Conversion task itself | [optional] 
 

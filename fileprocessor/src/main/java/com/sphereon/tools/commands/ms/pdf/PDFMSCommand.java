@@ -25,7 +25,7 @@ public class PDFMSCommand extends AbstractCommand {
 
 
             logger.info("** Begin of pdf settings");
-            String json = getJson(ConversionSettings.VersionEnum._1_7, ResultSettings.FileFormatEnum.PDF);
+            String json = getJson(ConversionSettings.VersionEnum._1_7, ResultSettings.FileFormatEnum.PDF, ConversionSettings.EngineEnum.ADVANCED);
             logger.info("Content : " + json);
             logger.info("** end of pdf settings");
             logger.info("Copy/paste json text after 'Content :' to a file");
@@ -44,35 +44,36 @@ public class PDFMSCommand extends AbstractCommand {
 
         StringBuffer sb = new StringBuffer();
 
+        for (ConversionSettings.EngineEnum engineEnum : ConversionSettings.EngineEnum.values()) {
 
-        for (ConversionSettings.VersionEnum versionEnum : ConversionSettings.VersionEnum.values()) {
-            String pdfSettingsJson = getJson(versionEnum, ResultSettings.FileFormatEnum.PDF);
-            String prefix = versionEnum.toString().toLowerCase();
-            sb = createOutput(apiKey, settingsPath, sb, prefix, pdfSettingsJson, "pdf");
+            for (ConversionSettings.VersionEnum versionEnum : ConversionSettings.VersionEnum.values()) {
+                String pdfSettingsJson = getJson(versionEnum, ResultSettings.FileFormatEnum.PDF, engineEnum);
+                String prefix = versionEnum.toString().toLowerCase();
+                sb = createOutput(engineEnum, apiKey, settingsPath, sb, prefix, pdfSettingsJson, engineEnum.toString().toLowerCase() + "_pdf");
+            }
+
+            String pdfSettingsJson = getJson(null, ResultSettings.FileFormatEnum.DOCX, engineEnum);
+            sb = createOutput(engineEnum, apiKey, settingsPath, sb, "docx", pdfSettingsJson, engineEnum.toString().toLowerCase() + "_docx");
+
+            pdfSettingsJson = getJson(null, ResultSettings.FileFormatEnum.TIFF, engineEnum);
+            sb = createOutput(engineEnum, apiKey, settingsPath, sb, "tiff", pdfSettingsJson, engineEnum.toString().toLowerCase() + "_tiff");
+
+            pdfSettingsJson = getJson(null, ResultSettings.FileFormatEnum.XLSX, engineEnum);
+            sb = createOutput(engineEnum, apiKey, settingsPath, sb, "xlsx", pdfSettingsJson, engineEnum.toString().toLowerCase() + "_xlsx");
         }
-
-        String pdfSettingsJson = getJson(null, ResultSettings.FileFormatEnum.DOCX);
-        sb = createOutput(apiKey, settingsPath, sb, "docx", pdfSettingsJson, "docx");
-
-        pdfSettingsJson = getJson(null, ResultSettings.FileFormatEnum.TIFF);
-        sb = createOutput(apiKey, settingsPath, sb, "tiff", pdfSettingsJson, "tiff");
-
-        pdfSettingsJson = getJson(null, ResultSettings.FileFormatEnum.XLSX);
-        sb = createOutput(apiKey, settingsPath, sb, "xlsx", pdfSettingsJson, "xlsx");
-
         Path commandFilePath = Paths.get(tempPath.toString(), "ExecuteConfigs.cmd");
         logger.info(String.format("Create command file %s", commandFilePath.toString()));
         FileUtils.writeStringToFile(commandFilePath.toFile(), sb.toString(), Charset.defaultCharset());
     }
 
-    private StringBuffer createOutput(String apiKey, Path settingsPath, StringBuffer sb, String prefix, String pdfSettingsJson, String subDirectory) throws IOException {
+    private StringBuffer createOutput(ConversionSettings.EngineEnum engineEnum, String apiKey, Path settingsPath, StringBuffer sb, String prefix, String pdfSettingsJson, String subDirectory) throws IOException {
         ;
-        Path pdfSetting = Paths.get(settingsPath.toString(), "pdfSetting" + prefix + ".json");
+        Path pdfSetting = Paths.get(settingsPath.toString(), engineEnum.toString().toLowerCase() + "_pdfSetting" + prefix + ".json");
         logger.info(String.format("Create pdf setting file %s", pdfSetting.toString()));
         FileUtils.writeStringToFile(pdfSetting.toFile(), pdfSettingsJson, Charset.defaultCharset());
 
         String globalJson = getGlobalJson(subDirectory, prefix, apiKey);
-        Path globalSetting = Paths.get(settingsPath.toString(), "globalSetting" + prefix + ".json");
+        Path globalSetting = Paths.get(settingsPath.toString(), engineEnum.toString().toLowerCase() + "_globalSetting" + prefix + ".json");
         logger.info(String.format("Create global setting file %s", globalSetting.toString()));
         FileUtils.writeStringToFile(globalSetting.toFile(), globalJson, Charset.defaultCharset());
 
@@ -114,7 +115,8 @@ public class PDFMSCommand extends AbstractCommand {
 
 
         logger.info(String.format("Add input file %s", inputfile.getAbsolutePath()));
-        conversionJobResponse = conversion2PDFApi.addInputFile(jobId, inputfile, FilenameUtils.getBaseName(inputfile.getAbsolutePath()));
+        String filename = FilenameUtils.getBaseName(inputfile.getAbsolutePath()) + "." + FilenameUtils.getExtension(inputfile.getAbsolutePath());
+        conversionJobResponse = conversion2PDFApi.addInputFile(jobId, inputfile, filename);
         logger.info(String.format("Status=%s", conversionJobResponse.getStatus()));
 
         logger.info(String.format("Input file %s added", inputfile.getAbsolutePath()));
@@ -125,15 +127,15 @@ public class PDFMSCommand extends AbstractCommand {
         logger.info(String.format("Job submitted with id %s", jobId));
 
 
-        int retry = timeout;
+        int countdownn = timeout;
         do {
             conversionJobResponse = conversion2PDFApi.getJob(jobId);
             if (!done(conversionJobResponse)) {
-                logger.info(String.format("Waiting for completion of job submitted with id %s, status : %s, retry : %d", jobId, conversionJobResponse.getStatus(), retry));
+                logger.info(String.format("Waiting for completion of job submitted with id %s, status : %s, countdown : %d", jobId, conversionJobResponse.getStatus(), countdownn));
                 Thread.sleep(1000);
             }
-            retry--;
-        } while (!done(conversionJobResponse) && retry > 0);
+            countdownn--;
+        } while (!done(conversionJobResponse) && countdownn > 0);
 
         logger.info(String.format("Job submitted with id %s is %s", jobId, conversionJobResponse.getStatus()));
 
@@ -170,10 +172,10 @@ public class PDFMSCommand extends AbstractCommand {
         return getObjectMapper().readValue(pdfSettingsFile, ConversionSettings.class);
     }
 
-    private String getJson(ConversionSettings.VersionEnum version, ResultSettings.FileFormatEnum fileFormat) throws JsonProcessingException {
+    private String getJson(ConversionSettings.VersionEnum version, ResultSettings.FileFormatEnum fileFormat, ConversionSettings.EngineEnum engine) throws JsonProcessingException {
         ConversionSettings conversionSettings = new ConversionSettings();
         conversionSettings.setContainerConversion(ConversionSettings.ContainerConversionEnum.ALL);
-        conversionSettings.setEngine(ConversionSettings.EngineEnum.PREMIUM);
+        conversionSettings.setEngine(engine);
         CSVSettings csvSettings = new CSVSettings();
         csvSettings.setSeparatorCharacter(CSVSettings.SeparatorCharacterEnum.COMMA);
         conversionSettings.setCsv(csvSettings);

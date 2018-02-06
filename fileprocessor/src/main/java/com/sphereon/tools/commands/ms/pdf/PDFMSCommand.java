@@ -10,6 +10,7 @@ import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 
 public class PDFMSCommand extends AbstractCommand {
 
@@ -21,7 +22,7 @@ public class PDFMSCommand extends AbstractCommand {
 
 
             logger.info("** Begin of pdf settings");
-            String json = getJson();
+            String json = getJson(ConversionSettings.VersionEnum._1_7);
             logger.info("Content : " + json);
             logger.info("** end of pdf settings");
             logger.info("Copy/paste json text after 'Content :' to a file");
@@ -33,7 +34,13 @@ public class PDFMSCommand extends AbstractCommand {
 
 
     @Override
-    public void generateAll() {
+    public void generateAll() throws JsonProcessingException {
+        Path tempPath = getTempPath();
+
+        for (ConversionSettings.VersionEnum versionEnum : ConversionSettings.VersionEnum.values()) {
+            String pdfSettingsJson = getJson(versionEnum);
+
+        }
 
     }
 
@@ -116,7 +123,7 @@ public class PDFMSCommand extends AbstractCommand {
         return getObjectMapper().readValue(pdfSettingsFile, ConversionSettings.class);
     }
 
-    private String getJson() throws JsonProcessingException {
+    private String getJson(ConversionSettings.VersionEnum version) throws JsonProcessingException {
         ConversionSettings conversionSettings = new ConversionSettings();
         conversionSettings.setContainerConversion(ConversionSettings.ContainerConversionEnum.ALL);
         conversionSettings.setEngine(ConversionSettings.EngineEnum.PREMIUM);
@@ -125,7 +132,7 @@ public class PDFMSCommand extends AbstractCommand {
         conversionSettings.setCsv(csvSettings);
         conversionSettings.setOcrMode(ConversionSettings.OcrModeEnum.AUTO);
         conversionSettings.setQualityFactor(100);
-        conversionSettings.setVersion(ConversionSettings.VersionEnum._1_7);
+        conversionSettings.setVersion(version);
         ResultSettings resultSettings = new ResultSettings();
         Compression compression = new Compression();
         compression.setLevel(100);

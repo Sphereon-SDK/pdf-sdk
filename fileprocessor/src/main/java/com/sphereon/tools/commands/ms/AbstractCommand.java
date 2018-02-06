@@ -30,17 +30,21 @@ public abstract class AbstractCommand implements Command {
 
     protected void generateGlobalConfiguration(String subDirectory, String prefix) throws JsonProcessingException {
         logger.info("** Begin of global configuration");
+        String json = getGlobalJson(subDirectory, prefix);
+        logger.info("Content : " + json);
+        logger.info("** end of global configuration");
+        logger.info("Copy/paste json text after 'Content :' to a file");
+        logger.info("");
+    }
+
+    private String getGlobalJson(String subDirectory, String prefix) throws JsonProcessingException {
         Configuration configuration = new Configuration();
         configuration.setApiKey("enter Sphereon store api key");
         configuration.setImportDirectory("c:/fileprocessor/import");
         configuration.setExportDirectory("c:/fileprocessor/export");
         configuration.setSubdirectory(subDirectory);
         configuration.setPrefix(prefix);
-        String json = getObjectMapper().writeValueAsString(configuration);
-        logger.info("Content : " + json);
-        logger.info("** end of global configuration");
-        logger.info("Copy/paste json text after 'Content :' to a file");
-        logger.info("");
+        return getObjectMapper().writeValueAsString(configuration);
     }
 
     protected ObjectMapper getObjectMapper() {
@@ -86,5 +90,9 @@ public abstract class AbstractCommand implements Command {
 
         Path outputFile = Paths.get(outputPath.toString(), configuration.getPrefix() + outputFileName);
         FileUtils.writeByteArrayToFile(outputFile.toFile(), content);
+    }
+
+    protected Path getTempPath(){
+        return Paths.get(System.getProperty("java.io.tmpdir")+"Fileprocessor-configs");
     }
 }

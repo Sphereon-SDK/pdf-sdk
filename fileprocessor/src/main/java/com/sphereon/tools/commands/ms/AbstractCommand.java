@@ -25,11 +25,17 @@ public abstract class AbstractCommand implements Command {
     private int fileCounter = 0;
 
     protected void generateGlobalConfiguration() throws JsonProcessingException {
+        generateGlobalConfiguration("", "");
+    }
+
+    protected void generateGlobalConfiguration(String subDirectory, String prefix) throws JsonProcessingException {
         logger.info("** Begin of global configuration");
         Configuration configuration = new Configuration();
         configuration.setApiKey("enter Sphereon store api key");
         configuration.setImportDirectory("c:/fileprocessor/import");
         configuration.setExportDirectory("c:/fileprocessor/export");
+        configuration.setSubdirectory(subDirectory);
+        configuration.setPrefix(prefix);
         String json = getObjectMapper().writeValueAsString(configuration);
         logger.info("Content : " + json);
         logger.info("** end of global configuration");
@@ -75,7 +81,10 @@ public abstract class AbstractCommand implements Command {
     }
 
     protected void writeToOutputDirectory(String outputFileName, byte[] content) throws IOException {
-        Path outputPath = Paths.get(configuration.getExportDirectory(), outputFileName);
-        FileUtils.writeByteArrayToFile(outputPath.toFile(), content);
+        Path outputPath = Paths.get(configuration.getExportDirectory(), configuration.getSubdirectory());
+        FileUtils.forceMkdir(outputPath.toFile());
+
+        Path outputFile = Paths.get(outputPath.toString(), configuration.getPrefix() + outputFileName);
+        FileUtils.writeByteArrayToFile(outputFile.toFile(), content);
     }
 }

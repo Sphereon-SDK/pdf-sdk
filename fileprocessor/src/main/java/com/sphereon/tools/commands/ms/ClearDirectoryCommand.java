@@ -12,8 +12,13 @@ public class ClearDirectoryCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute(File globalSettings, File commandSettings) throws Exception {
-        Configuration configuration = applyConfiguration(globalSettings);
+    public void generateAll() {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public void execute(File globalSettings, File commandSettings, int timeout) throws Exception {
+        applyConfiguration(globalSettings);
         while (hasFile()) {
             File inputFile = nextFile();
             if (inputFile.exists()) {

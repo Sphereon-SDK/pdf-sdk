@@ -20,6 +20,7 @@ public class FileProcessor {
         OptionParser parser = new OptionParser() {
             {
                 acceptsAll(asList("h", "?", "help"), "show help (this screen)").forHelp();
+                acceptsAll(asList("job-timeout"), "Number of seconds to wait for job completion").withRequiredArg().ofType(Integer.class);
                 acceptsAll(asList("c", "conf", "configuration"), "Location of the global configuration").withRequiredArg().ofType(File.class).describedAs("File path to global configuration file");
                 acceptsAll(asList("clear-input-folder"), "Clear input folder afterwards");
                 acceptsAll(asList("generate-pdf-settings"), "Generate pdf settings");
@@ -43,18 +44,22 @@ public class FileProcessor {
             PDFMSCommand.generate();
         }
 
+        int timeout = 90;
+        if (options.has("job-timeout")) {
+            timeout = (int) options.valueOf("job-timeout");
+        }
 
         if (options.has("configuration") && options.has("pdf") && options.has("pdf-settings")) {
             File configuration = (File) options.valueOf("configuration");
             File pdfSettings = (File) options.valueOf("pdf-settings");
             PDFMSCommand PDFMSCommand = new PDFMSCommand();
-            PDFMSCommand.execute(configuration, pdfSettings);
+            PDFMSCommand.execute(configuration, pdfSettings, timeout);
         }
 
         if (options.has("configuration") && options.has("clear-input-folder")) {
             File configuration = (File) options.valueOf("configuration");
             ClearDirectoryCommand clearDirectoryCommand = new ClearDirectoryCommand();
-            clearDirectoryCommand.execute(configuration, null);
+            clearDirectoryCommand.execute(configuration, null, timeout);
         }
     }
 

@@ -17,6 +17,12 @@ public class Configuration {
     @XmlElement
     private String exportDirectory;
 
+    @XmlElement
+    private String prefix;
+
+    @XmlElement
+    private String subdirectory;
+
     public String getApiKey() {
         return apiKey;
     }
@@ -39,5 +45,27 @@ public class Configuration {
 
     public void setExportDirectory(String exportDirectory) {
         this.exportDirectory = exportDirectory;
+    }
+
+    public String getPrefix() {
+        if (prefix == null) {
+            this.prefix = "";
+        }
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
+
+    public String getSubdirectory() {
+        if (subdirectory == null) {
+            this.subdirectory = "";
+        }
+        return subdirectory;
+    }
+
+    public void setSubdirectory(String subdirectory) {
+        this.subdirectory = subdirectory;
     }
 }

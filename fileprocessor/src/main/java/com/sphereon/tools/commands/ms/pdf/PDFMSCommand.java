@@ -54,6 +54,12 @@ public class PDFMSCommand extends AbstractCommand {
         String pdfSettingsJson = getJson(null, ResultSettings.FileFormatEnum.DOCX);
         sb = createOutput(apiKey, settingsPath, sb, "docx", pdfSettingsJson, "docx");
 
+        pdfSettingsJson = getJson(null, ResultSettings.FileFormatEnum.TIFF);
+        sb = createOutput(apiKey, settingsPath, sb, "tiff", pdfSettingsJson, "tiff");
+
+        pdfSettingsJson = getJson(null, ResultSettings.FileFormatEnum.XLSX);
+        sb = createOutput(apiKey, settingsPath, sb, "xlsx", pdfSettingsJson, "xlsx");
+
         Path commandFilePath = Paths.get(tempPath.toString(), "ExecuteConfigs.cmd");
         logger.info(String.format("Create command file %s", commandFilePath.toString()));
         FileUtils.writeStringToFile(commandFilePath.toFile(), sb.toString(), Charset.defaultCharset());
@@ -91,7 +97,7 @@ public class PDFMSCommand extends AbstractCommand {
             }
 
             String outputFileName = FilenameUtils.getBaseName(inputfile.getAbsolutePath()) + "." + extension;
-            writeToOutputDirectory(outputFileName, result);
+            writeToOutputDirectory(inputfile, outputFileName, result);
         }
     }
 

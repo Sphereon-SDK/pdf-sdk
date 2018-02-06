@@ -86,7 +86,7 @@ public abstract class AbstractCommand implements Command {
         return nextFile;
     }
 
-    protected void writeToOutputDirectory(String outputFileName, Result result) throws IOException {
+    protected void writeToOutputDirectory(File inputfile, String outputFileName, Result result) throws IOException {
         Path outputPath = Paths.get(configuration.getExportDirectory(), configuration.getSubdirectory());
         FileUtils.forceMkdir(outputPath.toFile());
 
@@ -97,8 +97,11 @@ public abstract class AbstractCommand implements Command {
                 FileUtils.writeByteArrayToFile(outputFile.toFile(), result.getStream());
                 break;
             case ERROR:
-                outputFile = Paths.get(outputPath.toString(), configuration.getPrefix() + "ERROR" + outputFileName + ".txt");
-                FileUtils.writeStringToFile(outputFile.toFile(), result.getStatusMessage(), Charset.defaultCharset());
+                outputFile = Paths.get(outputPath.toString(), configuration.getPrefix() + "ERROR" + inputfile.getName() + "_to_" + outputFileName + ".txt");
+                StringBuffer sb = new StringBuffer();
+                sb.append(String.format("Input file :%s\n", inputfile.getAbsolutePath()));
+                sb.append(result.getStatusMessage());
+                FileUtils.writeStringToFile(outputFile.toFile(), sb.toString(), Charset.defaultCharset());
                 break;
             default:
                 break;

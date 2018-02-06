@@ -24,3 +24,4 @@
 ConversionPDFApiTest.java
 Sphereon.SDK.Pdf.Converter/**
 resources/*
+!/html-docs/index.html

@@ -2,12 +2,14 @@ package com.sphereon.tools.commands.ms;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sphereon.tools.commands.ms.pdf.Result;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.ext.XLogger;
 import org.slf4j.ext.XLoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -25,21 +27,21 @@ public abstract class AbstractCommand implements Command {
     private int fileCounter = 0;
 
     protected void generateGlobalConfiguration() throws JsonProcessingException {
-        generateGlobalConfiguration("", "");
+        generateGlobalConfiguration("", "", "enter Sphereon store api key");
     }
 
-    protected void generateGlobalConfiguration(String subDirectory, String prefix) throws JsonProcessingException {
+    protected void generateGlobalConfiguration(String subDirectory, String prefix, String apiKey) throws JsonProcessingException {
         logger.info("** Begin of global configuration");
-        String json = getGlobalJson(subDirectory, prefix);
+        String json = getGlobalJson(subDirectory, prefix, apiKey);
         logger.info("Content : " + json);
         logger.info("** end of global configuration");
         logger.info("Copy/paste json text after 'Content :' to a file");
         logger.info("");
     }
 
-    private String getGlobalJson(String subDirectory, String prefix) throws JsonProcessingException {
+    protected String getGlobalJson(String subDirectory, String prefix, String apiKey) throws JsonProcessingException {
         Configuration configuration = new Configuration();
-        configuration.setApiKey("enter Sphereon store api key");
+        configuration.setApiKey(apiKey);
         configuration.setImportDirectory("c:/fileprocessor/import");
         configuration.setExportDirectory("c:/fileprocessor/export");
         configuration.setSubdirectory(subDirectory);
@@ -84,15 +86,26 @@ public abstract class AbstractCommand implements Command {
         return nextFile;
     }
 
-    protected void writeToOutputDirectory(String outputFileName, byte[] content) throws IOException {
+    protected void writeToOutputDirectory(String outputFileName, Result result) throws IOException {
         Path outputPath = Paths.get(configuration.getExportDirectory(), configuration.getSubdirectory());
         FileUtils.forceMkdir(outputPath.toFile());
 
-        Path outputFile = Paths.get(outputPath.toString(), configuration.getPrefix() + outputFileName);
-        FileUtils.writeByteArrayToFile(outputFile.toFile(), content);
+
+        switch (result.getStatus()) {
+            case DONE:
+                Path outputFile = Paths.get(outputPath.toString(), configuration.getPrefix() + outputFileName);
+                FileUtils.writeByteArrayToFile(outputFile.toFile(), result.getStream());
+                break;
+            case ERROR:
+                outputFile = Paths.get(outputPath.toString(), configuration.getPrefix() + "ERROR" + outputFileName + ".txt");
+                FileUtils.writeStringToFile(outputFile.toFile(), result.getStatusMessage(), Charset.defaultCharset());
+                break;
+            default:
+                break;
+        }
     }
 
-    protected Path getTempPath(){
-        return Paths.get(System.getProperty("java.io.tmpdir")+"Fileprocessor-configs");
+    protected Path getTempPath() {
+        return Paths.get(System.getProperty("java.io.tmpdir") + "Fileprocessor-configs");
     }
 }

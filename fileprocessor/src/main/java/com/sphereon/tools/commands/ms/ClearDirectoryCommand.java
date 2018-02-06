@@ -12,7 +12,7 @@ public class ClearDirectoryCommand extends AbstractCommand {
     }
 
     @Override
-    public void generateAll() {
+    public void generateAll(String apiKey) {
         throw new NotImplementedException();
     }
 

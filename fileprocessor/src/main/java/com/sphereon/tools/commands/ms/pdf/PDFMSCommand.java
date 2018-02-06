@@ -6,11 +6,14 @@ import com.sphereon.sdk.pdf.handler.ApiException;
 import com.sphereon.sdk.pdf.model.*;
 import com.sphereon.tools.commands.ms.AbstractCommand;
 import com.sphereon.tools.commands.ms.Configuration;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class PDFMSCommand extends AbstractCommand {
 
@@ -22,7 +25,7 @@ public class PDFMSCommand extends AbstractCommand {
 
 
             logger.info("** Begin of pdf settings");
-            String json = getJson(ConversionSettings.VersionEnum._1_7);
+            String json = getJson(ConversionSettings.VersionEnum._1_7, ResultSettings.FileFormatEnum.PDF);
             logger.info("Content : " + json);
             logger.info("** end of pdf settings");
             logger.info("Copy/paste json text after 'Content :' to a file");
@@ -34,14 +37,41 @@ public class PDFMSCommand extends AbstractCommand {
 
 
     @Override
-    public void generateAll() throws JsonProcessingException {
+    public void generateAll(String apiKey) throws IOException {
         Path tempPath = getTempPath();
 
-        for (ConversionSettings.VersionEnum versionEnum : ConversionSettings.VersionEnum.values()) {
-            String pdfSettingsJson = getJson(versionEnum);
+        Path settingsPath = Paths.get(tempPath.toString(), "settings");
 
+        StringBuffer sb = new StringBuffer();
+
+
+        for (ConversionSettings.VersionEnum versionEnum : ConversionSettings.VersionEnum.values()) {
+            String pdfSettingsJson = getJson(versionEnum, ResultSettings.FileFormatEnum.PDF);
+            String prefix = versionEnum.toString().toLowerCase();
+            sb = createOutput(apiKey, settingsPath, sb, prefix, pdfSettingsJson, "pdf");
         }
 
+        String pdfSettingsJson = getJson(null, ResultSettings.FileFormatEnum.DOCX);
+        sb = createOutput(apiKey, settingsPath, sb, "docx", pdfSettingsJson, "docx");
+
+        Path commandFilePath = Paths.get(tempPath.toString(), "ExecuteConfigs.cmd");
+        logger.info(String.format("Create command file %s", commandFilePath.toString()));
+        FileUtils.writeStringToFile(commandFilePath.toFile(), sb.toString(), Charset.defaultCharset());
+    }
+
+    private StringBuffer createOutput(String apiKey, Path settingsPath, StringBuffer sb, String prefix, String pdfSettingsJson, String subDirectory) throws IOException {
+        ;
+        Path pdfSetting = Paths.get(settingsPath.toString(), "pdfSetting" + prefix + ".json");
+        logger.info(String.format("Create pdf setting file %s", pdfSetting.toString()));
+        FileUtils.writeStringToFile(pdfSetting.toFile(), pdfSettingsJson, Charset.defaultCharset());
+
+        String globalJson = getGlobalJson(subDirectory, prefix, apiKey);
+        Path globalSetting = Paths.get(settingsPath.toString(), "globalSetting" + prefix + ".json");
+        logger.info(String.format("Create global setting file %s", globalSetting.toString()));
+        FileUtils.writeStringToFile(globalSetting.toFile(), globalJson, Charset.defaultCharset());
+
+        sb.append(String.format("call FileProcessor.cmd --configuration settings/%s --pdf --pdf-settings settings/%s --job-timeout 1000\n", globalSetting.getFileName().toString(), pdfSetting.getFileName().toString()));
+        return sb;
     }
 
     @Override
@@ -50,22 +80,23 @@ public class PDFMSCommand extends AbstractCommand {
 
         ConversionSettings pdfConfiguration = getPDFConfiguration(pdfSettingsFile);
 
+        logger.info(String.format("Using global configuration %s and pdf configuration %s", configurationFile.getName(), pdfSettingsFile.getName()));
         while (hasFile()) {
             File inputfile = nextFile();
-            byte[] content = convertToPDF(configuration, pdfConfiguration, inputfile, timeout);
+            Result result = convertToPDF(configuration, pdfConfiguration, inputfile, timeout);
             String extension = "pdf";
-            ResultSettings result = pdfConfiguration.getResult();
-            if (result != null && result.getFileFormat() != null) {
-                extension = result.getFileFormat().toString().toLowerCase();
+            ResultSettings resultSettings = pdfConfiguration.getResult();
+            if (resultSettings != null && resultSettings.getFileFormat() != null) {
+                extension = resultSettings.getFileFormat().toString().toLowerCase();
             }
 
             String outputFileName = FilenameUtils.getBaseName(inputfile.getAbsolutePath()) + "." + extension;
-            writeToOutputDirectory(outputFileName, content);
+            writeToOutputDirectory(outputFileName, result);
         }
     }
 
 
-    private byte[] convertToPDF(Configuration configuration, ConversionSettings pdfConfiguration, File inputfile, int timeout) throws ApiException, IOException, InterruptedException {
+    private Result convertToPDF(Configuration configuration, ConversionSettings pdfConfiguration, File inputfile, int timeout) throws ApiException, IOException, InterruptedException {
         logger.info("Create job");
         Conversion2PDFApi conversion2PDFApi = new Conversion2PDFApi();
         conversion2PDFApi.getApiClient().setAccessToken(configuration.getApiKey());
@@ -100,8 +131,18 @@ public class PDFMSCommand extends AbstractCommand {
 
         logger.info(String.format("Job submitted with id %s is %s", jobId, conversionJobResponse.getStatus()));
 
-        logger.info(String.format("Get result of job with id %s", jobId));
-        byte[] stream = conversion2PDFApi.getStream(jobId);
+        Result result = new Result();
+        result.setStatus(conversionJobResponse.getStatus());
+        result.setMessage(conversionJobResponse.getStatusMessage());
+
+        if (ConversionJobResponse.StatusEnum.DONE.equals(result.getStatus())) {
+            logger.info(String.format("Get result of job with id %s", jobId));
+            byte[] stream = conversion2PDFApi.getStream(jobId);
+
+            result.setStream(stream);
+        } else {
+            logger.error("Error occurred : " + result.getStatusMessage());
+        }
 
         logger.info(String.format("Delete job with id %s", jobId));
         try {
@@ -112,7 +153,7 @@ public class PDFMSCommand extends AbstractCommand {
             // do nothing
         }
 
-        return stream;
+        return result;
     }
 
     private boolean done(ConversionJobResponse conversionJobResponse) {
@@ -123,7 +164,7 @@ public class PDFMSCommand extends AbstractCommand {
         return getObjectMapper().readValue(pdfSettingsFile, ConversionSettings.class);
     }
 
-    private String getJson(ConversionSettings.VersionEnum version) throws JsonProcessingException {
+    private String getJson(ConversionSettings.VersionEnum version, ResultSettings.FileFormatEnum fileFormat) throws JsonProcessingException {
         ConversionSettings conversionSettings = new ConversionSettings();
         conversionSettings.setContainerConversion(ConversionSettings.ContainerConversionEnum.ALL);
         conversionSettings.setEngine(ConversionSettings.EngineEnum.PREMIUM);
@@ -138,7 +179,7 @@ public class PDFMSCommand extends AbstractCommand {
         compression.setLevel(100);
         compression.setType(Compression.TypeEnum.ADVANCED);
         resultSettings.setCompression(compression);
-        resultSettings.setFileFormat(ResultSettings.FileFormatEnum.PDF);
+        resultSettings.setFileFormat(fileFormat);
         conversionSettings.setResult(resultSettings);
         return getObjectMapper().writeValueAsString(conversionSettings);
     }

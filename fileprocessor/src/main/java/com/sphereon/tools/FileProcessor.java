@@ -23,6 +23,7 @@ public class FileProcessor {
                 acceptsAll(asList("job-timeout"), "Number of seconds to wait for job completion").withRequiredArg().ofType(Integer.class);
                 acceptsAll(asList("c", "conf", "configuration"), "Location of the global configuration").withRequiredArg().ofType(File.class).describedAs("File path to global configuration file");
                 acceptsAll(asList("clear-input-folder"), "Clear input folder afterwards");
+                acceptsAll(asList("generate-all-settings"), "Generate a bunch of different settings").withRequiredArg().ofType(String.class).describedAs("Api-key");
                 acceptsAll(asList("generate-pdf-settings"), "Generate pdf settings");
                 acceptsAll(asList("pdf"), "Perform pdf conversion");
                 acceptsAll(asList("pdf-settings"), "PDF Settings").requiredIf("pdf").withRequiredArg().ofType(File.class);
@@ -42,6 +43,12 @@ public class FileProcessor {
         if (options.has("generate-pdf-settings")) {
             PDFMSCommand PDFMSCommand = new PDFMSCommand();
             PDFMSCommand.generate();
+        }
+
+        if (options.has("generate-all-settings")) {
+            String apiKey = (String) options.valueOf("generate-all-settings");
+            PDFMSCommand PDFMSCommand = new PDFMSCommand();
+            PDFMSCommand.generateAll(apiKey);
         }
 
         int timeout = 90;

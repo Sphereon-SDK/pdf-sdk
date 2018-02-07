@@ -10,19 +10,13 @@
 
 using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Reflection;
-using RestSharp;
+using System.Threading;
 using NUnit.Framework;
-
 using Sphereon.SDK.Pdf.Client;
 using Sphereon.SDK.Pdf.Api;
 using Sphereon.SDK.Pdf.Model;
 
-namespace Sphereon.SDK.Pdf.Test
-{
+namespace Sphereon.SDK.Pdf.Test {
     /// <summary>
     ///  Class for testing Conversion2PDFApi
     /// </summary>
@@ -31,16 +25,19 @@ namespace Sphereon.SDK.Pdf.Test
     /// Please update the test case below to test the API endpoint.
     /// </remarks>
     [TestFixture]
-    public class Conversion2PDFApiTests
-    {
+    public class Conversion2PDFApiTests {
+        private static readonly string TestImage = TestContext.CurrentContext.TestDirectory + @"..\TestData\EH.tif";
+        private static readonly string ResultFile = TestContext.CurrentContext.TestDirectory + @"..\EH.pdf";
+
         private Conversion2PDFApi instance;
+        private ConversionJob _job;
 
         /// <summary>
         /// Setup before each unit test
         /// </summary>
         [SetUp]
-        public void Init()
-        {
+        public void Init() {
+            Configuration.Default.AccessToken = "6534f740-a99a-3bde-9046-287de103baf9";
             instance = new Conversion2PDFApi();
         }
 
@@ -48,122 +45,104 @@ namespace Sphereon.SDK.Pdf.Test
         /// Clean up after each unit test
         /// </summary>
         [TearDown]
-        public void Cleanup()
-        {
-
-        }
+        public void Cleanup() { }
 
         /// <summary>
         /// Test an instance of Conversion2PDFApi
         /// </summary>
         [Test]
-        public void InstanceTest()
-        {
+        public void InstanceTest() {
             // TODO uncomment below to test 'IsInstanceOfType' Conversion2PDFApi
             //Assert.IsInstanceOfType(typeof(Conversion2PDFApi), instance, "instance is a Conversion2PDFApi");
         }
 
-        
-        /// <summary>
-        /// Test AddInputFile
-        /// </summary>
-        [Test]
-        public void AddInputFileTest()
-        {
-            // TODO uncomment below to test the method and replace null with proper value
-            //string jobid = null;
-            //System.IO.Stream stream = null;
-            //string fileName = null;
-            //var response = instance.AddInputFile(jobid, stream, fileName);
-            //Assert.IsInstanceOf<ConversionJobResponse> (response, "response is ConversionJobResponse");
-        }
-        
-        /// <summary>
-        /// Test AddInputStreamLocations
-        /// </summary>
-        [Test]
-        public void AddInputStreamLocationsTest()
-        {
-            // TODO uncomment below to test the method and replace null with proper value
-            //string jobid = null;
-            //List<StreamLocation> inputStreamLocations = null;
-            //var response = instance.AddInputStreamLocations(jobid, inputStreamLocations);
-            //Assert.IsInstanceOf<ConversionJobResponse> (response, "response is ConversionJobResponse");
-        }
-        
         /// <summary>
         /// Test CreateJob
         /// </summary>
         [Test]
-        public void CreateJobTest()
-        {
-            // TODO uncomment below to test the method and replace null with proper value
-            //ConversionSettings settings = null;
-            //var response = instance.CreateJob(settings);
-            //Assert.IsInstanceOf<ConversionJobResponse> (response, "response is ConversionJobResponse");
+        public void TestController() {
+            CreateJob();
+            AddInputFile();
+            SubmitJob();
+            GetStream();
         }
-        
+
+        public void CreateJob() {
+            var settings = new ConversionSettings(
+                Engine: ConversionSettings.EngineEnum.PREMIUM,
+                OcrMode: ConversionSettings.OcrModeEnum.AUTO,
+                QualityFactor: 255,
+                JobLifecycle: new Lifecycle(
+                    Action: Lifecycle.ActionEnum.DELETE,
+                    Type: Lifecycle.TypeEnum.RETRIEVAL
+                ),
+                Result: new ResultSettings(
+                    FileFormat: ResultSettings.FileFormatEnum.PDF,
+                    Compression: new Compression {
+                        Type = Compression.TypeEnum.NONE,
+                    },
+                    Lifecycle: new Lifecycle {
+                        Type = Lifecycle.TypeEnum.RETRIEVAL,
+                        Action = Lifecycle.ActionEnum.DELETE
+                    }
+                ),
+                Version: ConversionSettings.VersionEnum.A1b
+            );
+            var jobResponse = instance.CreateJob(settings);
+            Assert.IsInstanceOf<ConversionJobResponse>(jobResponse, "response is ConversionJobResponse");
+            if (jobResponse.Status != ConversionJobResponse.StatusEnum.INIT) {
+                throw new Exception($"Creation of new conversion job on the pdf-conversion-ms failed: {jobResponse.StatusMessage}");
+            }
+            _job = jobResponse.Job;
+        }
+
         /// <summary>
-        /// Test DeleteJob
+        /// Test AddInputFile
         /// </summary>
-        [Test]
-        public void DeleteJobTest()
-        {
-            // TODO uncomment below to test the method and replace null with proper value
-            //string jobid = null;
-            //var response = instance.DeleteJob(jobid);
+        public void AddInputFile() {
+            using (var fileStream = File.OpenRead(TestImage)) {
+                var uploadResponse = instance.AddInputFile(_job.JobId, fileStream);
+                if (uploadResponse.Status != ConversionJobResponse.StatusEnum.INPUTSUPLOADED) {
+                    throw new Exception($"Upload of file {TestImage} to pdf-conversion-ms failed: {uploadResponse.StatusMessage}");
+                }
+            }
+
             //Assert.IsInstanceOf<ConversionJobResponse> (response, "response is ConversionJobResponse");
         }
-        
-        /// <summary>
-        /// Test GetJob
-        /// </summary>
-        [Test]
-        public void GetJobTest()
-        {
-            // TODO uncomment below to test the method and replace null with proper value
-            //string jobid = null;
-            //var response = instance.GetJob(jobid);
-            //Assert.IsInstanceOf<ConversionJobResponse> (response, "response is ConversionJobResponse");
+
+
+        public void SubmitJob() {
+            var submitResponse = instance.SubmitJob(_job.JobId, _job);
+            if (submitResponse.Status != ConversionJobResponse.StatusEnum.PROCESSING) {
+                throw new Exception($"Submission of job {_job.JobId} to pdf-conversion-ms failed: {submitResponse.StatusMessage}");
+            }
+            Assert.IsInstanceOf<ConversionJobResponse>(submitResponse, "response is ConversionJobResponse");
         }
-        
-        /// <summary>
-        /// Test GetJobs
-        /// </summary>
-        [Test]
-        public void GetJobsTest()
-        {
-            // TODO uncomment below to test the method and replace null with proper value
-            //List<string> status = null;
-            //var response = instance.GetJobs(status);
-            //Assert.IsInstanceOf<ConversionJobResponse> (response, "response is ConversionJobResponse");
-        }
-        
+
+
         /// <summary>
         /// Test GetStream
         /// </summary>
-        [Test]
-        public void GetStreamTest()
-        {
-            // TODO uncomment below to test the method and replace null with proper value
-            //string jobid = null;
-            //var response = instance.GetStream(jobid);
-            //Assert.IsInstanceOf<byte[]> (response, "response is byte[]");
+        public void GetStream() {
+            WaitForJob();
+            using (var stream = new FileInfo(ResultFile).OpenWrite()) {
+                var data = instance.GetStream(_job.JobId);
+                Assert.IsInstanceOf<byte[]>(data, "response is byte[]");
+                stream.Write(data, 0, data.Length);
+            }
         }
-        
-        /// <summary>
-        /// Test SubmitJob
-        /// </summary>
-        [Test]
-        public void SubmitJobTest()
-        {
-            // TODO uncomment below to test the method and replace null with proper value
-            //string jobid = null;
-            //ConversionJob job = null;
-            //var response = instance.SubmitJob(jobid, job);
-            //Assert.IsInstanceOf<ConversionJobResponse> (response, "response is ConversionJobResponse");
-        }
-        
-    }
 
+
+        private void WaitForJob() {
+            ConversionJobResponse response = null;
+            int count = 0;
+            do {
+                Thread.Sleep(500);
+                count++;
+                response = instance.GetJob(_job.JobId);
+            } while (count < 100
+                     && response.Status != ConversionJobResponse.StatusEnum.DONE
+                     && response.Status != ConversionJobResponse.StatusEnum.ERROR);
+        }
+    }
 }

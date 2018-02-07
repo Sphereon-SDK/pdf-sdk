@@ -28,10 +28,10 @@ namespace Convert2PDFLib
         }
 
         [Parameter(Position = 4, Mandatory = false)]
-        public bool Ocr {
+        public string OcrMode {
             set
             {
-                _convert2Pdf.SetOcr(value);
+                _convert2Pdf.SetOcrMode(value);
             }
         }
 

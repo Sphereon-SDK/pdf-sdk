@@ -19,19 +19,21 @@ namespace Convert2PDFLib
         
         private const string BasePath = "https://gw.api.cloud.sphereon.com";
 
-        private readonly ConversionPDFApi _api;
+        private readonly Conversion2PDFApi _api;
 
-        private ConversionSettings settings;
+        private readonly ConversionSettings _settings;
 
 
         public Convert2Pdf()
         {
-            _api = new ConversionPDFApi();
-            settings = new ConversionSettings
+            _api = new Conversion2PDFApi();
+            _settings = new ConversionSettings
             {
-                Ocr = true,
+                OcrMode = ConversionSettings.OcrModeEnum.AUTO,
                 Engine = ConversionSettings.EngineEnum.BASIC,
-                Lifecycle = new Lifecycle(null, null, Lifecycle.TypeEnum.TIME)
+                Result = new ResultSettings(FileFormat: ResultSettings.FileFormatEnum.PDF,
+                Compression: new Compression(1, Compression.TypeEnum.NONE)),
+                QualityFactor = 255
             };
         }
 
@@ -44,33 +46,38 @@ namespace Convert2PDFLib
         [ComVisible(true)]
         public void SetQualityFactor(int value)
         {
-            settings.QualityFactor = value;
+            _settings.QualityFactor = value;
         }
 
+        private void InitCompression() {
+            if (_settings.Result.Compression == null)
+                _settings.Result.Compression = new Compression();
+        }
 
+        
         [ComVisible(true)]
         public void SetCompressionType(string value)
         {
             Compression.TypeEnum compressionType;
             Enum.TryParse(value, out compressionType);
-            if(settings.Compression == null)
-                settings.Compression = new Compression();
-            settings.Compression.Type = compressionType;
+            InitCompression();
+            _settings.Result.Compression.Type = compressionType;
 
         }
 
         [ComVisible(true)]
         public void SetCompressionLevel(int value)
         {
-            if (settings.Compression == null)
-                settings.Compression = new Compression();
-            settings.Compression.Level = value;
+            InitCompression();
+            _settings.Result.Compression.Level = value;
         }
 
         [ComVisible(true)]
-        public void SetOcr(bool value)
+        public void SetOcrMode(string value)
         {
-            settings.Ocr = value;            
+            ConversionSettings.OcrModeEnum ocrModeEnum;
+            Enum.TryParse(value, out ocrModeEnum);
+            _settings.OcrMode = ocrModeEnum;            
         }
 
 
@@ -79,32 +86,41 @@ namespace Convert2PDFLib
         {
             ConversionSettings.EngineEnum engine;
             Enum.TryParse(value, out engine);
-            settings.Engine = engine;
+            _settings.Engine = engine;
         }
 
 
         [ComVisible(true)]
         public void Convert(string inFile, string outFile)
         {
-            var jobResponse = Upload(inFile);
+            var jobResponse = CreateJob();
+            jobResponse = Upload(inFile, jobResponse.JobId);
             string jobId = jobResponse.JobId;
             var pdfJob = jobResponse.Job;
-            pdfJob.Settings = settings;    
+            pdfJob.Settings = _settings;    
             jobResponse = _api.SubmitJob(jobId, pdfJob);
             CheckStatus(jobResponse);
             WaitProcessing(jobId);
             WritePdf(outFile, jobId); 
         }
 
+        private ConversionJobResponse CreateJob() {
+            var conversionJobResponse = _api.CreateJob(_settings);
+            if (conversionJobResponse.Status == ConversionJobResponse.StatusEnum.ERROR) {
+                throw new Exception("CreateJob failed: " + conversionJobResponse.StatusMessage);
+            }
+            return conversionJobResponse;
+        }
+
         public Configuration Configuration => _api.Configuration;
 
-        private PDFJobResponse Upload(string inFile)
+        private ConversionJobResponse Upload(string inFile, string jobId)
         {
-            PDFJobResponse response;
+            ConversionJobResponse response;
             using (var fileStream = File.OpenRead(inFile))
             {
-                response = _api.UploadFile(fileStream);
-                if (response.Status == null || response.Status.Value != PDFJobResponse.StatusEnum.INPUTSUPLOADED)
+                response = _api.AddInputFile(jobId, fileStream);
+                if (response.Status == null || response.Status.Value != ConversionJobResponse.StatusEnum.INPUTSUPLOADED)
                     throw new Exception(response.StatusMessage);
             }
             return response;
@@ -117,7 +133,7 @@ namespace Convert2PDFLib
             {
                 var response = _api.GetJob(jobId);
                 CheckStatus(response);
-                if (response.Status != PDFJobResponse.StatusEnum.PROCESSING)
+                if (response.Status != ConversionJobResponse.StatusEnum.PROCESSING)
                     break;
                 Thread.Sleep(2000);
             }
@@ -134,14 +150,13 @@ namespace Convert2PDFLib
 
 
 
-        private static void CheckStatus(PDFJobResponse response)
+        private static void CheckStatus(ConversionJobResponse response)
         {
             if (response.Status != null &&
-                (response.Status.Value == PDFJobResponse.StatusEnum.ERROR || response.Status.Value == PDFJobResponse.StatusEnum.DELETED))
+                (response.Status.Value == ConversionJobResponse.StatusEnum.ERROR || response.Status.Value == ConversionJobResponse.StatusEnum.DELETED))
             {
                 throw new Exception($"convert2pdf conversion job {response.JobId} returned an invalid status code {response.Status} with message {response.StatusMessage}");
             }
         }
-
     }
 }

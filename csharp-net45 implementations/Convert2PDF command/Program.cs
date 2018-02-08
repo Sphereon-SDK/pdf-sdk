@@ -24,8 +24,8 @@ namespace Convert2PDF_command
         public int QualityFactor { get; set; }
 
 
-        [Option('o', "ocr", DefaultValue = true, HelpText = "Whether to perform OCR. When set to false the text in the PDF will not be searchable.")]
-        public bool Ocr { get; set; }
+        [Option('o', "ocr", DefaultValue = true, HelpText = "Whether to perform OCR. When set to false the text in the PDF will not be searchable. Possible values: ALWAYS,NEVER,AUTO")]
+        public string OcrMode { get; set; }
 
         [Option('e', "engine", Required = false, DefaultValue = "BASIC", HelpText = "Specify OCR engine BASIC|ADVANCED|PREMIUM")]
         public string Engine { get; set; }
@@ -58,7 +58,7 @@ namespace Convert2PDF_command
                 var convert2Pdf = new Convert2Pdf();
                 convert2Pdf.SetAccessToken(options.AccessToken);
                 convert2Pdf.SetQualityFactor(options.QualityFactor);
-                convert2Pdf.SetOcr(options.Ocr);
+                convert2Pdf.SetOcrMode(options.OcrMode);
                 convert2Pdf.SetEngine(options.Engine);
                 convert2Pdf.SetCompressionType(options.CompressionType);
                 convert2Pdf.SetCompressionLevel(options.CompressionLevel);

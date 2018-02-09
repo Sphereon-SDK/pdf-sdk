@@ -342,7 +342,7 @@ Name | Type | Description  | Notes
 
 <a name="getjobs"></a>
 # **GetJobs**
-> ConversionJobResponse GetJobs (List<string> status = null)
+> List<ConversionJobResponse> GetJobs (List<string> status = null)
 
 Get all jobs
 
@@ -371,7 +371,7 @@ namespace Example
             try
             {
                 // Get all jobs
-                ConversionJobResponse result = apiInstance.GetJobs(status);
+                List&lt;ConversionJobResponse&gt; result = apiInstance.GetJobs(status);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -391,7 +391,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ConversionJobResponse**](ConversionJobResponse.md)
+[**List<ConversionJobResponse>**](ConversionJobResponse.md)
 
 ### Authorization
 

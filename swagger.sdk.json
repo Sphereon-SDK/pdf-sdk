@@ -71,7 +71,10 @@
         "description": "Get all PDF job definitions and their current state.",
         "operationId": "getJobs",
         "responses": {"200": {
-          "schema": {"$ref": "#/definitions/ConversionJobResponse"},
+          "schema": {
+            "type": "array",
+            "items": {"$ref": "#/definitions/ConversionJobResponse"}
+          },
           "description": "All PDF jobs that have not been deleted"
         }},
         "parameters": [{

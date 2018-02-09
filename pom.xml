@@ -15,8 +15,8 @@
         <sdk-package-javascript>SphereonSDKPdf</sdk-package-javascript>
         <sdk-package-version>1.1.0</sdk-package-version>
 
-        <swagger-codegen-maven-plugin.version>2.2.3</swagger-codegen-maven-plugin.version>
-        <swagger-codegen-maven-plugin-javascript.version>2.3.1</swagger-codegen-maven-plugin-javascript.version>
+        <swagger-codegen-maven-plugin-java.version>2.2.3</swagger-codegen-maven-plugin-java.version>
+        <swagger-codegen-maven-plugin-nonjava.version>2.3.1</swagger-codegen-maven-plugin-nonjava.version>
         <swagger-codegen-verbose>false</swagger-codegen-verbose>
 
         <swagger-annotations-version>1.5.9</swagger-annotations-version>
@@ -109,7 +109,7 @@
                     <plugin>
                         <groupId>io.swagger</groupId>
                         <artifactId>swagger-codegen-maven-plugin</artifactId>
-                        <version>${swagger-codegen-maven-plugin.version}</version>
+                        <version>${swagger-codegen-maven-plugin-java.version}</version>
                         <executions>
                             <execution>
                                 <goals>
@@ -145,7 +145,7 @@
                     <plugin>
                         <groupId>io.swagger</groupId>
                         <artifactId>swagger-codegen-maven-plugin</artifactId>
-                        <version>${swagger-codegen-maven-plugin.version}</version>
+                        <version>${swagger-codegen-maven-plugin-java.version}</version>
                         <executions>
                             <execution>
                                 <goals>
@@ -260,7 +260,7 @@
                     <plugin>
                         <groupId>io.swagger</groupId>
                         <artifactId>swagger-codegen-maven-plugin</artifactId>
-                        <version>${swagger-codegen-maven-plugin-javascript.version}</version>
+                        <version>${swagger-codegen-maven-plugin-nonjava.version}</version>
                         <executions>
                             <execution>
                                 <goals>
@@ -298,7 +298,7 @@
                     <plugin>
                         <groupId>io.swagger</groupId>
                         <artifactId>swagger-codegen-maven-plugin</artifactId>
-                        <version>${swagger-codegen-maven-plugin.version}</version>
+                        <version>${swagger-codegen-maven-plugin-java.version}</version>
 
                         <executions>
 
@@ -314,9 +314,9 @@
                                     </templateDirectory>
                                     <configOptions>
                                         <packageCompany>${company-name}</packageCompany>
-                                        <apiPackage>${sdk-package-csharp}.Api</apiPackage>
+                                        <!--<apiPackage>${sdk-package-csharp}.Api</apiPackage>
                                         <modelPackage>${sdk-package-csharp}.Model</modelPackage>
-                                        <invokerPackage>${sdk-package-csharp}.Handler</invokerPackage>
+                                        <invokerPackage>${sdk-package-csharp}.Handler</invokerPackage>-->
                                         <packageName>${sdk-package-csharp}</packageName>
                                         <packageVersion>${sdk-package-version}</packageVersion>
                                     </configOptions>
@@ -327,6 +327,7 @@
                                     <artifactId>pdf-sdk-csharp-net45</artifactId>
                                     <artifactVersion>${project.version}</artifactVersion>
                                     <addCompileSourceRoot>true</addCompileSourceRoot>
+
                                     <apiPackage>Api</apiPackage>
                                     <modelPackage>Model</modelPackage>
                                     <invokerPackage>Handler</invokerPackage>
@@ -345,7 +346,7 @@
                     <plugin>
                         <groupId>io.swagger</groupId>
                         <artifactId>swagger-codegen-maven-plugin</artifactId>
-                        <version>${swagger-codegen-maven-plugin.version}</version>
+                        <version>${swagger-codegen-maven-plugin-java.version}</version>
                         <executions>
                             <execution>
                                 <goals>

@@ -310,6 +310,7 @@
       "type": "object",
       "properties": {"streamLocations": {
         "description": "Result Stream Locations",
+        "readOnly": true,
         "type": "array",
         "items": {"$ref": "#/definitions/StreamLocation"}
       }}
@@ -392,7 +393,6 @@
     "ResultSettings": {
       "description": "Result settings",
       "type": "object",
-      "required": ["fileFormat"],
       "properties": {
         "lifecycle": {"$ref": "#/definitions/Lifecycle"},
         "storageLocation": {
@@ -573,7 +573,7 @@
           ]
         },
         "version": {
-          "description": "The PDF version to use for conversion. Default value : PDF1_7",
+          "description": "The PDF version to use for conversion. Default value : PDF_1_7",
           "type": "string",
           "enum": [
             "PDF_1_4",
@@ -674,14 +674,19 @@
     "ConversionJob": {
       "description": "The PDF conversion job. Has access to the job settings.",
       "type": "object",
-      "required": ["jobId"],
+      "required": [
+        "jobId",
+        "settings"
+      ],
       "properties": {
         "jobId": {
           "description": "The server generated job jobId. This jobId is checked against the jobId in the request path on overy invocation",
+          "readOnly": true,
           "type": "string"
         },
         "settings": {
           "description": "The settings to use during the conversion job",
+          "readOnly": true,
           "$ref": "#/definitions/ConversionSettings"
         }
       }

@@ -327,7 +327,7 @@
           "minimum": 0
         },
         "type": {
-          "description": "Compression type. ADVANCED is only allowed and should be used with the ADVANCED engine",
+          "description": "Compression type. ADVANCED is only allowed in combination with the ADVANCED engine!",
           "type": "string",
           "enum": [
             "NONE",

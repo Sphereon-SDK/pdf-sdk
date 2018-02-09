@@ -13,6 +13,7 @@
         <sdk-package>com.sphereon.sdk.pdf</sdk-package>
         <sdk-package-csharp>Sphereon.SDK.Pdf</sdk-package-csharp>
         <sdk-package-javascript>SphereonSDKPdf</sdk-package-javascript>
+        <sdk-package-powershell>SphereonSDKPdf</sdk-package-powershell>
         <sdk-package-version>1.1.0</sdk-package-version>
 
         <swagger-codegen-maven-plugin-java.version>2.2.3</swagger-codegen-maven-plugin-java.version>
@@ -314,9 +315,9 @@
                                     </templateDirectory>
                                     <configOptions>
                                         <packageCompany>${company-name}</packageCompany>
-                                        <!--<apiPackage>${sdk-package-csharp}.Api</apiPackage>
+                                        <apiPackage>${sdk-package-csharp}.Api</apiPackage>
                                         <modelPackage>${sdk-package-csharp}.Model</modelPackage>
-                                        <invokerPackage>${sdk-package-csharp}.Handler</invokerPackage>-->
+                                        <invokerPackage>${sdk-package-csharp}.Handler</invokerPackage>
                                         <packageName>${sdk-package-csharp}</packageName>
                                         <packageVersion>${sdk-package-version}</packageVersion>
                                     </configOptions>
@@ -327,10 +328,67 @@
                                     <artifactId>pdf-sdk-csharp-net45</artifactId>
                                     <artifactVersion>${project.version}</artifactVersion>
                                     <addCompileSourceRoot>true</addCompileSourceRoot>
-
                                     <apiPackage>Api</apiPackage>
                                     <modelPackage>Model</modelPackage>
                                     <invokerPackage>Handler</invokerPackage>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>powershell</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.swagger</groupId>
+                        <artifactId>swagger-codegen-maven-plugin</artifactId>
+                        <version>${swagger-codegen-maven-plugin-nonjava.version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                                <configuration>
+                                    <inputSpec>swagger.sdk.json</inputSpec>
+                                    <language>powershell</language>
+                                    <configOptions>
+
+                                        <packageName>${sdk-package-csharp}</packageName>
+
+                                        <packageVersion>${sdk-package-version}</packageVersion>
+                                        <packageGuid>{5CEA4A63-8E0C-42F6-9ABF-AA84601B3FE6}</packageGuid>
+
+                                        <companyName>${company-name}</companyName>
+                                        <author>${company-name}</author>
+                                        <csharpClientPath>..\\csharp-net45</csharpClientPath>
+
+                                    </configOptions>
+                                    <templateDirectory>
+                                        ${basedir}/src/main/mustacheTemplates/powershell
+                                    </templateDirectory>
+                                    <!--<configOptions>
+                                        <dateLibrary>java8</dateLibrary>
+                                    </configOptions>-->
+                                    <!--<library>okhttp-gson</library>-->
+                                    <verbose>${swagger-codegen-verbose}</verbose>
+                                    <output>${project.basedir}/powershell</output>
+                                    <groupId>com.sphereon.sdk</groupId>
+                                    <artifactId>pdf-sdk-powershell</artifactId>
+                                    <artifactVersion>${project.version}</artifactVersion>
+                                    <!--<addCompileSourceRoot>true</addCompileSourceRoot>-->
+<!--                                    <apiPackage>${sdk-package-powershell}.Api</apiPackage>
+                                    <modelPackage>${sdk-package-powershell}.Model</modelPackage>-->
+                                    <!--<invokerPackage>Handler</invokerPackage>-->
+                                    <!--<sourceFolder>${sdk-package-powershell}</sourceFolder>-->
+                                    <!--<packageName>${sdk-package-csharp}</packageName>-->
+                                    <apiPackage>${sdk-package-csharp}/Api</apiPackage>
+                                    <modelPackage>${sdk-package-csharp}/Model</modelPackage>
+                                    <!--<packageVersion>${sdk-package-version}</packageVersion>-->
+
                                 </configuration>
                             </execution>
                         </executions>

@@ -1,4 +1,4 @@
-function New-ResultSettings
+function New-PDFResultSettings
 {
     [CmdletBinding()]
     Param (

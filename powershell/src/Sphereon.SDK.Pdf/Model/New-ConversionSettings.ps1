@@ -1,33 +1,33 @@
-function New-ConversionSettings
+function New-PDFConversionSettings
 {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = 0, Mandatory = $false, ValueFromPipelineByPropertyName = $true, ValueFromPipeline = $true)]
+        [Parameter(Position = 0, Mandatory = $false)]
         [Int32] ${qualityFactor},
-        
-        [Parameter(Position = 1, Mandatory = $false, ValueFromPipelineByPropertyName = $true, ValueFromPipeline = $true)]
-        [Sphereon.SDK.Pdf.Model.ResultSettings] ${result},
-        
-        [Parameter(Position = 2, Mandatory = $false, ValueFromPipelineByPropertyName = $true, ValueFromPipeline = $true)]
-        [Sphereon.SDK.Pdf.Model.InputSettings] ${input},
+
+        [Parameter(Position = 1, Mandatory = $false)]
+        [Sphereon.SDK.Pdf.Model.ResultSettings] ${resultSettings},
+
+        [Parameter(Position = 2, Mandatory = $false)]
+        [Sphereon.SDK.Pdf.Model.InputSettings] ${inputSettings},
 
         [Parameter(Position = 3, Mandatory = $false, ValueFromPipelineByPropertyName = $true, ValueFromPipeline = $true)]
-        [String] ${engine},
+        [String] ${engine} = "ADVANCED",
 
         [Parameter(Position = 4, Mandatory = $false, ValueFromPipelineByPropertyName = $true, ValueFromPipeline = $true)]
         [Sphereon.SDK.Pdf.Model.CSVSettings] ${csv},
 
-        [Parameter(Position = 5, Mandatory=$false, ValueFromPipelineByPropertyName = $true, ValueFromPipeline = $true)]
-        [String] ${containerConversion},
+        [Parameter(Position = 5, Mandatory = $false, ValueFromPipelineByPropertyName = $true, ValueFromPipeline = $true)]
+        [String] ${containerConversion} = "ALL",
 
-        [Parameter(Position = 6, Mandatory=$false, ValueFromPipelineByPropertyName = $true, ValueFromPipeline = $true)]
-        [String] ${version} = "_1_7",
+        [Parameter(Position = 6, Mandatory = $false, ValueFromPipelineByPropertyName = $true, ValueFromPipeline = $true)]
+        [String] ${version} = "_17",
 
-        [Parameter(Position = 7, Mandatory=$false, ValueFromPipelineByPropertyName = $true, ValueFromPipeline = $true)]
+        [Parameter(Position = 7, Mandatory = $false, ValueFromPipelineByPropertyName = $true, ValueFromPipeline = $true)]
         [Sphereon.SDK.Pdf.Model.Lifecycle] ${jobLifecycle},
 
-        [Parameter(Position = 8, Mandatory=$false, ValueFromPipelineByPropertyName = $true, ValueFromPipeline = $true)]
-        [String] ${ocrMode}
+        [Parameter(Position = 8, Mandatory = $false, ValueFromPipelineByPropertyName = $true, ValueFromPipeline = $true)]
+        [String] ${ocrMode} = "AUTO"
     )
 
     Process {
@@ -36,8 +36,8 @@ function New-ConversionSettings
 
         New-Object -TypeName Sphereon.SDK.Pdf.Model.ConversionSettings -ArgumentList @(
         ${qualityFactor},
-        ${result},
-        ${input},
+        ${resultSettings},
+        ${inputSettings},
         ${engine},
         ${csv},
         ${containerConversion},

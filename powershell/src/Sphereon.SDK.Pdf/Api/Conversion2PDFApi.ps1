@@ -1,11 +1,11 @@
-function Invoke-Conversion2PDFApiAddInputFile {
+function Submit-PDFAddInputFile {
     [CmdletBinding()]
     Param (
         [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
         [String]
         ${jobid},
         [Parameter(Position = 1, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
-        [String]
+        [System.IO.Stream]
         ${stream},
         [Parameter(Position = 2, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
         [String]
@@ -24,7 +24,7 @@ function Invoke-Conversion2PDFApiAddInputFile {
     }
 }
 
-function Invoke-Conversion2PDFApiAddInputStreamLocations {
+function Submit-PDFAddInputStreamLocations {
     [CmdletBinding()]
     Param (
         [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
@@ -46,10 +46,10 @@ function Invoke-Conversion2PDFApiAddInputStreamLocations {
     }
 }
 
-function Invoke-Conversion2PDFApiCreateJob {
+function Submit-PDFCreateJob {
     [CmdletBinding()]
     Param (
-        [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
+        [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
         [Sphereon.SDK.Pdf.Model.ConversionSettings]
         ${settings}
     )
@@ -64,7 +64,7 @@ function Invoke-Conversion2PDFApiCreateJob {
     }
 }
 
-function Invoke-Conversion2PDFApiDeleteJob {
+function Submit-PDFDeleteJob {
     [CmdletBinding()]
     Param (
         [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
@@ -82,7 +82,7 @@ function Invoke-Conversion2PDFApiDeleteJob {
     }
 }
 
-function Invoke-Conversion2PDFApiGetJob {
+function Submit-PDFGetJob {
     [CmdletBinding()]
     Param (
         [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
@@ -100,7 +100,7 @@ function Invoke-Conversion2PDFApiGetJob {
     }
 }
 
-function Invoke-Conversion2PDFApiGetJobs {
+function Submit-PDFGetJobs {
     [CmdletBinding()]
     Param (
         [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
@@ -118,7 +118,7 @@ function Invoke-Conversion2PDFApiGetJobs {
     }
 }
 
-function Invoke-Conversion2PDFApiGetStream {
+function Submit-PDFGetStream {
     [CmdletBinding()]
     Param (
         [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]
@@ -136,7 +136,7 @@ function Invoke-Conversion2PDFApiGetStream {
     }
 }
 
-function Invoke-Conversion2PDFApiSubmitJob {
+function Submit-PDFSubmitJob {
     [CmdletBinding()]
     Param (
         [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $true)]

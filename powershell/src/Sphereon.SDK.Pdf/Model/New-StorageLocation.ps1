@@ -1,4 +1,4 @@
-function New-StorageLocation
+function New-PDFStorageLocation
 {
     [CmdletBinding()]
     Param (

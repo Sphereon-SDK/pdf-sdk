@@ -1,4 +1,4 @@
-function New-Compression
+function New-PDFCompression
 {
     [CmdletBinding()]
     Param (

@@ -1,4 +1,4 @@
-function New-CSVSettings
+function New-PDFCSVSettings
 {
     [CmdletBinding()]
     Param (

@@ -1,4 +1,4 @@
-function New-Lifecycle
+function New-PDFLifecycle
 {
     [CmdletBinding()]
     Param (

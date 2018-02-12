@@ -1,4 +1,4 @@
-function New-InputSettings
+function New-PDFInputSettings
 {
     [CmdletBinding()]
     Param (

@@ -1,4 +1,4 @@
-function New-StreamLocation
+function New-PDFStreamLocation
 {
     [CmdletBinding()]
     Param (

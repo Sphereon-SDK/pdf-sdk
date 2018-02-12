@@ -1,37 +1,29 @@
-        function New-StreamLocation {
-        [CmdletBinding()]
-        Param (
-            [Parameter(ValueFromPipelineByPropertyName = $true)]
-            [String]            
-            ${folderPath},
-            [Parameter(ValueFromPipelineByPropertyName = $true)]
-            [String]            
-            ${filename},
-            [Parameter(ValueFromPipelineByPropertyName = $true)]
-            [String]            
-            ${name},
-            [Parameter(ValueFromPipelineByPropertyName = $true)]
-            [String]            
-            ${id},
-            [Parameter(ValueFromPipelineByPropertyName = $true)]
-            [String]            
-            ${containerId},
-            [Parameter(ValueFromPipelineByPropertyName = $true)]
-            [String]            
-            ${originalFilename}
-        )
+function New-StreamLocation
+{
+    [CmdletBinding()]
+    Param (
+        [Parameter(Position = 0, Mandatory = $false, ValueFromPipelineByPropertyName = $true, ValueFromPipeline = $true)]
+        [String] ${folderPath},
 
-        Process {
+        [Parameter(Position = 1, Mandatory = $true, ValueFromPipelineByPropertyName = $true, ValueFromPipeline = $true)]
+        [String] ${filename},
+
+        [Parameter(Position = 2, Mandatory = $true, ValueFromPipelineByPropertyName = $true, ValueFromPipeline = $true)]
+        [String] ${containerId},
+
+        [Parameter(Position = 3, Mandatory = $false, ValueFromPipelineByPropertyName = $true, ValueFromPipeline = $true)]
+        [String] ${originalFilename}
+    )
+
+    Process {
         'Creating object: Sphereon.SDK.Pdf.Model.StreamLocation' | Write-Verbose
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
         New-Object -TypeName Sphereon.SDK.Pdf.Model.StreamLocation -ArgumentList @(
-            ${folderPath},
-            ${filename},
-            ${name},
-            ${id},
-            ${containerId},
-            ${originalFilename}
+        ${folderPath},
+        ${filename},
+        ${containerId},
+        ${originalFilename}
         )
-        }
-        }
+    }
+}

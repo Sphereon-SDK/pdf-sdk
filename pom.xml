@@ -339,6 +339,8 @@
             </build>
         </profile>
 
+<!--
+
         <profile>
             <id>powershell</id>
             <build>
@@ -370,24 +372,24 @@
                                     <templateDirectory>
                                         ${basedir}/src/main/mustacheTemplates/powershell
                                     </templateDirectory>
-                                    <!--<configOptions>
+                                    &lt;!&ndash;<configOptions>
                                         <dateLibrary>java8</dateLibrary>
-                                    </configOptions>-->
-                                    <!--<library>okhttp-gson</library>-->
+                                    </configOptions>&ndash;&gt;
+                                    &lt;!&ndash;<library>okhttp-gson</library>&ndash;&gt;
                                     <verbose>${swagger-codegen-verbose}</verbose>
                                     <output>${project.basedir}/powershell</output>
                                     <groupId>com.sphereon.sdk</groupId>
                                     <artifactId>pdf-sdk-powershell</artifactId>
                                     <artifactVersion>${project.version}</artifactVersion>
-                                    <!--<addCompileSourceRoot>true</addCompileSourceRoot>-->
-<!--                                    <apiPackage>${sdk-package-powershell}.Api</apiPackage>
-                                    <modelPackage>${sdk-package-powershell}.Model</modelPackage>-->
-                                    <!--<invokerPackage>Handler</invokerPackage>-->
-                                    <!--<sourceFolder>${sdk-package-powershell}</sourceFolder>-->
-                                    <!--<packageName>${sdk-package-csharp}</packageName>-->
+                                    &lt;!&ndash;<addCompileSourceRoot>true</addCompileSourceRoot>&ndash;&gt;
+&lt;!&ndash;                                    <apiPackage>${sdk-package-powershell}.Api</apiPackage>
+                                    <modelPackage>${sdk-package-powershell}.Model</modelPackage>&ndash;&gt;
+                                    &lt;!&ndash;<invokerPackage>Handler</invokerPackage>&ndash;&gt;
+                                    &lt;!&ndash;<sourceFolder>${sdk-package-powershell}</sourceFolder>&ndash;&gt;
+                                    &lt;!&ndash;<packageName>${sdk-package-csharp}</packageName>&ndash;&gt;
                                     <apiPackage>${sdk-package-csharp}/Api</apiPackage>
                                     <modelPackage>${sdk-package-csharp}/Model</modelPackage>
-                                    <!--<packageVersion>${sdk-package-version}</packageVersion>-->
+                                    &lt;!&ndash;<packageVersion>${sdk-package-version}</packageVersion>&ndash;&gt;
 
                                 </configuration>
                             </execution>
@@ -396,6 +398,7 @@
                 </plugins>
             </build>
         </profile>
+-->
 
         <profile>
             <id>csharp-net35</id>

@@ -12,5 +12,5 @@ if not exist ".\bin" mkdir bin
 
 copy packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll bin\Newtonsoft.Json.dll
 copy packages\RestSharpSigned.105.1.0\lib\net45\RestSharp.dll bin\RestSharp.dll
-%CSCPATH%\csc -debug /pdb:bin\Sphereon.SDK.Pdf /reference:bin\Newtonsoft.Json.dll;bin\RestSharp.dll;System.ComponentModel.DataAnnotations.dll  /target:library /out:bin\Sphereon.SDK.Pdf.dll /recurse:src\Sphereon.SDK.Pdf\*.cs /doc:bin\Sphereon.SDK.Pdf.xml
+%CSCPATH%\csc  /reference:bin\Newtonsoft.Json.dll;bin\RestSharp.dll;System.ComponentModel.DataAnnotations.dll  /target:library /out:bin\Sphereon.SDK.Pdf.dll /recurse:src\Sphereon.SDK.Pdf\*.cs /doc:bin\Sphereon.SDK.Pdf.xml
 

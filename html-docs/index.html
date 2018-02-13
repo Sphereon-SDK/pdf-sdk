@@ -732,7 +732,7 @@ margin-bottom: 20px;
     },
     "type" : {
       "type" : "string",
-      "description" : "Compression type. ADVANCED is only allowed and should be used with the ADVANCED engine",
+      "description" : "Compression type. ADVANCED is only allowed in combination with the ADVANCED engine!",
       "enum" : [ "NONE", "ADVANCED" ]
     }
   },
@@ -740,11 +740,12 @@ margin-bottom: 20px;
 };
             defs.ConversionJob = {
   "type" : "object",
-  "required" : [ "jobId" ],
+  "required" : [ "jobId", "settings" ],
   "properties" : {
     "jobId" : {
       "type" : "string",
-      "description" : "The server generated job jobId. This jobId is checked against the jobId in the request path on overy invocation"
+      "description" : "The server generated job jobId. This jobId is checked against the jobId in the request path on overy invocation",
+      "readOnly" : true
     },
     "settings" : {
       "description" : "The settings to use during the conversion job",
@@ -851,7 +852,7 @@ margin-bottom: 20px;
     },
     "version" : {
       "type" : "string",
-      "description" : "The PDF version to use for conversion. Default value : PDF1_7",
+      "description" : "The PDF version to use for conversion. Default value : PDF_1_7",
       "enum" : [ "PDF_1_4", "PDF_1_5", "PDF_1_6", "PDF_1_7", "PDF_A_1b" ]
     },
     "jobLifecycle" : {
@@ -1011,7 +1012,6 @@ margin-bottom: 20px;
 };
             defs.ResultSettings = {
   "type" : "object",
-  "required" : [ "fileFormat" ],
   "properties" : {
     "lifecycle" : {
       "$ref" : "#/definitions/Lifecycle"
@@ -1035,14 +1035,22 @@ margin-bottom: 20px;
   "type" : "object",
   "properties" : {
     "folderPath" : {
-      "type" : "string"
+      "type" : "string",
+      "description" : "The path of the folder in the container (if any). Please note that a folder can be virtual depending on the backend"
+    },
+    "fullPath" : {
+      "type" : "string",
+      "description" : "The full path with the container part",
+      "readOnly" : true
     },
     "id" : {
       "type" : "string",
+      "description" : "The auto generated ID for this location",
       "readOnly" : true
     },
     "containerId" : {
-      "type" : "string"
+      "type" : "string",
+      "description" : "The container Id"
     }
   },
   "description" : "Storage Location"
@@ -1051,23 +1059,30 @@ margin-bottom: 20px;
   "type" : "object",
   "properties" : {
     "folderPath" : {
-      "type" : "string"
+      "type" : "string",
+      "description" : "The path of the folder in the container (if any). Please note that a folder can be virtual depending on the backend"
+    },
+    "fullPath" : {
+      "type" : "string",
+      "description" : "The fully resolved path of the file, folder and container. This path corresponds with the /streams/path endpoints. This value is automatically determined",
+      "readOnly" : true
     },
     "filename" : {
-      "type" : "string"
-    },
-    "name" : {
-      "type" : "string"
+      "type" : "string",
+      "description" : "The current filename"
     },
     "id" : {
       "type" : "string",
+      "description" : "The auto generated ID for this location",
       "readOnly" : true
     },
     "containerId" : {
-      "type" : "string"
+      "type" : "string",
+      "description" : "The container Id"
     },
     "originalFilename" : {
-      "type" : "string"
+      "type" : "string",
+      "description" : "The original filename. Handy for later clientside naming"
     }
   },
   "description" : "Location record of data stream"
@@ -3284,7 +3299,7 @@ public class Conversion2PDFApiExample {
         Conversion2PDFApi apiInstance = new Conversion2PDFApi();
         array[String] status = ; // array[String] | A list of status to filter on.
         try {
-            ConversionJobResponse result = apiInstance.getJobs(status);
+            array[ConversionJobResponse] result = apiInstance.getJobs(status);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling Conversion2PDFApi#getJobs");
@@ -3303,7 +3318,7 @@ public class Conversion2PDFApiExample {
         Conversion2PDFApi apiInstance = new Conversion2PDFApi();
         array[String] status = ; // array[String] | A list of status to filter on.
         try {
-            ConversionJobResponse result = apiInstance.getJobs(status);
+            array[ConversionJobResponse] result = apiInstance.getJobs(status);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling Conversion2PDFApi#getJobs");
@@ -3328,7 +3343,7 @@ Conversion2PDFApi *apiInstance = [[Conversion2PDFApi alloc] init];
 
 // Get all jobs
 [apiInstance getJobsWith:status
-              completionHandler: ^(ConversionJobResponse output, NSError* error) {
+              completionHandler: ^(array[ConversionJobResponse] output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -3390,7 +3405,7 @@ namespace Example
             try
             {
                 // Get all jobs
-                ConversionJobResponse result = apiInstance.getJobs(status);
+                array[ConversionJobResponse] result = apiInstance.getJobs(status);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -3517,7 +3532,10 @@ except ApiException as e:
                                         var schemaWrapper = {
   "description" : "All PDF jobs that have not been deleted",
   "schema" : {
-    "$ref" : "#/definitions/ConversionJobResponse"
+    "type" : "array",
+    "items" : {
+      "$ref" : "#/definitions/ConversionJobResponse"
+    }
   }
 };
                                         var schema = schemaWrapper.schema;
@@ -4472,7 +4490,7 @@ $(document).ready(function() {
           </div>
           <div id="generator">
             <div class="content">
-              Generated 2018-02-06T13:41:40.265+01:00
+              Generated 2018-02-13T02:14:31.850+01:00
             </div>
           </div>
       </div>

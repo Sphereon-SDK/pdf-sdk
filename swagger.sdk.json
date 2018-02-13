@@ -415,15 +415,32 @@
       "description": "Location record of data stream",
       "type": "object",
       "properties": {
-        "folderPath": {"type": "string"},
-        "filename": {"type": "string"},
-        "name": {"type": "string"},
-        "id": {
+        "folderPath": {
+          "description": "The path of the folder in the container (if any). Please note that a folder can be virtual depending on the backend",
+          "type": "string"
+        },
+        "fullPath": {
+          "description": "The fully resolved path of the file, folder and container. This path corresponds with the /streams/path endpoints. This value is automatically determined",
           "readOnly": true,
           "type": "string"
         },
-        "containerId": {"type": "string"},
-        "originalFilename": {"type": "string"}
+        "filename": {
+          "description": "The current filename",
+          "type": "string"
+        },
+        "id": {
+          "description": "The auto generated ID for this location",
+          "readOnly": true,
+          "type": "string"
+        },
+        "containerId": {
+          "description": "The container Id",
+          "type": "string"
+        },
+        "originalFilename": {
+          "description": "The original filename. Handy for later clientside naming",
+          "type": "string"
+        }
       }
     },
     "CSVSettings": {
@@ -695,12 +712,24 @@
       "description": "Storage Location",
       "type": "object",
       "properties": {
-        "folderPath": {"type": "string"},
-        "id": {
+        "folderPath": {
+          "description": "The path of the folder in the container (if any). Please note that a folder can be virtual depending on the backend",
+          "type": "string"
+        },
+        "fullPath": {
+          "description": "The full path with the container part",
           "readOnly": true,
           "type": "string"
         },
-        "containerId": {"type": "string"}
+        "id": {
+          "description": "The auto generated ID for this location",
+          "readOnly": true,
+          "type": "string"
+        },
+        "containerId": {
+          "description": "The container Id",
+          "type": "string"
+        }
       }
     },
     "InputSettings": {

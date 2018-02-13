@@ -28,7 +28,7 @@ Add this dependency to your project's POM:
 <dependency>
     <groupId>com.sphereon.sdk</groupId>
     <artifactId>pdf-sdk-java8-okhttp-gson</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <scope>compile</scope>
 </dependency>
 ```
@@ -49,7 +49,7 @@ At first generate the JAR by executing:
 
 Then manually install the following JARs:
 
-* target/pdf-sdk-java8-okhttp-gson-1.1.0.jar
+* target/pdf-sdk-java8-okhttp-gson-1.1.1.jar
 * target/lib/*.jar
 
 ## Getting Started

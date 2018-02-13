@@ -12,10 +12,10 @@ Resources:
 ## Available SDKs
 
 The SDK currently supports the folowing languages:
- * source: [Java - Okhttp - gson](java8-okhttp-gson), Maven releases at: [nexus.qa.sphereon.com](http://nexus.qa.sphereon.com/repository/sphereon-sdk-releases)
- * source: [C# .NET 4.X](csharp-net45), NuGet releases at: [nexus.qa.sphereon.com](http://nexus.qa.sphereon.com/repository/sphereon-sdk-nuget)
- * source: [C# .NET 3.5](csharp-net35), NuGet releases at: [nexus.qa.sphereon.com](http://nexus.qa.sphereon.com/repository/sphereon-sdk-nuget)
- * source: [Javascript / NodeJS](javascript), NPM releases at: [nexus.qa.sphereon.com](http://nexus.qa.sphereon.com/repository/sphereon-sdk-npm)
+ * source: [Java - Okhttp - gson](java8-okhttp-gson), Maven releases at: [nexus.qa.sphereon.com](http://nexus.qa.sphereon.com/repository/sphereon-sdk-releases/)
+ * source: [C# .NET 4.X](csharp-net45), NuGet releases at: [nexus.qa.sphereon.com](http://nexus.qa.sphereon.com/repository/sphereon-sdk-nuget/)
+ * source: [C# .NET 3.5](csharp-net35), NuGet releases at: [nexus.qa.sphereon.com](http://nexus.qa.sphereon.com/repository/sphereon-sdk-nuget/)
+ * source: [Javascript / NodeJS](javascript), NPM releases at: [nexus.qa.sphereon.com](http://nexus.qa.sphereon.com/repository/sphereon-sdk-npm/)
  * source: [Powershell](powershell)
  
 SDKs for the following languages will follow soon:

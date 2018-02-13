@@ -72,7 +72,7 @@ public class FileProcessor {
 
     private static void printHeader() {
         logger.info("Sphereon File Processor");
-        logger.info("Sphereon B.V.");
+        logger.info("Sphereon B.V. Copyright 2018");
         logger.info("");
     }
 

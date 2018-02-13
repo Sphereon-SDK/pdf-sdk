@@ -27,7 +27,7 @@ Most SDK implementations contain integration test code that show you how to use 
  
 Some tools included in this repository:
 * [.NET conversion libs and commandlets](csharp-net45 implementations)
-* [Java batch conversion tool](java-conversion-tool)
+* [Java batch conversion tool](java-implementations-examples/java-file-processor)
  
 Do you have the need for another language? Please contact us. In many cases we can easily accomidate you.
 

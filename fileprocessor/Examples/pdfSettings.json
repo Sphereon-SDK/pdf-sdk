@@ -1,0 +1,23 @@
+{
+	"qualityFactor": 100,
+	"result": {
+		"lifecycle": null,
+		"storageLocation": null,
+		"compression": {
+			"level": 100,
+			"type": "ADVANCED"
+		},
+		"fileFormat": "PDF"
+	},
+	"input": null,
+	"engine": "PREMIUM",
+	"csv": {
+		"separatorCharacter": "COMMA",
+		"standardRowHeight": null,
+		"standardColumnWidth": null
+	},
+	"containerConversion": "ALL",
+	"version": "_1_7",
+	"jobLifecycle": null,
+	"ocrMode": "AUTO"
+}

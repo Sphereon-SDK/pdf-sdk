@@ -2,7 +2,7 @@ lazy val root = (project in file(".")).
   settings(
     organization := "com.sphereon.sdk",
     name := "pdf-sdk-java8-okhttp-gson",
-    version := "1.1.0",
+    version := "1.1.1",
     scalaVersion := "2.11.4",
     scalacOptions ++= Seq("-feature"),
     javacOptions in compile ++= Seq("-Xlint:deprecation"),

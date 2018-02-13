@@ -5,7 +5,7 @@
   <artifactId>pdf-sdk-java8-okhttp-gson</artifactId>
   <packaging>jar</packaging>
   <name>pdf-sdk-java8-okhttp-gson</name>
-  <version>1.1.1-SNAPSHOT</version>
+  <version>1.1.1</version>
   <url>https://github.com/Sphereon-SDK/pdf-SDK</url>
   <description>PDF Conversion SDK</description>
 

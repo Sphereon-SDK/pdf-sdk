@@ -12,7 +12,7 @@
   "invokerPackage": "Sphereon.SDK.Pdf.Invoker",
   "groupId": "com.sphereon.sdk",
   "artifactId": "pdf-sdk-csharp-net45",
-  "artifactVersion": "1.1.1-SNAPSHOT",
+  "artifactVersion": "1.1.1",
   "systemProperties": {
     "systemProp1": "value1"
   },

@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **engine** | [**EngineEnum**](#EngineEnum) | Engine to use for conversion. Costs apply. Default engine : ADVANCED |  [optional]
 **csv** | [**CSVSettings**](CSVSettings.md) |  |  [optional]
 **containerConversion** | [**ContainerConversionEnum**](#ContainerConversionEnum) | Specify which container to process. Currently used for email (ALL&#x3D;Both message and attachments, MAIN&#x3D;Only message, SUB&#x3D;attachments |  [optional]
-**version** | [**VersionEnum**](#VersionEnum) | The PDF version to use for conversion. Default value : PDF1_7 |  [optional]
+**version** | [**VersionEnum**](#VersionEnum) | The PDF version to use for conversion. Default value : PDF_1_7 |  [optional]
 **jobLifecycle** | [**Lifecycle**](Lifecycle.md) | The lifecycle of the job itself |  [optional]
 **ocrMode** | [**OcrModeEnum**](#OcrModeEnum) | Specify if a file must be processed by OCR engine. Default ocrMode : AUTO (only when not already processed) |  [optional]
 

@@ -12,7 +12,7 @@ import org.junit.Before;
 import java.util.concurrent.TimeUnit;
 
 public abstract class AbstractApiTest {
-    public static final String APPLICATION_NAME = "tests.pdf";
+    public static final String APPLICATION_NAME = "test";
     public static final long TOKEN_VALIDITY_SECONDS = 5400;
     public static final int CONNECTION_TIMEOUT = 40000;
 

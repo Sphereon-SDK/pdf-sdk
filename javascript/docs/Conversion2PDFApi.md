@@ -282,7 +282,7 @@ Name | Type | Description  | Notes
 
 <a name="getJobs"></a>
 # **getJobs**
-> ConversionJobResponse getJobs(opts)
+> [ConversionJobResponse] getJobs(opts)
 
 Get all jobs
 
@@ -321,7 +321,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ConversionJobResponse**](ConversionJobResponse.md)
+[**[ConversionJobResponse]**](ConversionJobResponse.md)
 
 ### Authorization
 

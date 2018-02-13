@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **lifecycle** | [**Lifecycle**](Lifecycle.md) |  |  [optional]
 **storageLocation** | [**StorageLocation**](StorageLocation.md) | Result Storage location |  [optional]
 **compression** | [**Compression**](Compression.md) |  |  [optional]
-**fileFormat** | [**FileFormatEnum**](#FileFormatEnum) | Resulting file format. Restrictions apply. Default : PDF | 
+**fileFormat** | [**FileFormatEnum**](#FileFormatEnum) | Resulting file format. Restrictions apply. Default : PDF |  [optional]
 
 
 <a name="FileFormatEnum"></a>

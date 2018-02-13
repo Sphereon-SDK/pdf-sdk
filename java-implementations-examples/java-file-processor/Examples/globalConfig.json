@@ -1,0 +1,7 @@
+{
+	"apiKey": "fill in",
+	"importDirectory": "c:/fileprocessor/import",
+	"exportDirectory": "c:/fileprocessor/export",
+	"prefix": "pref",
+	"subdirectory": "sub"
+}

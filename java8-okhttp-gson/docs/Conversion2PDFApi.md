@@ -287,7 +287,7 @@ Name | Type | Description  | Notes
 
 <a name="getJobs"></a>
 # **getJobs**
-> ConversionJobResponse getJobs(status)
+> List&lt;ConversionJobResponse&gt; getJobs(status)
 
 Get all jobs
 
@@ -311,7 +311,7 @@ oauth2schema.setAccessToken("YOUR ACCESS TOKEN");
 Conversion2PDFApi apiInstance = new Conversion2PDFApi();
 List<String> status = Arrays.asList("status_example"); // List<String> | A list of status to filter on.
 try {
-    ConversionJobResponse result = apiInstance.getJobs(status);
+    List<ConversionJobResponse> result = apiInstance.getJobs(status);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling Conversion2PDFApi#getJobs");
@@ -327,7 +327,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ConversionJobResponse**](ConversionJobResponse.md)
+[**List&lt;ConversionJobResponse&gt;**](ConversionJobResponse.md)
 
 ### Authorization
 

@@ -71,7 +71,10 @@
         "description": "Get all PDF job definitions and their current state.",
         "operationId": "getJobs",
         "responses": {"200": {
-          "schema": {"$ref": "#/definitions/ConversionJobResponse"},
+          "schema": {
+            "type": "array",
+            "items": {"$ref": "#/definitions/ConversionJobResponse"}
+          },
           "description": "All PDF jobs that have not been deleted"
         }},
         "parameters": [{
@@ -307,6 +310,7 @@
       "type": "object",
       "properties": {"streamLocations": {
         "description": "Result Stream Locations",
+        "readOnly": true,
         "type": "array",
         "items": {"$ref": "#/definitions/StreamLocation"}
       }}
@@ -323,7 +327,7 @@
           "minimum": 0
         },
         "type": {
-          "description": "Compression type. ADVANCED is only allowed and should be used with the ADVANCED engine",
+          "description": "Compression type. ADVANCED is only allowed in combination with the ADVANCED engine!",
           "type": "string",
           "enum": [
             "NONE",
@@ -389,7 +393,6 @@
     "ResultSettings": {
       "description": "Result settings",
       "type": "object",
-      "required": ["fileFormat"],
       "properties": {
         "lifecycle": {"$ref": "#/definitions/Lifecycle"},
         "storageLocation": {
@@ -412,15 +415,32 @@
       "description": "Location record of data stream",
       "type": "object",
       "properties": {
-        "folderPath": {"type": "string"},
-        "filename": {"type": "string"},
-        "name": {"type": "string"},
-        "id": {
+        "folderPath": {
+          "description": "The path of the folder in the container (if any). Please note that a folder can be virtual depending on the backend",
+          "type": "string"
+        },
+        "fullPath": {
+          "description": "The fully resolved path of the file, folder and container. This path corresponds with the /streams/path endpoints. This value is automatically determined",
           "readOnly": true,
           "type": "string"
         },
-        "containerId": {"type": "string"},
-        "originalFilename": {"type": "string"}
+        "filename": {
+          "description": "The current filename",
+          "type": "string"
+        },
+        "id": {
+          "description": "The auto generated ID for this location",
+          "readOnly": true,
+          "type": "string"
+        },
+        "containerId": {
+          "description": "The container Id",
+          "type": "string"
+        },
+        "originalFilename": {
+          "description": "The original filename. Handy for later clientside naming",
+          "type": "string"
+        }
       }
     },
     "CSVSettings": {
@@ -570,7 +590,7 @@
           ]
         },
         "version": {
-          "description": "The PDF version to use for conversion. Default value : PDF1_7",
+          "description": "The PDF version to use for conversion. Default value : PDF_1_7",
           "type": "string",
           "enum": [
             "PDF_1_4",
@@ -671,14 +691,19 @@
     "ConversionJob": {
       "description": "The PDF conversion job. Has access to the job settings.",
       "type": "object",
-      "required": ["jobId"],
+      "required": [
+        "jobId",
+        "settings"
+      ],
       "properties": {
         "jobId": {
           "description": "The server generated job jobId. This jobId is checked against the jobId in the request path on overy invocation",
+          "readOnly": true,
           "type": "string"
         },
         "settings": {
           "description": "The settings to use during the conversion job",
+          "readOnly": true,
           "$ref": "#/definitions/ConversionSettings"
         }
       }
@@ -687,12 +712,24 @@
       "description": "Storage Location",
       "type": "object",
       "properties": {
-        "folderPath": {"type": "string"},
-        "id": {
+        "folderPath": {
+          "description": "The path of the folder in the container (if any). Please note that a folder can be virtual depending on the backend",
+          "type": "string"
+        },
+        "fullPath": {
+          "description": "The full path with the container part",
           "readOnly": true,
           "type": "string"
         },
-        "containerId": {"type": "string"}
+        "id": {
+          "description": "The auto generated ID for this location",
+          "readOnly": true,
+          "type": "string"
+        },
+        "containerId": {
+          "description": "The container Id",
+          "type": "string"
+        }
       }
     },
     "InputSettings": {

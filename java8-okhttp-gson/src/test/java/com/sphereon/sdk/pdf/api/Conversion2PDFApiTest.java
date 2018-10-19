@@ -18,23 +18,34 @@ import com.sphereon.sdk.pdf.model.ConversionJob;
 import com.sphereon.sdk.pdf.model.ConversionJobResponse;
 import com.sphereon.sdk.pdf.model.ConversionSettings;
 import com.sphereon.sdk.pdf.model.Lifecycle;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * API tests for Conversion2PDFApi
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class Conversion2PDFApiTest extends AbstractApiTest {
+public abstract class Conversion2PDFApiTest extends AbstractApiTest {
 
-    private static final String IMAGE_NAME = "image.png";
-    private static final URL IMAGE_URL = Conversion2PDFApiTest.class.getResource("/" + IMAGE_NAME);
+    private static final Log LOGGER = LogFactory.getLog(Conversion2PDFApiTest.class);
+    protected List<FileUploadConfig> UPLOAD_CONFIG = new ArrayList<>();
+    protected boolean writeToFile =false;
     private static ConversionJob conversionJob;
+    protected static String PDF_DOWNLOAD_PATH = "Linux".equals(System.getProperty("os.name")) ? "/tmp/out.pdf" :"c:\\Temp\\out.pdf";
 
 
     @Test
@@ -66,8 +77,12 @@ public class Conversion2PDFApiTest extends AbstractApiTest {
      */
     @Test
     public void _020_UploadFile() throws ApiException {
-        File stream = new File(IMAGE_URL.getFile());
-        ConversionJobResponse response = api.addInputFile(conversionJob.getJobId(), stream, IMAGE_NAME);
+        ConversionJobResponse response = null;
+        for (FileUploadConfig fuc : UPLOAD_CONFIG)  {
+            File stream = new File(fuc.uploadUrl.getFile());
+            for (int i=0; i < fuc.numberOfUploads; i++)
+                 response = api.addInputFile(conversionJob.getJobId(), stream, fuc.fileName);
+        }
         Assert.assertNotNull(response);
         Assert.assertNotNull(response.getJobId());
         Assert.assertNotNull(response.getJob());
@@ -130,8 +145,12 @@ public class Conversion2PDFApiTest extends AbstractApiTest {
         String result = new String(pdfOutput);
         Assert.assertTrue("Invalid result received: " + result, result.startsWith("%PDF-1"));
         Assert.assertTrue(result.contains("EOF"));
-        // We could write the output to file of course
-        // Files.write(new File("/tmp/out.pdf").toPath(), pdfOutput);
+        if (writeToFile)
+            try {
+                 Files.write(new File(PDF_DOWNLOAD_PATH).toPath(), pdfOutput);
+            } catch (IOException io) {
+                LOGGER.warn("Could not write output PDF file!", io);
+        }
     }
 
 
@@ -148,5 +167,25 @@ public class Conversion2PDFApiTest extends AbstractApiTest {
         Assert.assertNotNull(response);
         Assert.assertNotNull(response.getJob());
         Assert.assertEquals(ConversionJobResponse.StatusEnum.DELETED, response.getStatus());
+    }
+
+    @Test
+    public abstract void _70_checkGeneratedPdf() throws IOException;
+
+    class FileUploadConfig {
+        public FileUploadConfig(String fileName, URL uploadUrl) {
+            this.fileName = fileName;
+            this.uploadUrl = uploadUrl;
+        }
+
+        public FileUploadConfig(int numberOfUploads, String fileName, URL uploadUrl) {
+            this.numberOfUploads = numberOfUploads;
+            this.fileName = fileName;
+            this.uploadUrl = uploadUrl;
+        }
+
+        private int numberOfUploads = 1;
+        private String fileName;
+        private URL uploadUrl;
     }
 }

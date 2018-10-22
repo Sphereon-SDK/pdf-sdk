@@ -1,7 +1,9 @@
-package com.sphereon.sdk.pdf.api;
+package com.sphereon.sdk.pdf.api.advanced;
 
+import com.sphereon.sdk.pdf.api.Conversion2PDFApiTest;
 import com.sphereon.sdk.pdf.api.util.PDFReadUtils;
 import com.sphereon.sdk.pdf.handler.ApiException;
+import com.sphereon.sdk.pdf.model.ConversionSettings;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.junit.Assert;
@@ -15,15 +17,16 @@ import java.io.IOException;
 
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class PngXlsDocConversion2PDFApiTest extends Conversion2PDFApiTest  {
+public class AdvPngXlsDocConversion2PDFApiTest extends Conversion2PDFApiTest {
 
     private final boolean WRITE_TO_FILE = true;
 
     @Before
     public void setUp() {
-        super.UPLOAD_CONFIG.add(new FileUploadConfig("11Sheets4Testing.xls",Conversion2PDFApiTest.class.getResource("/11Sheets4Testing.xls")));
-        super.UPLOAD_CONFIG.add(new FileUploadConfig("image.png",Conversion2PDFApiTest.class.getResource("/image.png")));
-        super.UPLOAD_CONFIG.add(new FileUploadConfig("4Pages4TestingPDFConversion.doc", Conversion2PDFApiTest.class.getResource("/4Pages4TestingPDFConversion.doc")));
+        super.uploadConfigs.add(new FileUploadConfig("11Sheets.xls",Conversion2PDFApiTest.class.getResource("/11Sheets.xls")));
+        super.uploadConfigs.add(new FileUploadConfig("image.png",Conversion2PDFApiTest.class.getResource("/image.png")));
+        super.uploadConfigs.add(new FileUploadConfig("4Pages.doc", Conversion2PDFApiTest.class.getResource("/4Pages.doc")));
+        super.engine = ConversionSettings.EngineEnum.ADVANCED;
         super.writeToFile = WRITE_TO_FILE;
 
     }

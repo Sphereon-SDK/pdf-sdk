@@ -1,7 +1,10 @@
-package com.sphereon.sdk.pdf.api;
+package com.sphereon.sdk.pdf.api.advanced;
 
+import com.sphereon.sdk.pdf.api.Conversion2PDFApiTest;
 import com.sphereon.sdk.pdf.api.util.PDFReadUtils;
 import com.sphereon.sdk.pdf.handler.ApiException;
+import com.sphereon.sdk.pdf.model.ConversionSettings;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,14 +16,16 @@ import java.io.File;
 import java.io.IOException;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class DocAndJPGConversion2PDFApiTest extends Conversion2PDFApiTest {
+public class AdvDocJpgConversion2PDFApiTest extends Conversion2PDFApiTest {
 
     private final boolean WRITE_TO_FILE = true;
 
     @Before
     public void setUp() {
-        super.UPLOAD_CONFIG.add(new FileUploadConfig(2, "4Pages4TestingPDFConversion.doc", Conversion2PDFApiTest.class.getResource("/4Pages4TestingPDFConversion.doc")));
-        super.UPLOAD_CONFIG.add(new FileUploadConfig("blue-flower.jpeg", Conversion2PDFApiTest.class.getResource("/blue-flower.jpeg")));
+        super.uploadConfigs.add(new FileUploadConfig(2, "4Pages.doc", Conversion2PDFApiTest.class.getResource("/4Pages.doc")));
+        super.uploadConfigs.add(new FileUploadConfig("blue-flower.jpeg", Conversion2PDFApiTest.class.getResource("/blue-flower.jpeg")));
+        super.uploadConfigs.add(new FileUploadConfig("autocad.dwg", Conversion2PDFApiTest.class.getResource("/autocad.dwg")));
+        super.engine = ConversionSettings.EngineEnum.ADVANCED;
         super.writeToFile = WRITE_TO_FILE;
     }
 
@@ -60,7 +65,8 @@ public class DocAndJPGConversion2PDFApiTest extends Conversion2PDFApiTest {
             PDDocument doc = null;
             try {
                 doc = PDDocument.load(new File(Conversion2PDFApiTest.PDF_DOWNLOAD_PATH));
-                Assert.assertEquals(9, doc.getNumberOfPages());
+                String allText = PDFReadUtils.getTextFromPdfPage(doc,1,9);
+                Assert.assertEquals(10, doc.getNumberOfPages());
                 Assert.assertEquals(0, PDFReadUtils.getImagesFromPdfPage(doc, 0).size());
                 Assert.assertEquals(0, PDFReadUtils.getImagesFromPdfPage(doc, 1).size());
                 Assert.assertEquals(2, PDFReadUtils.getImagesFromPdfPage(doc, 2).size());
@@ -70,7 +76,7 @@ public class DocAndJPGConversion2PDFApiTest extends Conversion2PDFApiTest {
                 Assert.assertEquals(2, PDFReadUtils.getImagesFromPdfPage(doc, 6).size());
                 Assert.assertEquals(0, PDFReadUtils.getImagesFromPdfPage(doc, 7).size());
                 Assert.assertEquals(1, PDFReadUtils.getImagesFromPdfPage(doc, 8).size());
-
+                Assert.assertEquals(96, StringUtils.countMatches(allText,"Lorem ipsum dolor sit amet"));
             } finally {
                 doc.close();
             }

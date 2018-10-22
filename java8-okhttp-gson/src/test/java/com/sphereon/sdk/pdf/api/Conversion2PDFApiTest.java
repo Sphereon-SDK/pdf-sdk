@@ -36,13 +36,14 @@ import java.util.List;
  */
 public class Conversion2PDFApiTest extends AbstractApiTest {
 
-    private static final Log LOGGER = LogFactory.getLog(Conversion2PDFApiTest.class);
-    protected List<FileUploadConfig> UPLOAD_CONFIG = new ArrayList<>();
+
+    protected List<FileUploadConfig> uploadConfigs = new ArrayList<>();
     protected boolean writeToFile =false;
-    private static ConversionJob conversionJob;
     protected static String PDF_DOWNLOAD_PATH = "Linux".equals(System.getProperty("os.name")) ? "/tmp/out.pdf" :"c:\\Temp\\out.pdf";
+    protected ConversionSettings.EngineEnum engine;
 
-
+    private static final Log LOGGER = LogFactory.getLog(Conversion2PDFApiTest.class);
+    private static ConversionJob conversionJob;
     /**
      * Create a conversion job
      *
@@ -51,7 +52,7 @@ public class Conversion2PDFApiTest extends AbstractApiTest {
     public void _010_CreateJob() throws ApiException {
         ConversionSettings settings = new ConversionSettings()
                                           .jobLifecycle(new Lifecycle().action(Lifecycle.ActionEnum.NONE))
-                                          .engine(ConversionSettings.EngineEnum.ADVANCED)
+                                          .engine(engine)
                                           .ocrMode(ConversionSettings.OcrModeEnum.AUTO);
         ConversionJobResponse response = api.createJob(settings);
         Assert.assertNotNull(response);
@@ -71,7 +72,7 @@ public class Conversion2PDFApiTest extends AbstractApiTest {
      */
     public void _020_UploadFile() throws ApiException {
         ConversionJobResponse response = null;
-        for (FileUploadConfig fuc : UPLOAD_CONFIG)  {
+        for (FileUploadConfig fuc : uploadConfigs)  {
             File stream = new File(fuc.uploadUrl.getFile());
             for (int i=0; i < fuc.numberOfUploads; i++)
                  response = api.addInputFile(conversionJob.getJobId(), stream, fuc.fileName);
@@ -159,7 +160,7 @@ public class Conversion2PDFApiTest extends AbstractApiTest {
     }
 
 
-    class FileUploadConfig {
+    protected class FileUploadConfig {
         public FileUploadConfig(String fileName, URL uploadUrl) {
             this.fileName = fileName;
             this.uploadUrl = uploadUrl;

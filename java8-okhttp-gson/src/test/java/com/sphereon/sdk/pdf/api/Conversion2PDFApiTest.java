@@ -160,7 +160,7 @@ public class Conversion2PDFApiTest extends AbstractApiTest {
     }
 
 
-    protected class FileUploadConfig {
+    public static class FileUploadConfig {
         public FileUploadConfig(String fileName, URL uploadUrl) {
             this.fileName = fileName;
             this.uploadUrl = uploadUrl;

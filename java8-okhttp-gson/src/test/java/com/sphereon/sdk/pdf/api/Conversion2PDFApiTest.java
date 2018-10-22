@@ -22,10 +22,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,8 +34,7 @@ import java.util.List;
 /**
  * API tests for Conversion2PDFApi
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public abstract class Conversion2PDFApiTest extends AbstractApiTest {
+public class Conversion2PDFApiTest extends AbstractApiTest {
 
     private static final Log LOGGER = LogFactory.getLog(Conversion2PDFApiTest.class);
     protected List<FileUploadConfig> UPLOAD_CONFIG = new ArrayList<>();
@@ -48,7 +43,6 @@ public abstract class Conversion2PDFApiTest extends AbstractApiTest {
     protected static String PDF_DOWNLOAD_PATH = "Linux".equals(System.getProperty("os.name")) ? "/tmp/out.pdf" :"c:\\Temp\\out.pdf";
 
 
-    @Test
     /**
      * Create a conversion job
      *
@@ -75,7 +69,6 @@ public abstract class Conversion2PDFApiTest extends AbstractApiTest {
      *
      * @throws ApiException if the Api call fails
      */
-    @Test
     public void _020_UploadFile() throws ApiException {
         ConversionJobResponse response = null;
         for (FileUploadConfig fuc : UPLOAD_CONFIG)  {
@@ -98,7 +91,6 @@ public abstract class Conversion2PDFApiTest extends AbstractApiTest {
      *
      * @throws ApiException if the Api call fails
      */
-    @Test
     public void _030_submitJob() throws ApiException {
         // Change the default deletion after first retrieval to manual deletion for the manual deletion test
         ConversionJobResponse response = api.submitJob(conversionJob.getJobId(), conversionJob);
@@ -115,7 +107,6 @@ public abstract class Conversion2PDFApiTest extends AbstractApiTest {
      *
      * @throws ApiException if the Api call fails
      */
-    @Test
     public void _040_getJob() throws ApiException {
         ConversionJobResponse response = api.getJob(conversionJob.getJobId());
         Assert.assertNotNull(response);
@@ -130,7 +121,6 @@ public abstract class Conversion2PDFApiTest extends AbstractApiTest {
      *
      * @throws ApiException if the Api call fails
      */
-    @Test
     public void _050_getPDF() throws ApiException, InterruptedException {
         ConversionJobResponse response = null;
         int count = 0;
@@ -161,7 +151,6 @@ public abstract class Conversion2PDFApiTest extends AbstractApiTest {
      *
      * @throws ApiException if the Api call fails
      */
-    @Test
     public void _060_deleteJob() throws ApiException {
         ConversionJobResponse response = api.deleteJob(conversionJob.getJobId());
         Assert.assertNotNull(response);
@@ -169,8 +158,6 @@ public abstract class Conversion2PDFApiTest extends AbstractApiTest {
         Assert.assertEquals(ConversionJobResponse.StatusEnum.DELETED, response.getStatus());
     }
 
-    @Test
-    public abstract void _70_checkGeneratedPdf() throws IOException;
 
     class FileUploadConfig {
         public FileUploadConfig(String fileName, URL uploadUrl) {

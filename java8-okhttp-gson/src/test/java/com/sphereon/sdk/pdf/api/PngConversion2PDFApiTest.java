@@ -2,30 +2,19 @@ package com.sphereon.sdk.pdf.api;
 
 import com.sphereon.sdk.pdf.api.util.PDFReadUtils;
 import com.sphereon.sdk.pdf.handler.ApiException;
-import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDResources;
-import org.apache.pdfbox.pdmodel.graphics.PDXObject;
-import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 
-import java.lang.Iterable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class ImageConversion2PDFApiTest extends Conversion2PDFApiTest  {
+public class PngConversion2PDFApiTest extends Conversion2PDFApiTest  {
 
     private final boolean WRITE_TO_FILE = true;
 
@@ -65,7 +54,7 @@ public class ImageConversion2PDFApiTest extends Conversion2PDFApiTest  {
         try {
             doc = PDDocument.load(new File(Conversion2PDFApiTest.PDF_DOWNLOAD_PATH));
             Assert.assertEquals(1, doc.getNumberOfPages());
-            Assert.assertEquals(1, PDFReadUtils.getImagesFromPdf(doc, 0).size());
+            Assert.assertEquals(1, PDFReadUtils.getImagesFromPdfPage(doc, 0).size());
         } finally {
             doc.close();
         }

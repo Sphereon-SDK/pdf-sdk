@@ -18,6 +18,7 @@ import com.sphereon.sdk.pdf.model.ConversionJob;
 import com.sphereon.sdk.pdf.model.ConversionJobResponse;
 import com.sphereon.sdk.pdf.model.ConversionSettings;
 import com.sphereon.sdk.pdf.model.Lifecycle;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -39,7 +40,7 @@ public class Conversion2PDFApiTest extends AbstractApiTest {
 
     protected List<FileUploadConfig> uploadConfigs = new ArrayList<>();
     protected boolean writeToFile =false;
-    protected static String PDF_DOWNLOAD_PATH = "Linux".equals(System.getProperty("os.name")) ? "/tmp/out.pdf" :"c:\\Temp\\out.pdf";
+    protected static String PDF_DOWNLOAD_PATH = FileUtils.getTempDirectoryPath()+"/out.pdf";
     protected ConversionSettings.EngineEnum engine;
 
     private static final Log LOGGER = LogFactory.getLog(Conversion2PDFApiTest.class);

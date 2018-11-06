@@ -221,6 +221,12 @@
 		<version>${authentication-lib.version}</version>
 		<scope>test</scope>
 	</dependency>
+    <dependency>
+      <groupId>org.apache.pdfbox</groupId>
+      <artifactId>pdfbox</artifactId>
+      <version>${pdfbox.version}</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
   <properties>
     <java.version>1.8</java.version>
@@ -235,5 +241,6 @@
     <junit-version>4.12</junit-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <authentication-lib.version>0.1.1</authentication-lib.version>
+    <pdfbox.version>2.0.12</pdfbox.version>
   </properties>
 </project>
